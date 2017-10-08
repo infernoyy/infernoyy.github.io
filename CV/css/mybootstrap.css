@@ -1,0 +1,254 @@
+body{
+    background: none;
+    background: #fafafa;
+    font-family: 'Microsoft YaHei', sans-serif;
+}
+.container{
+    max-width: 1200px!important;
+    overflow: hidden;
+}
+
+/*导航条*/
+.navbar-default{
+    background-color: #fff;
+    border: none;
+    box-shadow: 0px 2px 8px 0px rgba(50,50,50,0.25);
+}
+.navbar-default .navbar-brand {
+    font-size: 30px;
+    font-weight: bold;
+    color: #ff0036;
+    height: 70px;
+    line-height: 35px;
+}
+.navbar-default .navbar-nav li a {
+    font-size: 16px;
+    font-weight: bold;
+    color: #666;
+    height: 70px;
+    line-height: 35px;
+}
+.navbar-toggle{
+    margin-top: 17px;
+}
+.navbar-default .navbar-toggle:hover {
+    border-color: #40D2B1;
+    background-color: #FFFF00;
+}
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: #1C9982;
+}
+/*导航条结束*/
+
+.section{
+    width: 100%;
+    position: relative;
+    padding-bottom: 20px;
+    min-height: 610px;
+}
+.section h2{
+    text-align: center;
+    font-size: 30px;
+    color: #2c3e50;
+    letter-spacing: 2px;
+ }
+.section hr{
+    width: 0px;
+    border: 0;
+}
+/*home*/
+#home{
+    height: 610px;
+    margin-top: 70px;
+    background: url("../image/bg1.jpg");
+    background-size: cover;
+    color: #ffffff;
+    text-align: center;
+    width: 100%;
+    overflow: hidden;
+}
+.lvjing{
+    width: 100%;
+    height: 610px;
+    background: rgba(240,240,240,0.3);
+    padding: 90px 0;
+}
+#home h1{
+	color: #2C3E50;
+	font-size: 50px;
+    margin: 80px 0 40px 0;
+}
+#home p{
+	color: #2C3E50;
+	font-size: 18px;
+    font-weight: 400;
+    line-height: 60px;
+}
+#home button{
+	width: 150px;
+	margin: 30px 10px 0px 10px
+}
+
+/*aboutme*/
+#aboutme{
+    padding: 80px 0;
+    text-align: center;
+}
+#aboutme .center{
+    padding: 15px;
+}
+#aboutme img{
+    margin: 0 auto;
+    border-radius: 50%;
+}
+/*#aboutme .my-intro{
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 0 2em;
+    position: relative;
+}
+#aboutme .my-intro p{
+    padding: 2em 0 0em;
+    text-indent: 2em;
+}*/
+
+
+/*jobintention*/
+#jobintention{
+    padding: 80px 0;
+	text-align: center;
+    background: #f8f8f8;
+    background: url(../image/services-bg.jpg) no-repeat center;
+    background-attachment: fixed;
+    padding-bottom: 100px;
+}
+#jobintention p{
+    line-height: 25px;
+}
+#jobintention .ptitle{
+    color: #E87E04;
+    margin: 2em 0 1em;
+    font-size: 16px;
+    font-family: "SimHei";
+    text-align: center;
+}
+
+/*works*/
+#works{
+    height: auto;
+    min-height: 100vh;
+}
+#works.section hr{
+    margin-bottom: 30px;
+}
+#works.section .intros{
+    margin-bottom: 60px;
+}
+#works .container>div{
+    padding: 10px;
+    transition: all 0.3s linear;
+}
+#works .container div:hover{
+    transition: all 0.3s linear;
+    padding: 0;
+}
+#works .container div .zp-cover{
+    position: absolute;
+    display: none;
+    width: 100%;
+    top: 50%;
+    margin-top: -46px;
+    left: 0;
+}
+#works .container div .zp-cover h4{
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+#works .container div .zp-cover p{
+    color: #fff;
+    font-size: 14px;
+    text-align: center;
+    margin: 10px 0;
+    padding: 0 1em;
+}
+#works .container div .zp-cover img{
+    width: 25px;
+    height: 25px;
+}
+
+#works .container div:hover .zp-cover{
+    display: block;
+    padding:  0 2em;
+}
+#works .container div:hover .imgbox img{
+    -webkit-filter: brightness(0.3);
+    filter: brightness(0.3);
+}
+#works .container div .imgbox{
+    width:100%;
+    height: 0;
+    padding-bottom: 100%;
+    overflow: hidden;
+    text-align: center;
+}
+#works .container .imgbox img{
+    width: 100%;
+    transition: all 0.3s ease;
+}
+/*works*/
+
+/*technology*/
+#technology{
+	padding: 50px;
+	text-align: center;
+}
+#technology .wrap-box .progress{
+	margin: 30px 30px 50px 30px;
+}
+/*contact*/
+#contact{
+	height: 700px;
+    background: url("../image/bg4.jpg") no-repeat;
+    background-size: cover;
+    color: #ffffff;
+    overflow: hidden;
+}
+#contact .lvjing{
+	height: 700px;
+}
+#contact h2{
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 25px;
+}
+#contact p{
+    line-height: 25px;
+    margin-bottom: 20px;
+}
+#contact .form-control {
+    border: none;
+    border-radius: 0;
+    height: 50px;
+    margin-bottom: 20px;
+}
+#contact textarea.form-control{
+    height: auto;
+}
+#contact input[type="submit"]{
+    background: #40D2B1;
+    color: #fff;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+#contact input[type="submit"]:hover{
+    background: rgb(44, 142, 120);
+}
+
+/*footer*/
+footer{
+    font-weight: 400;
+    text-align: center;
+    padding:20px ;
+}
