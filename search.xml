@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+    
+    <entry>
+      <title><![CDATA[2017/10/7 日常]]></title>
+      <url>/2017/10/07/2017_10_7/</url>
+      <content type="html"><![CDATA[<p>说说日常吧！<br><a id="more"></a></p>
+<h2 id="国庆倒数第二天日常"><a href="#国庆倒数第二天日常" class="headerlink" title="国庆倒数第二天日常"></a>国庆倒数第二天日常</h2><p>放假快结束了，后天回学校！</p>
+<hr>
+<h3 id="前端"><a href="#前端" class="headerlink" title="前端"></a>前端</h3><p>在家还是不适合看书，没性子。</p>
+<p>不过还是写了点代码，没怎么完善，再过两天再发布在博客上，量有点点多，花的时间还是有些长，主要是个人的简历项目，地址先留着，就这两天吧。</p>
+<p>顺带改了下next主题设置，应该好看多了，舒服。</p>
+<hr>
+<h3 id="生活"><a href="#生活" class="headerlink" title="生活"></a>生活</h3><p>晚饭出去吃了顿，家里不煮饭，学校吃外卖多了不太爱吃外卖回家还得吃，没什么办法。</p>
+<p>回家途中打了个照面的路人眼睛发亮(应该不是反光），盯着我挺久（我应该不丑-&gt;_-&gt; ）。。。</p>
+<hr>
+<h3 id="游戏"><a href="#游戏" class="headerlink" title="游戏"></a>游戏</h3><p>最近S7，LPL加油！</p>
+<hr>
+<h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2><h3 id="没必要和所有人解释你该做什么，活出自己就好！"><a href="#没必要和所有人解释你该做什么，活出自己就好！" class="headerlink" title="没必要和所有人解释你该做什么，活出自己就好！"></a>没必要和所有人解释你该做什么，活出自己就好！</h3>]]></content>
+      
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[开启第一天的博客]]></title>
+      <url>/2017/10/05/2017_10_5first/</url>
+      <content type="html"><![CDATA[<p>接触前端后，几经周转有了自己的博客 <a href="https://infernoyy.github.io/" target="_blank" rel="external">infernoyy的博客</a>! 算是在前端小白的道路上又迈进了一步. </p>
+<h2 id=""><a href="#" class="headerlink" title=""></a><a id="more"></a></h2><p>今天不写前端，正好看见markdown，就顺手写一下markdown的语法以便以后更好的记写。</p>
+<h2 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h2><ul>
+<li>#一级标题  </li>
+<li>##二级标题 </li>
+<li>###三级标题 </li>
+<li>####四级标题 </li>
+<li>#####五级标题 </li>
+<li>######六级标题  </li>
+</ul>
+<hr>
+<h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">引用的方式：&gt;引用内容</div></pre></td></tr></table></figure>
+<hr>
+<h2 id="段落"><a href="#段落" class="headerlink" title="段落"></a>段落</h2><ul>
+<li>段落以自然<em>回车</em>作为标记。</li>
+</ul>
+<hr>
+<h2 id="分隔符"><a href="#分隔符" class="headerlink" title="分隔符"></a>分隔符</h2><ul>
+<li>连续输入三个以上的 bash — 添加分隔符。如下</li>
+</ul>
+<hr>
+<h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><ul>
+<li>使用* - +中的任何一个符号加空格就可以创建无序列表，但如我这样的完美主义者可以进一步使用+ -来表现层次关系。</li>
+<li>使用数字+点+空格创建有序列表</li>
+<li>列表可以嵌套，使用时在嵌套列表前空格，这篇文章的列表使用了嵌套列表。</li>
+</ul>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="bullet">* </span>这是一个无序列表</div><div class="line"><span class="bullet">* </span>这是一个无序列表</div><div class="line"></div><div class="line"><span class="bullet">+ </span>这是一个父无序列表</div><div class="line">  - 这是一个子无序列表</div><div class="line"></div><div class="line"><span class="bullet">1. </span>这是一个有序列表</div><div class="line"><span class="bullet">2. </span>这是一个有序列表</div></pre></td></tr></table></figure>
+<hr>
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><ul>
+<li><p>baidu链接是这样构成的</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[<span class="string">百度</span>](<span class="link">http://www.baidu.com</span>)</div></pre></td></tr></table></figure>
+</li>
+<li><p>也可以直接用尖括号包含网址的方式<a href="http://www.jianshu.com" target="_blank" rel="external">http://www.jianshu.com</a>来构成链接 <a href="http://www.jianshu.com" target="_blank" rel="external">http://www.jianshu.com</a></p>
+</li>
+</ul>
+<hr>
+<h2 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h2><ul>
+<li><p>像构造一个链接一样，只需要在前面加！</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">![<span class="string">图片名称</span>](<span class="link">图片地址</span>)</div></pre></td></tr></table></figure>
+</li>
+<li><p>也可以使用html方式来指定图片大小</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;img <span class="attribute">src</span>=<span class="string">"http://xx.png"</span> <span class="attribute">width</span>=<span class="string">"300px"</span> <span class="attribute">height</span>=<span class="string">"240px"</span> <span class="attribute">alt</span>=<span class="string">"xx"</span>&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<h2 id="代码段"><a href="#代码段" class="headerlink" title="代码段"></a>代码段</h2><figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="builtin-name">print</span>(<span class="string">"这是一个代码段"</span>);</div></pre></td></tr></table></figure>
+<hr>
+<h2 id="字体样式"><a href="#字体样式" class="headerlink" title="字体样式"></a>字体样式</h2><p>1、<em>倾斜</em><br>2、<strong>加粗</strong><br>3、<strong><em>倾斜加粗</em></strong><br><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="strong">*倾斜*</span></div><div class="line">*<span class="strong">*加粗*</span><span class="strong">*</span></div><div class="line"><span class="strong">*</span>*<span class="strong">*倾斜加粗*</span>*<span class="strong">*</span></div></pre></td></tr></table></figure></p>
+<hr>
+<h2 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h2><ul>
+<li>使用-|符号把内容分割为你认为合适的表格样式就好。</li>
+<li>使用:符号标识对齐。<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">表头<span class="number">1</span><span class="params">|表头2|</span>表头<span class="number">3</span></div><div class="line"><span class="symbol">:----|</span><span class="symbol">:-----</span><span class="symbol">:|-----</span><span class="symbol">:</span></div><div class="line">左对齐<span class="params">|居中对齐|</span>右对齐</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<h2 id="END-希望每一天都像今天这么充实而有意义！！"><a href="#END-希望每一天都像今天这么充实而有意义！！" class="headerlink" title="END 希望每一天都像今天这么充实而有意义！！"></a>END 希望每一天都像今天这么充实而有意义！！</h2>]]></content>
+      
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Hello World]]></title>
+      <url>/2017/10/05/hello-world/</url>
+      <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post.<br> <a id="more"></a><br>Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+]]></content>
+      
+        
+    </entry>
+    
+  
+  
+</search>
