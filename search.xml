@@ -3,6 +3,81 @@
   
     
     <entry>
+      <title><![CDATA[2017/10/18 知识补足]]></title>
+      <url>/2017/10/18/2017_10_18/</url>
+      <content type="html"><![CDATA[<p>最近，累，倒地不起。<br><a id="more"></a></p>
+<hr>
+<p>最近面试太多，没时间写博客，白天到处跑，晚上立刻倒。。。不过，充实！</p>
+<h2 id="近一个星期前端多次面试"><a href="#近一个星期前端多次面试" class="headerlink" title="近一个星期前端多次面试"></a>近一个星期前端多次面试</h2><p>一星期内大大小小的面试，有单面、群面、etc</p>
+<p>知识面不足和面试经验不足应该是主要pass原因</p>
+<p>不过回来补足知识点还算及时，多多面试习惯就好！</p>
+<hr>
+<h2 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h2><h3 id="前端性能优化：DOM操作性能优化建议"><a href="#前端性能优化：DOM操作性能优化建议" class="headerlink" title="前端性能优化：DOM操作性能优化建议"></a>前端性能优化：DOM操作性能优化建议</h3><p>1查找元素的优化<br>2改变DOM，包括添加，修改，删除DOM<br>3改变DOM的样式类等<br>4批量修改DOM<br>5减少iframe<br>6样式放在header中，脚本放在关闭标签之前</p>
+<h3 id="get-post-区别"><a href="#get-post-区别" class="headerlink" title="get post 区别"></a>get post 区别</h3><p>区别如下</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center">GET</th>
+<th style="text-align:center">POST</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">后退按钮/刷新</td>
+<td style="text-align:center">无害</td>
+<td style="text-align:center">数据会被重新提交（浏览器应该告知用户数据会被重新提交）。</td>
+</tr>
+<tr>
+<td style="text-align:center">书签</td>
+<td style="text-align:center">可收藏为书签</td>
+<td style="text-align:center">不可收藏为书签</td>
+</tr>
+<tr>
+<td style="text-align:center">缓存</td>
+<td style="text-align:center">能被缓存</td>
+<td style="text-align:center">不能缓存</td>
+</tr>
+<tr>
+<td style="text-align:center">编码类型</td>
+<td style="text-align:center">application/x-www-form-urlencoded</td>
+<td style="text-align:center">application/x-www-form-urlencoded 或 multipart/form-data。为二进制数据使用多重编码。</td>
+</tr>
+<tr>
+<td style="text-align:center">历史</td>
+<td style="text-align:center">参数保留在浏览器历史中。</td>
+<td style="text-align:center">参数不会保存在浏览器历史中。</td>
+</tr>
+<tr>
+<td style="text-align:center">对数据长度的限制</td>
+<td style="text-align:center">是的。当发送数据时，GET 方法向 URL 添加数据；URL 的长度是受限制的（URL 的最大长度是 2048 个字符）。</td>
+<td style="text-align:center">无限制。</td>
+</tr>
+<tr>
+<td style="text-align:center">对数据类型的限制</td>
+<td style="text-align:center">只允许 ASCII 字符。</td>
+<td style="text-align:center">没有限制。也允许二进制数据。</td>
+</tr>
+<tr>
+<td style="text-align:center">安全性</td>
+<td style="text-align:center">与 POST 相比，GET 的安全性较差，因为所发送的数据是 URL 的一部分。<br>在发送密码或其他敏感信息时绝不要使用 GET ！</td>
+<td style="text-align:center">POST 比 GET 更安全，因为参数不会被保存在浏览器历史或 web 服务器日志中。</td>
+</tr>
+<tr>
+<td style="text-align:center">可见性</td>
+<td style="text-align:center">数据在 URL 中对所有人都是可见的。</td>
+<td style="text-align:center">数据不会显示在 URL 中。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="ajax-options-参数"><a href="#ajax-options-参数" class="headerlink" title="$.ajax( options )参数"></a>$.ajax( options )参数</h3><p><a href="http://www.w3school.com.cn/jquery/ajax_ajax.asp" target="_blank" rel="external">$.ajax( options )参数</a></p>
+<h3 id="html以及css细节用法"><a href="#html以及css细节用法" class="headerlink" title="html以及css细节用法"></a>html以及css细节用法</h3><p>多看书多动手。</p>
+<h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2>]]></content>
+      
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[2017/10/10 面试小结]]></title>
       <url>/2017/10/10/2017_10_10/</url>
       <content type="html"><![CDATA[<p>人生第一次面试<br>感受颇多<br><a id="more"></a></p>
