@@ -3,6 +3,28 @@
   
     
     <entry>
+      <title><![CDATA[2017/11/19 第一个Vue应用——————音乐播放器]]></title>
+      <url>/2017/11/19/2017_11_19/</url>
+      <content type="html"><![CDATA[<p>深入学习Vue 。。。</p>
+<a id="more"></a>
+<hr>
+<h1 id="Vue-音乐播放器"><a href="#Vue-音乐播放器" class="headerlink" title="Vue 音乐播放器"></a>Vue 音乐播放器</h1><h2 id="运行项目"><a href="#运行项目" class="headerlink" title="运行项目"></a>运行项目</h2><h3 id="Git-、Node-、Npm安装（自行百度）"><a href="#Git-、Node-、Npm安装（自行百度）" class="headerlink" title="Git 、Node 、Npm安装（自行百度）"></a>Git 、Node 、Npm安装（自行百度）</h3><h3 id="Clone-it"><a href="#Clone-it" class="headerlink" title="Clone it"></a>Clone it</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ git <span class="built_in">clone</span> https://github.com/zce/music-player.git -b vue --depth 1</div><div class="line">$ <span class="built_in">cd</span> music-player</div></pre></td></tr></table></figure>
+<p>基本页面（切图）：<a href="https://github.com/zce/music-player-pages">https://github.com/zce/music-player-pages</a></p>
+<h3 id="Run-it"><a href="#Run-it" class="headerlink" title="Run it"></a>Run it</h3><h4 id="Install-Dependencies"><a href="#Install-Dependencies" class="headerlink" title="Install Dependencies"></a>Install Dependencies</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install</div></pre></td></tr></table></figure>
+<h4 id="Server-Side"><a href="#Server-Side" class="headerlink" title="Server Side"></a>Server Side</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm run serve</div></pre></td></tr></table></figure>
+<p>visit <a href="http://localhost:2080/music/list" target="_blank" rel="external">http://localhost:2080/music/list</a> in browser</p>
+<h4 id="Client-Side"><a href="#Client-Side" class="headerlink" title="Client Side"></a>Client Side</h4><p>Open another Terminal and run:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm run client</div></pre></td></tr></table></figure>
+<p>visit <a href="http://localhost:3000" target="_blank" rel="external">http://localhost:3000</a> in browser</p>
+<hr>
+<h2 id="代码编写"><a href="#代码编写" class="headerlink" title="代码编写"></a>代码编写</h2><p>app.js接口 、 index.html程序入口主页面<br>1、index.html  引入静态页面，引入vue.js、vue-router、vue-resource.js以及app.js<br>2、应用程序App分为三个页面：首页Home、歌曲详情页Songs、播放页Player<br>3、在app.js搭建基本路由框架（路由的重定向）<br>4、大型应用template：通过webpack的vue文件<br>    本项目定义模板<br>    <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;script id=<span class="string">""</span> type=<span class="string">"text/x-template"</span>&gt;<span class="xml"><span class="comment">&lt;!--这里内容不会显示到页面上--&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></div><div class="line"><span class="comment">//在组件内</span></div><div class="line">template：<span class="built_in">document</span>.getElementById(<span class="string">""</span>).innerHTML;</div></pre></td></tr></table></figure></p>
+<p>5、歌曲列表渲染，json假数据代替，data、methods数据转换<br>6、resource的ajax请求、jsonp跨域获取真实数据</p>
+<h1 id="END"><a href="#END" class="headerlink" title="END"></a>END</h1>]]></content>
+      
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[2017/11/18]]></title>
       <url>/2017/11/18/2017_11_18/</url>
       <content type="html"><![CDATA[<p>很长时间没写。。。<br><a id="more"></a></p>
