@@ -3,9 +3,33 @@
   
     
     <entry>
+      <title><![CDATA[2017/11/25 nodejs基础篇（二）]]></title>
+      <url>/2017/11/24/2017_11_25/</url>
+      <content type="html"><![CDATA[<p>基础篇（二）</p>
+<a id="more"></a>
+<p>学习nodejs（ZN社）  持续更新ing。。。</p>
+<hr>
+<h1 id="第五章-Express"><a href="#第五章-Express" class="headerlink" title="第五章 Express"></a>第五章 Express</h1><h2 id="数据：GET、POST"><a href="#数据：GET、POST" class="headerlink" title="数据：GET、POST"></a>数据：GET、POST</h2><p>GET-无需中间件<br>req.query</p>
+<p>POST-需要”body-parser”</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">server.<span class="keyword">use</span>(bodyParser.urlencoded(&#123;&#125;));</div><div class="line"></div><div class="line">server.<span class="keyword">use</span>(<span class="keyword">function</span> <span class="title"></span>()&#123;</div><div class="line">	req.body</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<hr>
+<h2 id="中间件：使用、写、链式操作"><a href="#中间件：使用、写、链式操作" class="headerlink" title="中间件：使用、写、链式操作"></a>中间件：使用、写、链式操作</h2><p>链式操作：</p>
+<h3 id="1-GET、POST"><a href="#1-GET、POST" class="headerlink" title="1)GET、POST"></a>1)GET、POST</h3><p>  GET：    req.query<br>  POST：<br>  <figure class="highlight ada"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">server.<span class="keyword">use</span>(bodyParser.urlencoded(&#123;limit: &#125;));</div><div class="line">server.<span class="keyword">use</span>(<span class="keyword">function</span> <span class="title"></span>(req, res, next)&#123;</div><div class="line">  req.body</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<h3 id="2-链式操作"><a href="#2-链式操作" class="headerlink" title="2)链式操作"></a>2)链式操作</h3>  <figure class="highlight ada"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">server.<span class="keyword">use</span>(<span class="keyword">function</span> <span class="title"></span>(req, res, next)&#123;&#125;);</div><div class="line">server.get(<span class="string">'/'</span>, <span class="keyword">function</span> <span class="title"></span>(req, res, next)&#123;&#125;);</div><div class="line">server.post(<span class="keyword">function</span> <span class="title"></span>(req, res, next)&#123;&#125;);</div></pre></td></tr></table></figure>
+<p>  next——下一个步骤<br>  next();</p>
+  <figure class="highlight lua"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">server.use(<span class="string">'/login'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span></span>&#123;</div><div class="line">  mysql.query(<span class="function"><span class="keyword">function</span> <span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(有错)</div><div class="line">      res.emit(<span class="string">'error'</span>);</div><div class="line">    <span class="keyword">else</span></div><div class="line">      <span class="built_in">next</span>();</div><div class="line">  &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h3 id="3-中间件-body-parser-、自己写中间件"><a href="#3-中间件-body-parser-、自己写中间件" class="headerlink" title="3)中间件(body-parser)、自己写中间件"></a>3)中间件(body-parser)、自己写中间件</h3><p>  next();</p>
+  <figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">server.<span class="keyword">use</span>(<span class="function"><span class="keyword">function</span> <span class="params">(req, res, next)</span></span>&#123;</div><div class="line">  <span class="keyword">var</span> str=<span class="string">''</span>;</div><div class="line">  req.on(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(data)</span></span>&#123;</div><div class="line">    str+=data;</div><div class="line">  &#125;);</div><div class="line">  req.on(<span class="string">'end'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span></span>&#123;</div><div class="line">    req.body=querystring.parse(str);</div><div class="line">    next();</div><div class="line">  &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h1 id="第六章"><a href="#第六章" class="headerlink" title="第六章"></a>第六章</h1><h1 id="END"><a href="#END" class="headerlink" title="END"></a>END</h1>]]></content>
+      
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[2017/11/24 nodejs基础篇（一）]]></title>
       <url>/2017/11/24/2017_11_24/</url>
-      <content type="html"><![CDATA[<a id="more"></a>
+      <content type="html"><![CDATA[<p>基础篇（一）</p>
+<a id="more"></a>
 <p>学习nodejs（ZN社）  持续更新ing。。。</p>
 <hr>
 <h1 id="第一章-nodejs简介"><a href="#第一章-nodejs简介" class="headerlink" title="第一章 nodejs简介"></a>第一章 nodejs简介</h1><h2 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h2><p>1、性能  相对于PHP</p>
