@@ -3,6 +3,51 @@
   
     
     <entry>
+      <title><![CDATA[2017/11/24 nodejs基础篇（一）]]></title>
+      <url>/2017/11/24/2017_11_24/</url>
+      <content type="html"><![CDATA[<a id="more"></a>
+<p>学习nodejs（ZN社）  持续更新ing。。。</p>
+<hr>
+<h1 id="第一章-nodejs简介"><a href="#第一章-nodejs简介" class="headerlink" title="第一章 nodejs简介"></a>第一章 nodejs简介</h1><h2 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h2><p>1、性能  相对于PHP</p>
+<pre><code>nodejs    php         86倍
+1s      1分半
+
+PHP        200台    400万
+NodeJS  3台       6万
+</code></pre><p>2.跟前台JS配合方便</p>
+<p>3.NodeJS便于前端学习</p>
+<p>官网 <a href="https://nodejs.org/" target="_blank" rel="external">https://nodejs.org/</a></p>
+<hr>
+<h2 id="NodeJS也是JS"><a href="#NodeJS也是JS" class="headerlink" title="NodeJS也是JS"></a>NodeJS也是JS</h2><p>1.切换盘符    e:<br>2.改变目录    cd 目录名<br>3.执行程序    node xxx.js</p>
+<p>JS能用的，NodeJS都能用</p>
+<hr>
+<h1 id="第二章-nodejs-实现简单的功能-用户注册、登录"><a href="#第二章-nodejs-实现简单的功能-用户注册、登录" class="headerlink" title="第二章 nodejs 实现简单的功能 用户注册、登录"></a>第二章 nodejs 实现简单的功能 用户注册、登录</h1><p>涉及到的系统模块 http/fs/get/post</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> http=<span class="built_in">require</span>(<span class="string">'http'</span>);</div><div class="line"><span class="keyword">const</span> fs=<span class="built_in">require</span>(<span class="string">'fs'</span>);</div><div class="line"><span class="keyword">const</span> querystring=<span class="built_in">require</span>(<span class="string">'querystring'</span>);</div><div class="line"><span class="keyword">const</span> urlLib=<span class="built_in">require</span>(<span class="string">'url'</span>);</div><div class="line"></div><div class="line"><span class="keyword">var</span> users=&#123;&#125;;   <span class="comment">//&#123;"blue": "123456", "zhangsan": "123456", "lisi": "321321"&#125;</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> server=http.createServer(<span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>)</span>&#123;</div><div class="line">  <span class="comment">//解析数据</span></div><div class="line">  <span class="keyword">var</span> str=<span class="string">''</span>;</div><div class="line">  req.on(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">data</span>)</span>&#123;</div><div class="line">    str+=data;</div><div class="line">  &#125;);</div><div class="line">  req.on(<span class="string">'end'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> obj=urlLib.parse(req.url, <span class="literal">true</span>);</div><div class="line"></div><div class="line">    <span class="keyword">const</span> url=obj.pathname;</div><div class="line">    <span class="keyword">const</span> GET=obj.query;</div><div class="line">    <span class="keyword">const</span> POST=querystring.parse(str);</div><div class="line"></div><div class="line">    <span class="comment">//区分——接口、文件</span></div><div class="line">    <span class="keyword">if</span>(url==<span class="string">'/user'</span>)&#123;   <span class="comment">//接口</span></div><div class="line">      <span class="keyword">switch</span>(GET.act)&#123;</div><div class="line">        <span class="keyword">case</span> <span class="string">'reg'</span>:</div><div class="line">          <span class="comment">//1.检查用户名是否已经有了</span></div><div class="line">          <span class="keyword">if</span>(users[GET.user])&#123;</div><div class="line">            res.write(<span class="string">'&#123;"ok": false, "msg": "此用户已存在"&#125;'</span>);</div><div class="line">          &#125;<span class="keyword">else</span>&#123;</div><div class="line">            <span class="comment">//2.插入users</span></div><div class="line">            users[GET.user]=GET.pass;</div><div class="line">            res.write(<span class="string">'&#123;"ok": true, "msg": "注册成功"&#125;'</span>);</div><div class="line">          &#125;</div><div class="line">          <span class="keyword">break</span>;</div><div class="line">        <span class="keyword">case</span> <span class="string">'login'</span>:</div><div class="line">          <span class="comment">//1.检查用户是否存在</span></div><div class="line">          <span class="keyword">if</span>(users[GET.user]==<span class="literal">null</span>)&#123;</div><div class="line">            res.write(<span class="string">'&#123;"ok": false, "msg": "此用户不存在"&#125;'</span>);</div><div class="line">          <span class="comment">//2.检查用户密码</span></div><div class="line">          &#125;<span class="keyword">else</span> <span class="keyword">if</span>(users[GET.user]!=GET.pass)&#123;</div><div class="line">            res.write(<span class="string">'&#123;"ok": false, "msg": "用户名或密码有误"&#125;'</span>);</div><div class="line">          &#125;<span class="keyword">else</span>&#123;</div><div class="line">            res.write(<span class="string">'&#123;"ok": true, "msg": "登录成功"&#125;'</span>);</div><div class="line">          &#125;</div><div class="line">          <span class="keyword">break</span>;</div><div class="line">        <span class="keyword">default</span>:</div><div class="line">          res.write(<span class="string">'&#123;"ok": false, "msg": "未知的act"&#125;'</span>);</div><div class="line">      &#125;</div><div class="line">      res.end();</div><div class="line">    &#125;<span class="keyword">else</span>&#123;              <span class="comment">//文件</span></div><div class="line">      <span class="comment">//读取文件</span></div><div class="line">      <span class="keyword">var</span> file_name=<span class="string">'./www'</span>+url;</div><div class="line">      fs.readFile(file_name, <span class="function"><span class="keyword">function</span> (<span class="params">err, data</span>)</span>&#123;</div><div class="line">        <span class="keyword">if</span>(err)&#123;</div><div class="line">          res.write(<span class="string">'404'</span>);</div><div class="line">        &#125;<span class="keyword">else</span>&#123;</div><div class="line">          res.write(data);</div><div class="line">        &#125;</div><div class="line">        res.end();</div><div class="line">      &#125;);</div><div class="line">    &#125;</div><div class="line">  &#125;);</div><div class="line">&#125;);</div><div class="line"></div><div class="line">server.listen(<span class="number">8080</span>);</div></pre></td></tr></table></figure>
+<hr>
+<h1 id="第三章-系统模块简介-具体官网"><a href="#第三章-系统模块简介-具体官网" class="headerlink" title="第三章 系统模块简介(具体官网)"></a>第三章 系统模块简介(具体官网)</h1><p>模块化<br>1.系统模块：（上章）http、querystring、url<br>2.自定义模块<br>3.包管理器</p>
+<p>系统模块：</p>
+<p>assert   断言<br>Crypto     加密<br>Events      事件<br>Net         网络操作<br>OS         操作系统信息<br>Path       处理文件路径<br>Stream     流操作<br>Timers     定时器<br>ZLIB        压缩</p>
+<p>require</p>
+<p>自定义模块</p>
+<hr>
+<h1 id="第四章-模块化"><a href="#第四章-模块化" class="headerlink" title="第四章 模块化"></a>第四章 模块化</h1><p>模块化：<br>系统模块<br>自定义模块</p>
+<h2 id="模块组成"><a href="#模块组成" class="headerlink" title="模块组成"></a>模块组成</h2><p>引入自己的模块——./        ?<br>对外输出东西——必须加给exports</p>
+<p>exports.xxx=??;</p>
+<p>module.exports={<br>    xxx:    ??<br>};</p>
+<p>require——引入其他模块<br>exports——输出<br>module——批量输出</p>
+<h2 id="npm"><a href="#npm" class="headerlink" title="npm"></a>npm</h2><p>npm：NodeJS Package Manager(NodeJS包管理器)<br>1.统一下载途径<br>2.自动下载依赖</p>
+<p>如何下载？<br>npm install xxx<br>npm uninstall xxx  //卸载</p>
+<p>require<br>1.如果有”./“<br>    从当前目录找<br>2.如果没有”./“<br>    先从系统模块<br>    再从node_modules找<br>自定义模块统一，都放到node_modules里面</p>
+<p>1.模块里面<br>    require——引入<br>    exports——输出<br>    module.exports——批量输出</p>
+<p>2.npm<br>    帮咱们下载模块<br>    自动解决依赖</p>
+<p>3.node_modules<br>    模块放这里</p>
+<h2 id="发布自己的模块"><a href="#发布自己的模块" class="headerlink" title="发布自己的模块"></a>发布自己的模块</h2><p>npm init<br>npm publish<br>npm –force unpublish</p>
+<h1 id="END"><a href="#END" class="headerlink" title="END"></a>END</h1>]]></content>
+      
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[2017/11/19 第一个Vue应用——————音乐播放器]]></title>
       <url>/2017/11/19/2017_11_19/</url>
       <content type="html"><![CDATA[<p>深入学习Vue 。。。</p>
