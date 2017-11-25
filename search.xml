@@ -20,7 +20,90 @@
   <figure class="highlight lua"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">server.use(<span class="string">'/login'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span></span>&#123;</div><div class="line">  mysql.query(<span class="function"><span class="keyword">function</span> <span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(有错)</div><div class="line">      res.emit(<span class="string">'error'</span>);</div><div class="line">    <span class="keyword">else</span></div><div class="line">      <span class="built_in">next</span>();</div><div class="line">  &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
 <h3 id="3-中间件-body-parser-、自己写中间件"><a href="#3-中间件-body-parser-、自己写中间件" class="headerlink" title="3)中间件(body-parser)、自己写中间件"></a>3)中间件(body-parser)、自己写中间件</h3><p>  next();</p>
   <figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">server.<span class="keyword">use</span>(<span class="function"><span class="keyword">function</span> <span class="params">(req, res, next)</span></span>&#123;</div><div class="line">  <span class="keyword">var</span> str=<span class="string">''</span>;</div><div class="line">  req.on(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(data)</span></span>&#123;</div><div class="line">    str+=data;</div><div class="line">  &#125;);</div><div class="line">  req.on(<span class="string">'end'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span></span>&#123;</div><div class="line">    req.body=querystring.parse(str);</div><div class="line">    next();</div><div class="line">  &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-<h1 id="第六章"><a href="#第六章" class="headerlink" title="第六章"></a>第六章</h1><h1 id="END"><a href="#END" class="headerlink" title="END"></a>END</h1>]]></content>
+<h1 id="第六章-cookies和session"><a href="#第六章-cookies和session" class="headerlink" title="第六章 cookies和session"></a>第六章 cookies和session</h1><p>http-无状态的</p>
+<p>cookie：在浏览器保存一些数据，每次请求都会带过来<br>  *不安全、有限(4K)</p>
+<p>session：保存数据，保存在服务端<br>  *安全、无限</p>
+<hr>
+<p>session：基于cookie实现的<br>  *cookie中会有一个session的ID，服务器利用sessionid找到session文件、读取、写入</p>
+<p>  隐患：session劫持</p>
+<hr>
+<p>cookie<br>1.读取——cookie-parser<br>2.发送——</p>
+<p>session<br>cookie-session</p>
+<hr>
+<p>cookie：<br>1.cookie空间非常小——省着用<br>2.安全性非常差</p>
+<p>1.精打细算<br>2.校验cookie是否被篡改过</p>
+<p>a.发送cookie<br>res.secret=’字符串’;<br>res.cookie(名字, 值, {path: ‘/‘, maxAge: 毫秒, signed: true});</p>
+<p>b.读取cookie<br>cookie-parser</p>
+<p>server.use(cookieParser(‘秘钥’));</p>
+<p>server.use(function (){<br>    req.cookies        未签名版<br>    req.signedCookies    签名版<br>});</p>
+<p>c.删除cookie<br>res.clearCookie(名字);</p>
+<hr>
+<p>cookie-parser        //签名<br>cookie-encrypter     //加密</p>
+<hr>
+<p>session：<br>  cookie-session</p>
+<p>1.写入<br>2.读取</p>
+<p>session劫持</p>
+<hr>
+<p>cookie-session</p>
+<p>server.use(cookieParser());<br>server.use(cookieSession({<br>  name:”sess”,<br>    keys: [.., .., .., ..],<br>  maxAge:             //时间越长越利于用户使用（例如登录过期），越短越相对安全<br>}));</p>
+<p>server.use(‘/‘, function (){<br>    req.session<br>});</p>
+<p>delete req.session</p>
+<hr>
+<p>1.cookie-存在浏览器，4K，不安全<br>  签名、加密</p>
+<p>2.session-存在服务器<br>  不能独立存在，基于cookie</p>
+<hr>
+<p>server.use(cookieParser(‘签名字符串’));<br>server.use(cookieSession({</p>
+<p>}));</p>
+<p>server.use(function (req, res){<br>    res.cookie(名字, 值, {signed: true});</p>
+<pre><code>res.cookies[&apos;user&apos;]
+res.clearCookie(&apos;名字&apos;);
+
+res.session[&apos;xxx&apos;]
+delete res.session[&apos;xxx&apos;];
+</code></pre><p>});</p>
+<hr>
+<h1 id="第七章-模板引擎-初识"><a href="#第七章-模板引擎-初识" class="headerlink" title="第七章 模板引擎 初识"></a>第七章 模板引擎 初识</h1><p>模板引擎：<br>jade-破坏式、侵入式、强依赖<br>ejs-温和、非侵入式、弱依赖</p>
+<hr>
+<p>html                <html></html></p>
+<p>html                <html><br>    head                <head><br>        style                <style></style><br>                    </head><br>    body                <body><br>        div                <div></div><br>        div                <div></div><br>                    </body><br>                </html></p>
+<hr>
+<p>1.根据缩进，规定层级<br>2.属性放在()里面，逗号分隔<br>3.内容空个格，直接往后堆</p>
+<hr>
+<p>属性</p>
+<p><script src="a.js"></script><br>script(src=”a.js”)</p>
+<hr>
+<p>内容<br><a href="http://www.zhinengshe.com/" target="_blank" rel="external">官网</a><br>a(href=”<a href="http://www.zhinengshe.com/" target="_blank" rel="external">http://www.zhinengshe.com/</a>“) 官网</p>
+<hr>
+<div><br>    xxxxx<br>    <div><br>        aaaaa<br>        …<br>    </div><br></div>
+
+<hr>
+<p>style=”width:200px;height:200px;background:red;”<br>1.普通属性写法<br>2.用json</p>
+<p>class=”aaa left-swrap active”<br>1.普通属性写法<br>2.用arr</p>
+<hr>
+<p>简写</p>
+<hr>
+<p>模板引擎：生成页面<br>1.jade：破坏式<br>2.ejs：保留式</p>
+<hr>
+<p>jade<br>1.根据缩进划分层级<br>2.属性用()表示，用逗号分隔<br>  <em>style={}
+  </em>class=[]<br>3.内容<br>  div xxx<br>    span xxx<br>      a(href=”xxx”) 链接</p>
+<hr>
+<p>jade.render(‘字符串’);<br>jade.renderFile(‘模板文件名’, 参数)</p>
+<p>。。。。。。。。。。</p>
+<hr>
+<h1 id="第八章-body-parser-改进"><a href="#第八章-body-parser-改进" class="headerlink" title="第八章 body-parser 改进"></a>第八章 body-parser 改进</h1><p>express：<br>1.主体<br>2.cookie、session<br>3.数据<br>4.模板引擎</p>
+<p>body-parser    解析post数据</p>
+<ul>
+<li>multer    解析post文件</li>
+</ul>
+<hr>
+<p>body-parser    解析post数据    application/x-www-form-urlencoded<br>server.use(bodyParse.urlencode());<br>    req.body</p>
+<p>multer        解析post文件    multipart/form-data</p>
+<p>var obj=multer({dest: ‘upload/‘});</p>
+<p>server.use(obj.any());</p>
+<p>server.use(function (req, res){<br>    req.files[0].originalname<br>    req.files[0].path<br>});</p>
+<p>把扩展名加上<br>        //‘upload/aadfaew324we34’ + ‘.txt’<br>        //‘upload/aadfaew324we34.txt’<br>var newName=file.path+pathLib.parse(file.originalname).ext;</p>
+<p>fs.rename(老名, 新名, function (err){});</p>
+<h1 id="END"><a href="#END" class="headerlink" title="END"></a>END</h1>]]></content>
       
         
     </entry>
