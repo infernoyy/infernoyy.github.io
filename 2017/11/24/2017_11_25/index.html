@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="infernoyy的个人博客">
 <meta property="og:description" content="基础篇（二）">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-25T15:58:51.404Z">
+<meta property="og:updated_time" content="2017-11-26T07:29:42.053Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="2017&#x2F;11&#x2F;25 nodejs基础篇（二）">
 <meta name="twitter:description" content="基础篇（二）">
@@ -463,6 +463,74 @@ delete res.session[&apos;xxx&apos;];
 <p>server.use(function (req, res){<br>    req.files[0].originalname<br>    req.files[0].path<br>});</p>
 <p>把扩展名加上<br>        //‘upload/aadfaew324we34’ + ‘.txt’<br>        //‘upload/aadfaew324we34.txt’<br>var newName=file.path+pathLib.parse(file.originalname).ext;</p>
 <p>fs.rename(老名, 新名, function (err){});</p>
+<h1 id="第九章-consolidate适配-和-router路由"><a href="#第九章-consolidate适配-和-router路由" class="headerlink" title="第九章 consolidate适配  和  router路由"></a>第九章 consolidate适配  和  router路由</h1><p>express整合</p>
+<p>body-parser<br>multer</p>
+<p>模板引擎</p>
+<p>express  模板引擎</p>
+<p>consolidate-适配</p>
+<hr>
+<p>模板引擎：适配<br>1.consolidate</p>
+<p>consolidate=require</p>
+<p>server.set(‘view engine’, ‘html’);<br>server.set(‘views’, ‘模板文件目录’);<br>server.engine(‘html’, consolidate.ejs);</p>
+<p>server.get(‘/‘, function (req, res){<br>    res.render(‘模板文件’, 数据);<br>});</p>
+<hr>
+<p>route-路由：<br>把不同的目录，对应到不同的模块</p>
+<p>xxxx.com/aaa/        mod1<br>xxxx.com/news/    mod_news<br>    post            news_post<br>    list            news_list<br>    content        news_content<br>xxxx.com/user/        mod_users</p>
+<hr>
+<p>server.get();<br>server.use()<br>server.post()</p>
+<p>Router——迷你server<br>router.get();<br>router.post();<br>router.use();</p>
+<hr>
+<p>Router——拆<br>/user/….        mod_user<br>/item/….        mod_item</p>
+<p>//1.创建router<br>var router=express.Router();</p>
+<p>//2.把router添加到server<br>server.use(‘/user’, router);</p>
+<p>//3.router内部<br>router.get(‘/1.html’)<br>router.post(‘/2.html’)</p>
+<hr>
+<p>consolidate</p>
+<p>server.set(‘view engine’, ‘html’);<br>server.set(‘views’, ‘模板目录’);<br>server.engine(‘html’, consolidate.ejs);</p>
+<p>server.use(function (req, res){<br>    res.render(‘模板文件’, 数据);<br>});</p>
+<hr>
+<p>Router——子服务</p>
+<p>var router1=express.Router();<br>server.use(‘/user’, router1);</p>
+<p>var r=express.Router();<br>router1.use(‘/user_mod’, r);<br>router1.use(‘/user_reg’, function (){});<br><a href="http://www.xxxx.com/user/user_mod" target="_blank" rel="external">http://www.xxxx.com/user/user_mod</a><br><a href="http://www.xxxx.com/user/user_reg" target="_blank" rel="external">http://www.xxxx.com/user/user_reg</a><br><a href="http://www.xxxx.com/user/user_login" target="_blank" rel="external">http://www.xxxx.com/user/user_login</a></p>
+<p>var router2=express.Router();<br>server.use(‘/news’, router2);<br><a href="http://www.xxxx.com/news/list" target="_blank" rel="external">http://www.xxxx.com/news/list</a><br><a href="http://www.xxxx.com/news/post" target="_blank" rel="external">http://www.xxxx.com/news/post</a><br><a href="http://www.xxxx.com/news/content" target="_blank" rel="external">http://www.xxxx.com/news/content</a></p>
+<p>var router3=express.Router();<br>server.use(‘/item’, router3);<br><a href="http://www.xxxx.com/item/buy" target="_blank" rel="external">http://www.xxxx.com/item/buy</a><br><a href="http://www.xxxx.com/item/mod" target="_blank" rel="external">http://www.xxxx.com/item/mod</a><br><a href="http://www.xxxx.com/item/del" target="_blank" rel="external">http://www.xxxx.com/item/del</a></p>
+<hr>
+<h1 id="第十章-数据库"><a href="#第十章-数据库" class="headerlink" title="第十章 数据库"></a>第十章 数据库</h1><p>数据 - 数据库</p>
+<p>关系型数据库：<br>MySQL、Oracle、SQLServer、Access、db2、fox pro</p>
+<p>MySQL：<br>免费、中小网站<br>优点：性能非常不错<br>缺点：集群、容灾稍微弱一些</p>
+<p>Oracle：<br>挺贵、大型应用、金融级<br>优点：性能非常不错、集群、容灾非常强<br>缺点：挺贵</p>
+<p>文件型：<br>sqlite、mongodb</p>
+<p>空间型：</p>
+<hr>
+<p>Server端：<br>数据存在</p>
+<p>Client端：<br>管理工具、Node</p>
+<hr>
+<p>Server安装</p>
+<hr>
+<p>数据基本概念：<br>两种单位：<br>1.库：文件夹-用来管理，本身没法存数据<br>2.表：文件-存数据的</p>
+<p>表-Excel：<br>行-一条数据<br>列(字段、域)-一个数据项</p>
+<hr>
+<p>用户名<br>密码</p>
+<p>主键：唯一、性能高<br>    唯一标识符</p>
+<hr>
+<p>server：<br>client：<br>    Navicat-管理工具<br>    NodeJS-程序</p>
+<hr>
+<p>库-管理，存不了数据<br>表-存数据<br>字段-列<br>行-一条数据</p>
+<hr>
+<p>NodeJS本身默认不支持MySQL，而靠第三方模块</p>
+<p>npm</p>
+<p>服务端：<br>客户端：<br>    node的mysql模块</p>
+<p>1.连接<br>2.查询</p>
+<p>SQL=&gt;Structured Query Language(结构化查询语句)</p>
+<p>SQL：<br>4大查询语句——增删改查</p>
+<p>增-INSERT<br>INSERT INTO 表 (字段列表) VALUES(值列表)<br>INSERT INTO <code>user_table</code> (<code>ID</code>, <code>username</code>, <code>password</code>) VALUES(0, ‘blue2’, ‘987654’);</p>
+<p>删-DELETE</p>
+<p>改-UPDATE</p>
+<p>查-SELECT<br>SELECT 什么 FROM 表<br>SELECT * FROM <code>user_table</code>;</p>
+<p>SQL标准写法：<br>1.关键字大写<br>2.库、表、字段需要加上``</p>
+<hr>
+<p>1.下载mysql模块(client)<br>2.连接<br>    var db=mysql.createConnection(host, port, user, password, database)    //?<br>3.查询<br>    db.query(SQL, (err, data)=&gt;{})<br>4.SQL语句<br>    增删改查</p>
+<hr>
 <h1 id="END"><a href="#END" class="headerlink" title="END"></a>END</h1>
       
     </div>
@@ -640,7 +708,7 @@ delete res.session[&apos;xxx&apos;];
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第五章-Express"><span class="nav-number">1.</span> <span class="nav-text">第五章 Express</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据：GET、POST"><span class="nav-number">1.1.</span> <span class="nav-text">数据：GET、POST</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中间件：使用、写、链式操作"><span class="nav-number">1.2.</span> <span class="nav-text">中间件：使用、写、链式操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-GET、POST"><span class="nav-number">1.2.1.</span> <span class="nav-text">1)GET、POST</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-链式操作"><span class="nav-number">1.2.2.</span> <span class="nav-text">2)链式操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-中间件-body-parser-、自己写中间件"><span class="nav-number">1.2.3.</span> <span class="nav-text">3)中间件(body-parser)、自己写中间件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第六章-cookies和session"><span class="nav-number">2.</span> <span class="nav-text">第六章 cookies和session</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第七章-模板引擎-初识"><span class="nav-number">3.</span> <span class="nav-text">第七章 模板引擎 初识</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第八章-body-parser-改进"><span class="nav-number">4.</span> <span class="nav-text">第八章 body-parser 改进</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#END"><span class="nav-number">5.</span> <span class="nav-text">END</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第五章-Express"><span class="nav-number">1.</span> <span class="nav-text">第五章 Express</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据：GET、POST"><span class="nav-number">1.1.</span> <span class="nav-text">数据：GET、POST</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中间件：使用、写、链式操作"><span class="nav-number">1.2.</span> <span class="nav-text">中间件：使用、写、链式操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-GET、POST"><span class="nav-number">1.2.1.</span> <span class="nav-text">1)GET、POST</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-链式操作"><span class="nav-number">1.2.2.</span> <span class="nav-text">2)链式操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-中间件-body-parser-、自己写中间件"><span class="nav-number">1.2.3.</span> <span class="nav-text">3)中间件(body-parser)、自己写中间件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第六章-cookies和session"><span class="nav-number">2.</span> <span class="nav-text">第六章 cookies和session</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第七章-模板引擎-初识"><span class="nav-number">3.</span> <span class="nav-text">第七章 模板引擎 初识</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第八章-body-parser-改进"><span class="nav-number">4.</span> <span class="nav-text">第八章 body-parser 改进</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第九章-consolidate适配-和-router路由"><span class="nav-number">5.</span> <span class="nav-text">第九章 consolidate适配  和  router路由</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第十章-数据库"><span class="nav-number">6.</span> <span class="nav-text">第十章 数据库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#END"><span class="nav-number">7.</span> <span class="nav-text">END</span></a></li></ol></div>
             
 
           </div>
