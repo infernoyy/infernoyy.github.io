@@ -79,19 +79,19 @@
 
 
 
-<meta name="description" content="第一章设计模式概述设计模式的诞生和发展在特定环境下遇到特定问题采取他人使用过的一些成功的方案  降低了分析、设计实现的难度。 使系统具有跟好的可维护性和可复用性。  模式定义：    模式是在特定环境下人们解决某类重复出现问题的一套或有效的解决方案。 软件模式（1994年Gang of four四人组简称GOF发表）旨在用模式来统一沟通面向对象方法在分析、设计和实现之间的鸿沟。 软件模式的基本结构">
+<meta name="description" content="简单工厂模式创建型模式 创建型模式(Creational Pattern)关注对象的创建过程 创建型模式对类的实例化过程进行了抽象，能够将软件模块中对象的创建和对象的使用分离，对用户隐藏了类的实例的创建细节 创建型模式关注对象的创建过程，描述如何将对象的创建和使用分离，让用户在使用对象时无需关心对象的创建细节，从而降低系统耦合度，更易于修改和扩展。  创建型模式关注点  创建什么(What) 由谁">
 <meta property="og:type" content="article">
-<meta property="og:title" content="设计模式概述">
-<meta property="og:url" content="/2019/08/11/设计模式概述/index.html">
+<meta property="og:title" content="简单工厂模式">
+<meta property="og:url" content="/2019/08/11/简单工厂模式/index.html">
 <meta property="og:site_name" content="Mr.YY的博客">
-<meta property="og:description" content="第一章设计模式概述设计模式的诞生和发展在特定环境下遇到特定问题采取他人使用过的一些成功的方案  降低了分析、设计实现的难度。 使系统具有跟好的可维护性和可复用性。  模式定义：    模式是在特定环境下人们解决某类重复出现问题的一套或有效的解决方案。 软件模式（1994年Gang of four四人组简称GOF发表）旨在用模式来统一沟通面向对象方法在分析、设计和实现之间的鸿沟。 软件模式的基本结构">
+<meta property="og:description" content="简单工厂模式创建型模式 创建型模式(Creational Pattern)关注对象的创建过程 创建型模式对类的实例化过程进行了抽象，能够将软件模块中对象的创建和对象的使用分离，对用户隐藏了类的实例的创建细节 创建型模式关注对象的创建过程，描述如何将对象的创建和使用分离，让用户在使用对象时无需关心对象的创建细节，从而降低系统耦合度，更易于修改和扩展。  创建型模式关注点  创建什么(What) 由谁">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%A6%82%E8%BF%B0.png">
-<meta property="og:updated_time" content="2019-08-11T03:33:37.674Z">
+<meta property="og:image" content="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%AE%80%E5%8D%95%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F.png">
+<meta property="og:updated_time" content="2019-08-11T06:47:20.388Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="设计模式概述">
-<meta name="twitter:description" content="第一章设计模式概述设计模式的诞生和发展在特定环境下遇到特定问题采取他人使用过的一些成功的方案  降低了分析、设计实现的难度。 使系统具有跟好的可维护性和可复用性。  模式定义：    模式是在特定环境下人们解决某类重复出现问题的一套或有效的解决方案。 软件模式（1994年Gang of four四人组简称GOF发表）旨在用模式来统一沟通面向对象方法在分析、设计和实现之间的鸿沟。 软件模式的基本结构">
-<meta name="twitter:image" content="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%A6%82%E8%BF%B0.png">
+<meta name="twitter:title" content="简单工厂模式">
+<meta name="twitter:description" content="简单工厂模式创建型模式 创建型模式(Creational Pattern)关注对象的创建过程 创建型模式对类的实例化过程进行了抽象，能够将软件模块中对象的创建和对象的使用分离，对用户隐藏了类的实例的创建细节 创建型模式关注对象的创建过程，描述如何将对象的创建和使用分离，让用户在使用对象时无需关心对象的创建细节，从而降低系统耦合度，更易于修改和扩展。  创建型模式关注点  创建什么(What) 由谁">
+<meta name="twitter:image" content="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%AE%80%E5%8D%95%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F.png">
 
 
 
@@ -121,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="/2019/08/11/设计模式概述/">
+  <link rel="canonical" href="/2019/08/11/简单工厂模式/">
 
 
 
 
 
-  <title>设计模式概述 | Mr.YY的博客</title>
+  <title>简单工厂模式 | Mr.YY的博客</title>
   
 
 
@@ -254,7 +254,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="/2019/08/11/设计模式概述/">
+    <link itemprop="mainEntityOfPage" href="/2019/08/11/简单工厂模式/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Troy yuan">
@@ -271,7 +271,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">设计模式概述</h1>
+          <h1 class="post-title" itemprop="name headline">简单工厂模式</h1>
         
 
         <div class="post-meta">
@@ -283,7 +283,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-11T10:59:11+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-11T14:37:12+08:00">
                 2019-08-11
               </time>
             
@@ -317,8 +317,8 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/设计模式/第一章-设计模式简述/" itemprop="url" rel="index">
-                    <span itemprop="name">第一章 设计模式简述</span>
+                  <a href="/categories/设计模式/第三章-简单工厂模式/" itemprop="url" rel="index">
+                    <span itemprop="name">第三章 简单工厂模式</span>
                   </a>
                 </span>
 
@@ -354,65 +354,78 @@
       
 
       
-        <h1 id="第一章设计模式概述"><a href="#第一章设计模式概述" class="headerlink" title="第一章设计模式概述"></a>第一章设计模式概述</h1><h2 id="设计模式的诞生和发展"><a href="#设计模式的诞生和发展" class="headerlink" title="设计模式的诞生和发展"></a>设计模式的诞生和发展</h2><p>在特定环境下遇到特定问题采取他人使用过的一些成功的方案</p>
-<ol>
-<li>降低了分析、设计实现的难度。</li>
-<li>使系统具有跟好的可维护性和可复用性。</li>
-</ol>
-<p><strong>模式定义</strong>：<br>    模式是在特定环境下人们解决某类重复出现问题的一套或有效的解决方案。</p>
-<p>软件模式（1994年Gang of four四人组简称GOF发表）旨在用模式来统一沟通面向对象方法在分析、设计和实现之间的鸿沟。</p>
-<p>软件模式的基本结构由4个部分构成，即<strong>问题描述</strong>、<strong>前提条件</strong>（环境或约束条件）、<strong>解法</strong>和<strong>效果</strong>。</p>
-<p><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%A6%82%E8%BF%B0.png" alt="基本结构"></p>
-<p>软件模式与具体的应用邻域无关，在模式发现过程中需要遵循大三律：只有经过3个以上不同类型（或不同领域）的系统的校验，一个解决方案才能从候选模式升格为模式</p>
-<h2 id="设计模式的定义与分类"><a href="#设计模式的定义与分类" class="headerlink" title="设计模式的定义与分类"></a>设计模式的定义与分类</h2><h3 id="设计模式的定义"><a href="#设计模式的定义" class="headerlink" title="设计模式的定义"></a>设计模式的定义</h3><p>设计模式(Design Pattern)是一套被反复使用的、多数人知晓的、经过分类编目的、代码设计经验的总结，是一种用于对软件系统中不断重现的设计问题的解决方案进行文档化的技术，是一种共享专家设计经验的技术，目的：为了可重用代码、让代码更容易被他人理解、提高代码可靠性。<br>设计模式是在特定环境下为解决某一通用软件设计问题提供的一套定制的解决方案，该方案描述了对象和类之间的相互作用。</p>
-<h3 id="设计模式的基本要素"><a href="#设计模式的基本要素" class="headerlink" title="设计模式的基本要素"></a>设计模式的基本要素</h3><p>设计模式一般包含模式名称、问题、目的、解决方案、效果、实例代码和相关设计模式等基本要素，4个关键要素如下：</p>
-<ul>
-<li>模式名称 (Pattern Name) 根据功能或者模式结构来命名，一两个词描述模式的问题、解决方案和效果，以便于用户更好的理解模式并方便开发人员之间的交流。</li>
-<li>问题 (Problem) 何时使用模式，存在的问题和原因。</li>
-<li>解决方案 (Solution) 设计模式的组成成分，以及这些组成成分之间的相互关系，各自的职责和协作方式。</li>
-<li>效果 (Consequences)模式的应用情况以及在使用模式时应权衡的问题。模式的优缺点分析。</li>
+        <h1 id="简单工厂模式"><a href="#简单工厂模式" class="headerlink" title="简单工厂模式"></a>简单工厂模式</h1><h2 id="创建型模式"><a href="#创建型模式" class="headerlink" title="创建型模式"></a>创建型模式</h2><ul>
+<li>创建型模式(Creational Pattern)关注对象的创建过程</li>
+<li>创建型模式对类的实例化过程进行了抽象，能够将软件模块中对象的创建和对象的使用分离，对用户隐藏了类的实例的创建细节</li>
+<li>创建型模式关注对象的创建过程，描述如何将对象的创建和使用分离，让用户在使用对象时无需关心对象的创建细节，从而降低系统耦合度，更易于修改和扩展。</li>
 </ul>
-<h3 id="设计模式的分类"><a href="#设计模式的分类" class="headerlink" title="设计模式的分类"></a>设计模式的分类</h3><p>根据目的（模式是用来做什么的）可分为创建型(Creational)，结构型(Structural)和行为型(Behavioral)三类：</p>
-<ol>
-<li>创建型模式主要用于创建对象</li>
-<li>结构型模式主要用于处理类或对象的组合</li>
-<li>行为型模式主要用于描述类或对象如何交互和怎样分配职责</li>
-</ol>
-<p>根据范围，即模式主要是处理类之间的关系还是处理对象之间的关系，可分为类模式和对象模式两种：</p>
-<ol>
-<li>类模式处理类和子类之间的关系，这些关系通过继承建立，在编译时刻就被确定下来，是一种静态关系</li>
-<li>对象模式处理对象间的关系，这些关系在运行时变化，更具动态性</li>
-</ol>
-<table>
-<thead>
-<tr>
-<th>范围\目的</th>
-<th align="right">创建型模式</th>
-<th align="center">结构型模式</th>
-<th align="center">行为型模式</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>类模式</td>
-<td align="right">工厂方法模式(Factory Method) ★★★★★</td>
-<td align="center">（类）适配器模式(Adapter) ★★★★☆</td>
-<td align="center">解释器模式(Interpreter) ★☆☆☆☆ <br>模板方法模式(Template Method) ★★★☆☆</td>
-</tr>
-<tr>
-<td>对象模式</td>
-<td align="right">抽象工厂模式(Abstract Factory) ★★★★★ <br> 建造者模式(Builder) ★★☆☆☆ <br> 原型模式(Prototype) ★★★☆☆ <br> 单例模式(Singleton) ★★★★☆</td>
-<td align="center">（对象）适配器模式 (Adapter) ★★★★☆ <br> 桥接模式(Bridge) ★★★☆☆ <br> 组合模式(Composite) ★★★★☆ <br> 装饰模式(Decorator) ★★★☆☆ <br> 外观模式(Facade) ★★★★★ <br> 享元模式(Flyweight) ★☆☆☆☆ <br> 代理模式(Proxy) ★★★★☆</td>
-<td align="center">职责链模式(Chain of Responsibility) ★★☆☆☆ <br> 命令模式(Command) ★★★★☆ <br> 迭代器模式(Iterator) ★★★★★ <br> 中介者模式(Mediator) ★★☆☆☆ <br> 备忘录模式(Memento) ★★☆☆☆ <br> 观察者模式(Observer) ★★★★★ <br> 状态模式(State) ★★★☆☆ <br> 策略模式(Strategy) ★★★★☆ <br> 访问者模式(Visitor) ★☆☆☆☆</td>
-</tr>
-</tbody></table>
-<p> 23种设计模式不单独存在，存在联系。通过两个或多个模式设计一个系统，在充分发挥每个模式的优势的同时使他们协作工作，完成复杂的设计。</p>
-<h2 id="设计模式的优点"><a href="#设计模式的优点" class="headerlink" title="设计模式的优点"></a>设计模式的优点</h2><ul>
-<li>融合了众多专家的经验，并以一种标准的形式供广大开发人员所用</li>
-<li>提供了一套通用的设计词汇和一种通用的语言，以方便开发人员之间进行沟通和交流，使得设计方案更加通俗易懂</li>
-<li>让人们可以更加简单方便地复用成功的设计和体系结构</li>
-<li>使得设计方案更加灵活，且易于修改</li>
-<li>将提高软件系统的开发效率和软件质量，且在一定程度上节约设计成本</li>
-<li>有助于初学者更深入地理解面向对象思想，方便阅读和学习现有类库与其他系统中的源代码，还可以提高软件的设计水平和代码质量</li>
+<p>创建型模式关注点</p>
+<ul>
+<li>创建什么(What)</li>
+<li>由谁创建(Who)</li>
+<li>何时创建(When)</li>
+</ul>
+<h2 id="简单工厂模式概述"><a href="#简单工厂模式概述" class="headerlink" title="简单工厂模式概述"></a>简单工厂模式概述</h2><p>例子：<br><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%AE%80%E5%8D%95%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F.png" alt="简单工厂模式"><br>简单工厂模式基本实现流程</p>
+<ul>
+<li>具体产品类：将需要创建的各种不同产品对象的相关代码封装到具体产品类中</li>
+<li>抽象产品类：将具体产品类公共的代码进行抽象和提取后封装在一个抽象产品类中</li>
+<li>工厂类：提供一个工厂类用于创建各种产品，在工厂类中提供一个创建产品的工厂方法，该方法可以根据所传入参数的不同创建不同的具体产品对象</li>
+<li>客户端：只需调用工厂类的工厂方法并传入相应的参数即可得到一个产品对象</li>
+</ul>
+<blockquote>
+<p>简单工厂模式 (Simple Factory Pattern)：定义一个工厂类，它可以根据参数的不同返回不同类的实例，被创建的实例通常都具有共同的父类。</p>
+</blockquote>
+<p>简单工厂模式的定义:</p>
+<ul>
+<li>在简单工厂模式中用于创建实例的方法通常是静态(static)方法，因此又被称为静态工厂方法(Static Factory Method)模式</li>
+<li>要点：如果需要什么，只需要传入一个正确的参数，就可以获取所需要的对象，而无须知道其创建细节</li>
+</ul>
+<h2 id="创建对象和使用对象"><a href="#创建对象和使用对象" class="headerlink" title="创建对象和使用对象"></a>创建对象和使用对象</h2><ul>
+<li><p>C#语言创建对象的几种方式</p>
+<ul>
+<li>使用new关键字直接创建对象</li>
+<li>通过反射机制创建对象</li>
+<li>通过克隆方法创建对象</li>
+<li>通过工厂类创建对象</li>
+</ul>
+</li>
+<li><p>两个类A和B之间的关系应该仅仅是A创建B或者是A使用B，而不能两种关系都有。将对象的创建和使用分离，使得系统更加符合单一职责原则，有利于对功能的复用和系统的维护。</p>
+</li>
+<li><p>将对象的创建与使用分离的其他好处</p>
+<ul>
+<li>防止用来实例化一个类的数据和代码在多个类中到处都是，可以将有关创建的知识搬移到一个工厂类中，解决代码重复、创建蔓延的问题</li>
+<li>构造函数的名字都与类名相同，从构造函数和参数列表中大家很难了解不同构造函数所构造的产品的差异  将对象的创建过程封装在工厂类中，可以提供一系列名字完全不同的工厂方法，每一个工厂方法对应一个构造函数，客户端可以以一种更加可读、易懂的方式来创建对象</li>
+</ul>
+</li>
+<li><p>何时不需要工厂？</p>
+<ul>
+<li>无须为系统中的每一个类都配备一个工厂类</li>
+<li>如果一个类很简单，而且不存在太多变化，其构造过程也很简单，此时就无须为其提供工厂类，直接在使用之前实例化即可</li>
+<li>否则会导致工厂泛滥，增加系统的复杂度</li>
+<li>例如：string类</li>
+</ul>
+</li>
+<li><p>模式优点</p>
+<ul>
+<li>实现了对象创建和使用的分离</li>
+<li>客户端无须知道所创建的具体产品类的类名，只需要知道具体产品类所对应的参数即可</li>
+<li>通过引入配置文件，可以在不修改任何客户端代码的情况下更换和增加新的具体产品类，在一定程度上提高了系统的灵活性</li>
+</ul>
+</li>
+<li><p>模式缺点</p>
+<ul>
+<li>工厂类集中了所有产品的创建逻辑，职责过重，一旦不能正常工作，整个系统都要受到影响</li>
+<li>增加系统中类的个数（引入了新的工厂类），增加了系统的复杂度和理解难度</li>
+<li>系统扩展困难，一旦添加新产品不得不修改工厂逻辑</li>
+<li>由于使用了静态工厂方法，造成工厂角色无法形成基于继承的等级结构，工厂类不能得到很好地扩展</li>
+</ul>
+</li>
+<li><p>模式适用环境</p>
+<ul>
+<li>工厂类负责创建的对象比较少，由于创建的对象较少，不会造成工厂方法中的业务逻辑太过复杂</li>
+<li>客户端只知道传入工厂类的参数，对于如何创建对象并不关心</li>
+</ul>
+</li>
 </ul>
 
       
@@ -438,8 +451,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/08/05/简谈Redius/" rel="next" title="简谈Redius">
-                <i class="fa fa-chevron-left"></i> 简谈Redius
+              <a href="/2019/08/11/面向对象设计原则/" rel="next" title="面向对象设计原则">
+                <i class="fa fa-chevron-left"></i> 面向对象设计原则
               </a>
             
           </div>
@@ -448,8 +461,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/08/11/面向对象设计原则/" rel="prev" title="面向对象设计原则">
-                面向对象设计原则 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/08/11/工厂方法模式/" rel="prev" title="工厂方法模式">
+                工厂方法模式 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -600,7 +613,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第一章设计模式概述"><span class="nav-number">1.</span> <span class="nav-text">第一章设计模式概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#设计模式的诞生和发展"><span class="nav-number">1.1.</span> <span class="nav-text">设计模式的诞生和发展</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设计模式的定义与分类"><span class="nav-number">1.2.</span> <span class="nav-text">设计模式的定义与分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#设计模式的定义"><span class="nav-number">1.2.1.</span> <span class="nav-text">设计模式的定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设计模式的基本要素"><span class="nav-number">1.2.2.</span> <span class="nav-text">设计模式的基本要素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设计模式的分类"><span class="nav-number">1.2.3.</span> <span class="nav-text">设计模式的分类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设计模式的优点"><span class="nav-number">1.3.</span> <span class="nav-text">设计模式的优点</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简单工厂模式"><span class="nav-number">1.</span> <span class="nav-text">简单工厂模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建型模式"><span class="nav-number">1.1.</span> <span class="nav-text">创建型模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简单工厂模式概述"><span class="nav-number">1.2.</span> <span class="nav-text">简单工厂模式概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建对象和使用对象"><span class="nav-number">1.3.</span> <span class="nav-text">创建对象和使用对象</span></a></li></ol></li></ol></div>
             
 
           </div>
