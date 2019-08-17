@@ -79,27 +79,20 @@
 
 
 
-<meta name="description" content="如何创建个人微博github+hexo（nexT）创建个人帅气blog 安装node.js、npm、git官网安装，具体不教，请移步官网http://nodejs.cn/download/淘宝镜像：npm install -g cnpm --registry=https://registry.npm.taobao.org查看是否成功(显示版本):cnpm -v 创建个人仓库 新建一个名为  你的用">
+<meta name="description" content="单例模式单例模式概述此核心结构只包含一个被称为单例类的特殊类。一个类只有一个实例且易被外界访问，控制实例个数，节约系统资源。 例子：任务管理器、文件系统、计时工具、ID生成器等等…… ……  如何保证一个类只有一个实例并且这个实例易于被访问？ (1) 全局变量：可以确保对象随时都可以被访问，但不能防止创建多个对象 (2) 让类自身负责创建和保存它的唯一实例，并保证不能创建其他实例，它还提供一个访问">
 <meta property="og:type" content="article">
-<meta property="og:title" content="如何创建个人微博">
-<meta property="og:url" content="/2019/07/30/如何创建个人微博/index.html">
+<meta property="og:title" content="单例模式">
+<meta property="og:url" content="/2019/08/17/单例模式/index.html">
 <meta property="og:site_name" content="Mr.YY的博客">
-<meta property="og:description" content="如何创建个人微博github+hexo（nexT）创建个人帅气blog 安装node.js、npm、git官网安装，具体不教，请移步官网http://nodejs.cn/download/淘宝镜像：npm install -g cnpm --registry=https://registry.npm.taobao.org查看是否成功(显示版本):cnpm -v 创建个人仓库 新建一个名为  你的用">
+<meta property="og:description" content="单例模式单例模式概述此核心结构只包含一个被称为单例类的特殊类。一个类只有一个实例且易被外界访问，控制实例个数，节约系统资源。 例子：任务管理器、文件系统、计时工具、ID生成器等等…… ……  如何保证一个类只有一个实例并且这个实例易于被访问？ (1) 全局变量：可以确保对象随时都可以被访问，但不能防止创建多个对象 (2) 让类自身负责创建和保存它的唯一实例，并保证不能创建其他实例，它还提供一个访问">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="/images/20190730/ssh_key.png">
-<meta property="og:image" content="/images/20190730/ssh_key2.png">
-<meta property="og:image" content="/images/20190730/config_yml.png">
-<meta property="og:image" content="/images/20190730/comment.png">
-<meta property="og:image" content="/images/20190730/problem1.png">
-<meta property="og:image" content="/images/20190730/problem2.png">
-<meta property="og:image" content="/images/20190730/problem3-1.png">
-<meta property="og:image" content="/images/20190730/problem3-2.png">
-<meta property="og:image" content="/images/20190730/problem3-3.png">
-<meta property="og:updated_time" content="2019-08-11T05:21:40.028Z">
+<meta property="og:image" content="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F_1.png">
+<meta property="og:image" content="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F_2.png">
+<meta property="og:updated_time" content="2019-08-17T11:18:23.661Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="如何创建个人微博">
-<meta name="twitter:description" content="如何创建个人微博github+hexo（nexT）创建个人帅气blog 安装node.js、npm、git官网安装，具体不教，请移步官网http://nodejs.cn/download/淘宝镜像：npm install -g cnpm --registry=https://registry.npm.taobao.org查看是否成功(显示版本):cnpm -v 创建个人仓库 新建一个名为  你的用">
-<meta name="twitter:image" content="/images/20190730/ssh_key.png">
+<meta name="twitter:title" content="单例模式">
+<meta name="twitter:description" content="单例模式单例模式概述此核心结构只包含一个被称为单例类的特殊类。一个类只有一个实例且易被外界访问，控制实例个数，节约系统资源。 例子：任务管理器、文件系统、计时工具、ID生成器等等…… ……  如何保证一个类只有一个实例并且这个实例易于被访问？ (1) 全局变量：可以确保对象随时都可以被访问，但不能防止创建多个对象 (2) 让类自身负责创建和保存它的唯一实例，并保证不能创建其他实例，它还提供一个访问">
+<meta name="twitter:image" content="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F_1.png">
 
 
 
@@ -129,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="/2019/07/30/如何创建个人微博/">
+  <link rel="canonical" href="/2019/08/17/单例模式/">
 
 
 
 
 
-  <title>如何创建个人微博 | Mr.YY的博客</title>
+  <title>单例模式 | Mr.YY的博客</title>
   
 
 
@@ -262,7 +255,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="/2019/07/30/如何创建个人微博/">
+    <link itemprop="mainEntityOfPage" href="/2019/08/17/单例模式/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Troy yuan">
@@ -279,7 +272,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">如何创建个人微博</h1>
+          <h1 class="post-title" itemprop="name headline">单例模式</h1>
         
 
         <div class="post-meta">
@@ -291,8 +284,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-30T00:00:00+08:00">
-                2019-07-30
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-17T16:16:22+08:00">
+                2019-08-17
               </time>
             
 
@@ -314,8 +307,19 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/其他/" itemprop="url" rel="index">
-                    <span itemprop="name">其他</span>
+                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/设计模式/第八章-单例模式/" itemprop="url" rel="index">
+                    <span itemprop="name">第八章 单例模式</span>
                   </a>
                 </span>
 
@@ -351,46 +355,70 @@
       
 
       
-        <h1 id="如何创建个人微博"><a href="#如何创建个人微博" class="headerlink" title="如何创建个人微博"></a>如何创建个人微博</h1><p><strong>github+hexo（nexT）创建个人帅气blog</strong></p>
-<h2 id="安装node-js、npm、git"><a href="#安装node-js、npm、git" class="headerlink" title="安装node.js、npm、git"></a>安装node.js、npm、git</h2><p>官网安装，具体不教，请移步官网<a href="http://nodejs.cn/download/" target="_blank" rel="noopener">http://nodejs.cn/download/</a><br>淘宝镜像：<br><code>npm install -g cnpm --registry=https://registry.npm.taobao.org</code><br>查看是否成功(显示版本):<br><code>cnpm -v</code></p>
-<h2 id="创建个人仓库"><a href="#创建个人仓库" class="headerlink" title="创建个人仓库"></a>创建个人仓库</h2><ol>
-<li>新建一个名为  你的用户名.github.io  的仓库，且必须并唯一（必须以这个命名，每人只能有一个域名）</li>
-<li>配置ssh key</li>
-</ol>
+        <h1 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h1><h2 id="单例模式概述"><a href="#单例模式概述" class="headerlink" title="单例模式概述"></a>单例模式概述</h2><p>此核心结构只包含一个被称为单例类的特殊类。一个类只有一个实例且易被外界访问，控制实例个数，节约系统资源。</p>
+<p>例子：任务管理器、文件系统、计时工具、ID生成器等等…… ……</p>
 <ul>
-<li>登入账户 - 点击右上角的个人头像 - 下拉菜单Settings - SSH and GPG keys<br><img src="/images/20190730/ssh_key.png" alt="ssh_key"></li>
-<li>如果已经 key，delete原有的key。如果没有则新创建。</li>
-<li>点击New SSH key，输入 Title 和 Key</li>
-<li>Title随便命名<br><code>ssh-keygen -t rsa -b 4096 -C &quot;你的邮箱&quot;</code><br><code>cat ~/.ssh/id_rsa.pub，得到一串东西，就是key</code></li>
-<li>完整的复制这串很长的乱码，复制到打开的GitHub网页KEY框里，点击提交<br><img src="/images/20190730/ssh_key2.png" alt="ssh_key2"></li>
-<li>失败就重来，重新配置ssh key</li>
+<li>如何保证一个类只有一个实例并且这个实例易于被访问？<ul>
+<li>(1) 全局变量：可以确保对象随时都可以被访问，但不能防止创建多个对象</li>
+<li>(2) 让类自身负责创建和保存它的唯一实例，并保证不能创建其他实例，它还提供一个访问该实例的方法</li>
 </ul>
-<ol start="3">
-<li>安装hexo</li>
-</ol>
-<p><code>npm install -g hexo</code><br><code>hexo init 初始化</code><br><code>hexo g # 生成</code><br><code>hexo s # 启动服务</code></p>
-<h2 id="发布"><a href="#发布" class="headerlink" title="发布"></a>发布</h2><p>更改_config.yml文件<br><img src="/images/20190730/config_yml.png" alt="config_yml"><br><code>hexo s -g #生成并本地预览</code><br><code>hexo clean -g #清理缓存</code><br><code>hexo d -g #生成并上传</code></p>
-<p>p.s.hexo官网地址<a href="http://theme-next.iissnan.com/getting-started.html" target="_blank" rel="noopener">http://theme-next.iissnan.com/getting-started.html</a></p>
-<h2 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h2><p>个人觉得比较好用的插件可以推荐给大家</p>
+</li>
+<li>单例模式：<br>  确保一个类只有一个实例，并提供一个全局访问点来访问这个唯一实例。</li>
+<li>单例模式的定义<ul>
+<li>要点：<ul>
+<li>某个类只能有一个实例</li>
+<li>必须自行创建这个实例</li>
+<li>必须自行向整个系统提供这个实例</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="结构实现"><a href="#结构实现" class="headerlink" title="结构实现"></a>结构实现</h2><ul>
+<li>单例模式的结构<ul>
+<li>单例模式只包含一个单例角色：<br>  •  Singleton（单例）</li>
+<li>单例模式的实现注意点<ul>
+<li>私有构造函数</li>
+<li>静态私有成员变量（自身类型）</li>
+<li>静态公有的工厂方法</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="饿汉式单例与懒汉式单例"><a href="#饿汉式单例与懒汉式单例" class="headerlink" title="饿汉式单例与懒汉式单例"></a>饿汉式单例与懒汉式单例</h2><p>饿汉式单例类:<br><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F_1.png" alt="饿汉式单例类"><br>懒汉式单例类:<br><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F_2.png" alt="懒汉式单例类"></p>
 <ul>
-<li><p>音乐插件<br><code>npm install hexo-tag-mplayer --save</code><br>用法参考官方贴<a href="https://www.wshunli.com/posts/hexo-tag-mplayer.html&gt;" target="_blank" rel="noopener">https://www.wshunli.com/posts/hexo-tag-mplayer.html&gt;</a></p>
-</li>
-<li><p>增加评论功能<br>个人使用的是 来必力 <a href="https://www.livere.com/my_Livere" target="_blank" rel="noopener">https://www.livere.com/my_Livere</a><br>注册登录之后，查看安装代码<br><img src="/images/20190730/comment.png" alt="comment"><br>复制其中的uid，打开themes/next/&#95;config.yml，将其中的livere_uid值替换刚才的uid</p>
+<li>饿汉式单例类与懒汉式单例类比较<ul>
+<li><strong>饿汉式单例类</strong>：无须考虑多个线程同时访问的问题；调用速度和反应时间优于懒汉式单例；资源利用效率不及懒汉式单例；系统加载时间可能会比较长</li>
+<li><strong>懒汉式单例类</strong>：实现了延迟加载；必须处理好多个线程同时访问的问题；需通过双重检查锁定等机制进行控制，将导致系统性能受到一定影响</li>
+</ul>
 </li>
 </ul>
-<h2 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h2><ul>
-<li><p>图片加载不出来<br>图片存放路径<br><img src="/images/20190730/problem1.png" alt="图片加载不出来"><br>引用资源方式如下：<br><code>![引用资源](/images/20190730/temp.png)</code></p>
-</li>
-<li><p>主页面内容太多，预览取消<br><img src="/images/20190730/problem2.png" alt="取消预览"></p>
-</li>
-<li><p>文章分类<br>我增加了 tags 和 categories（个人自行选择）<br>每篇文章的抬头<br><img src="/images/20190730/problem3-1.png" alt="文章抬头"><br>next主题的配置<br><img src="/images/20190730/problem3-2.png" alt="主题配置"><br>新增两标签页<br><code>hexo new page tags</code><br><code>hexo new page categories</code><br>/source/tags目录下的index.md修改为<br><img src="/images/20190730/problem3-3.png" alt="index.md"><br>/source/categories 相同</p>
-</li>
-<li><p>发布git不成功(不能成功上传git)<br><code>hexo clean</code><br><code>hexo deploy</code></p>
-</li>
+<h2 id="单例模式的优缺点与适用环境"><a href="#单例模式的优缺点与适用环境" class="headerlink" title="单例模式的优缺点与适用环境"></a>单例模式的优缺点与适用环境</h2><ul>
+<li><p>模式优点</p>
+<ul>
+<li>提供了对唯一实例的受控访问</li>
+<li>可以节约系统资源，提高系统的性能</li>
+<li>允许可变数目的实例（多例类）</li>
 </ul>
-<blockquote>
-<p>未完待续……</p>
+</li>
+<li><p>模式缺点</p>
+<ul>
+<li>扩展困难（缺少抽象层）</li>
+<li>单例类的职责过重</li>
+<li>由于自动垃圾回收机制，可能会导致共享的单例对象的状态丢失<blockquote>
+<p>为对应的资源分配内存 → 初始化内存 → 使用资源 → 清理资源 → 释放内存<br>什么时候发生GC？<br>　　1、当应用程序分配新的对象，GC的代的预算大小已经达到阈值，比如GC的第0代（新分配的小于85000字节的对象）已满；<br>　　2、代码主动显式调用System.GC.Collect()；<br>　　3、其他特殊情况，比如，windows报告内存不足、CLR卸载AppDomain、CLR关闭，甚至某些极端情况下系统参数设置改变也可能导致GC回收</p>
 </blockquote>
+</li>
+</ul>
+</li>
+<li><p>模式适用环境</p>
+<ul>
+<li>系统只需要一个实例对象，或者因为资源消耗太大而只允许创建一个对象</li>
+<li>客户调用类的单个实例只允许使用一个公共访问点，除了该公共访问点，不能通过其他途径访问该实例</li>
+</ul>
+</li>
+</ul>
 
       
     </div>
@@ -415,8 +443,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/07/30/MarkDown常见语法/" rel="next" title="MarkDown常见语法">
-                <i class="fa fa-chevron-left"></i> MarkDown常见语法
+              <a href="/2019/08/17/原型模式/" rel="next" title="原型模式">
+                <i class="fa fa-chevron-left"></i> 原型模式
               </a>
             
           </div>
@@ -425,8 +453,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/08/05/简谈Redius/" rel="prev" title="简谈Redius">
-                简谈Redius <i class="fa fa-chevron-right"></i>
+              <a href="/2019/08/17/适配器模式/" rel="prev" title="适配器模式">
+                适配器模式 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -577,7 +605,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#如何创建个人微博"><span class="nav-number">1.</span> <span class="nav-text">如何创建个人微博</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装node-js、npm、git"><span class="nav-number">1.1.</span> <span class="nav-text">安装node.js、npm、git</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建个人仓库"><span class="nav-number">1.2.</span> <span class="nav-text">创建个人仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#发布"><span class="nav-number">1.3.</span> <span class="nav-text">发布</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#插件"><span class="nav-number">1.4.</span> <span class="nav-text">插件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#遇到的问题"><span class="nav-number">1.5.</span> <span class="nav-text">遇到的问题</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#单例模式"><span class="nav-number">1.</span> <span class="nav-text">单例模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#单例模式概述"><span class="nav-number">1.1.</span> <span class="nav-text">单例模式概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结构实现"><span class="nav-number">1.2.</span> <span class="nav-text">结构实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#饿汉式单例与懒汉式单例"><span class="nav-number">1.3.</span> <span class="nav-text">饿汉式单例与懒汉式单例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单例模式的优缺点与适用环境"><span class="nav-number">1.4.</span> <span class="nav-text">单例模式的优缺点与适用环境</span></a></li></ol></li></ol></div>
             
 
           </div>
