@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="职责链模式行为型模式关注系统中对象之间的交互，研究系统在运行时对象之间的相互通信与协作，进一步明确对象的职责。系统中多个对象处理同一请求，将所有的处理请求连成一条链，让请求沿着该链进行传递。如果链上对象可以处理则处理，不能处理转发给下家。将请求的发送者和接收者解耦，无需关心请求细节和传递过程。 16.1  行为型模式  行为型模式(Behavioral Pattern) 关注系统中对象之间的交互，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="职责链模式">
+<meta property="og:url" content="/2019/09/01/职责链模式/index.html">
+<meta property="og:site_name" content="Mr.YY的博客">
+<meta property="og:description" content="职责链模式行为型模式关注系统中对象之间的交互，研究系统在运行时对象之间的相互通信与协作，进一步明确对象的职责。系统中多个对象处理同一请求，将所有的处理请求连成一条链，让请求沿着该链进行传递。如果链上对象可以处理则处理，不能处理转发给下家。将请求的发送者和接收者解耦，无需关心请求细节和传递过程。 16.1  行为型模式  行为型模式(Behavioral Pattern) 关注系统中对象之间的交互，">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%81%8C%E8%B4%A3%E9%93%BE%E6%A8%A1%E5%BC%8F_1.png">
+<meta property="og:image" content="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%81%8C%E8%B4%A3%E9%93%BE%E6%A8%A1%E5%BC%8F_1.png">
+<meta property="og:image" content="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%81%8C%E8%B4%A3%E9%93%BE%E6%A8%A1%E5%BC%8F_3.png">
+<meta property="og:updated_time" content="2019-09-01T03:26:54.268Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="职责链模式">
+<meta name="twitter:description" content="职责链模式行为型模式关注系统中对象之间的交互，研究系统在运行时对象之间的相互通信与协作，进一步明确对象的职责。系统中多个对象处理同一请求，将所有的处理请求连成一条链，让请求沿着该链进行传递。如果链上对象可以处理则处理，不能处理转发给下家。将请求的发送者和接收者解耦，无需关心请求细节和传递过程。 16.1  行为型模式  行为型模式(Behavioral Pattern) 关注系统中对象之间的交互，">
+<meta name="twitter:image" content="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%81%8C%E8%B4%A3%E9%93%BE%E6%A8%A1%E5%BC%8F_1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="/2019/09/01/职责链模式/">
+
+
+
+
+
+  <title>职责链模式 | Mr.YY的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Mr.YY的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/2019/09/01/职责链模式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Troy yuan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.YY的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">职责链模式</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-01T11:10:08+08:00">
+                2019-09-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/设计模式/第16章-职责链模式/" itemprop="url" rel="index">
+                    <span itemprop="name">第16章 职责链模式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="职责链模式"><a href="#职责链模式" class="headerlink" title="职责链模式"></a>职责链模式</h1><p>行为型模式关注系统中对象之间的交互，研究系统在运行时对象之间的相互通信与协作，进一步明确对象的职责。<br>系统中多个对象处理同一请求，将所有的处理请求连成一条链，让请求沿着该链进行传递。如果链上对象可以处理则处理，不能处理转发给下家。<br>将请求的发送者和接收者解耦，无需关心请求细节和传递过程。</p>
+<p>16.1  行为型模式</p>
+<ul>
+<li><p>行为型模式(Behavioral Pattern) 关注系统中对象之间的交互，研究系统在运行时对象之间的相互通信与协作，进一步明确对象的职责</p>
+</li>
+<li><p>行为型模式：不仅仅关注类和对象本身，还重点关注它们之间的相互作用和职责划分</p>
+</li>
+<li><p>类行为型模式</p>
+</li>
+<li><p>使用继承关系在几个类之间分配行为，主要通过多态等方式来分配父类与子类的职责</p>
+</li>
+<li><p>对象行为型模式</p>
+</li>
+<li><p>使用对象的关联关系来分配行为，主要通过对象关联等方式来分配两个或多个类的职责</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>模式名称</th>
+<th>定义</th>
+<th>学习难度</th>
+<th>使用频率</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>职责链模式(Chain of Responsibility Pattern)</td>
+<td>避免将一个请求的发送者与接收者耦合在一起，让多个对象都有机会处理请求。将接收请求的对象连接成一条链，并且沿着这条链传递请求，直到有一个对象能够处理它为止。</td>
+<td>★★★☆☆</td>
+<td>★★☆☆☆</td>
+</tr>
+<tr>
+<td>命令模式(Command Pattern)</td>
+<td>将一个请求封装为一个对象，从而让你可以用不同的请求对客户进行参数化，对请求排队或者记录请求日志，以及支持可撤销的操作。</td>
+<td>★★★☆☆</td>
+<td>★★★★☆</td>
+</tr>
+<tr>
+<td>解释器模式(Interpreter Pattern)</td>
+<td>给定一个语言，定义它的文法的一种表示，并定义一个解释器，这个解释器使用该表示来解释语言中的句子。</td>
+<td>★★★★★</td>
+<td>★☆☆☆☆</td>
+</tr>
+<tr>
+<td>迭代器模式(Iterator Pattern)</td>
+<td>提供一种方法顺序访问一个聚合对象中的各个元素，且不用暴露该对象的内部表示。</td>
+<td>★★★☆☆</td>
+<td>★★★★★</td>
+</tr>
+<tr>
+<td>中介者模式(Mediator Pattern)</td>
+<td>定义一个对象来封装一系列对象的交互。中介者模式使各对象之间不需要显式地相互引用，从而使其耦合松散，而且让你可以独立地改变它们之间的交互。</td>
+<td>★★★☆☆</td>
+<td>★★☆☆☆</td>
+</tr>
+<tr>
+<td>备忘录模式(Memento Pattern)</td>
+<td>在不破坏封装的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态，这样可以在以后将对象恢复到原先保存的状态。</td>
+<td>★★☆☆☆</td>
+<td>★★☆☆☆</td>
+</tr>
+<tr>
+<td>观察者模式(Observer Pattern)</td>
+<td>定义对象之间的一种一对多依赖关系，使得每当一个对象状态发生改变时，其相关依赖对象都得到通知并被自动更新。</td>
+<td>★★★☆☆</td>
+<td>★★★★★</td>
+</tr>
+<tr>
+<td>状态模式(State Pattern)</td>
+<td>允许一个对象在其内部状态改变时改变它的行为。对象看起来似乎修改了它的类。</td>
+<td>★★★☆☆</td>
+<td>★★★☆☆</td>
+</tr>
+<tr>
+<td>策略模式(Strategy Pattern)</td>
+<td>定义一系列算法，将每一个算法封装起来，并让它们可以相互替换，策略模式让算法可以独立于使用它的客户变化。</td>
+<td>★☆☆☆☆</td>
+<td>★★★★☆</td>
+</tr>
+<tr>
+<td>模板方法模式(Template Method Pattern)</td>
+<td>定义一个操作中算法的框架，而将一些步骤延迟到子类中。模板方法模式使得子类不改变一个算法的结构即可重定义该算法的某些特定步骤。</td>
+<td>★★☆☆☆</td>
+<td>★★★☆☆</td>
+</tr>
+<tr>
+<td>访问者模式(Visitor Pattern)</td>
+<td>表示一个作用于某对象结构中的各个元素的操作。访问者模式让你可以在不改变各元素的类的前提下定义作用于这些元素的新操作。</td>
+<td>★★★★☆</td>
+<td>★☆☆☆☆</td>
+</tr>
+</tbody></table>
+<h2 id="职责链模式概述"><a href="#职责链模式概述" class="headerlink" title="职责链模式概述"></a>职责链模式概述</h2><p><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%81%8C%E8%B4%A3%E9%93%BE%E6%A8%A1%E5%BC%8F_1.png" alt="职责链模式"></p>
+<ul>
+<li><p>分析</p>
+<ul>
+<li>辅导员、系主任、院长、校长都可以处理奖学金申请表，他们构成一个处理申请表的链式结构，申请表沿着这条链进行传递，这条链就称为职责链</li>
+<li>职责链可以是一条直线、一个环或者一个树形结构，最常见的职责链是直线型，即沿着一条单向的链来传递请求</li>
+</ul>
+</li>
+<li><p>职责链模式：<br>避免将一个请求的发送者与接收者耦合在一起，让多个对象都有机会处理请求。将接收请求的对象连接成一条链，并且沿着这条链传递请求，直到有一个对象能够处理它为止。</p>
+</li>
+<li><p>职责链模式的定义</p>
+<ul>
+<li>又称为责任链模式（翻译不同，）</li>
+<li>将请求的处理者组织成一条链，并让请求沿着链传递，由链上的处理者对请求进行相应的处理</li>
+<li>客户端无须关心请求的处理细节以及请求的传递，只需将请求发送到链上，将请求的发送者和请求的处理者解耦</li>
+</ul>
+</li>
+</ul>
+<h2 id="职责链模式的结构与实现"><a href="#职责链模式的结构与实现" class="headerlink" title="职责链模式的结构与实现"></a>职责链模式的结构与实现</h2><ul>
+<li>职责链模式的结构<ul>
+<li>职责链模式包含以下两个角色：<br>•  Handler（抽象处理者）<br>•  ConcreteHandler（具体处理者）</li>
+</ul>
+</li>
+</ul>
+<h2 id="职责链模式的应用实例"><a href="#职责链模式的应用实例" class="headerlink" title="职责链模式的应用实例"></a>职责链模式的应用实例</h2><p>某企业的SCM(Supply Chain Management，供应链管理)系统中包含一个采购审批子系统。该企业的采购审批是分级进行的，即根据采购金额的不同由不同层次的主管人员来审批，主任可以审批5万元以下（不包括5万元）的采购单，副董事长可以审批5万元至10万元（不包括10万元）的采购单，董事长可以审批10万元至50万元（不包括50万元）的采购单，50万元及以上的采购单就需要开董事会讨论决定。如下图所示：</p>
+<p><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%81%8C%E8%B4%A3%E9%93%BE%E6%A8%A1%E5%BC%8F_1.png" alt="采购单分级审批示意图"></p>
+<p>可以使用职责链模式设计并实现该系统。</p>
+<h2 id="纯与不纯的职责链模式"><a href="#纯与不纯的职责链模式" class="headerlink" title="纯与不纯的职责链模式"></a>纯与不纯的职责链模式</h2><ul>
+<li>纯的职责链模式<ul>
+<li>一个具体处理者对象只能在两个行为中选择一个：要么承担全部责任，要么将责任推给下家</li>
+<li>不允许出现某一个具体处理者对象在承担了一部分或全部责任后又将责任向下传递的情况</li>
+<li>一个请求必须被某一个处理者对象所接收，不能出现某个请求未被任何一个处理者对象处理的情况</li>
+</ul>
+</li>
+<li>不纯的职责链模式<ul>
+<li>允许某个请求被一个具体处理者部分处理后向下传递，或者一个具体处理者处理完某请求后其后继处理者可以继续处理该请求</li>
+<li>一个请求可以最终不被任何处理者对象所接收并处理</li>
+<li>JavaScript的事件浮升(Event Bubbling)处理机制<br><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%81%8C%E8%B4%A3%E9%93%BE%E6%A8%A1%E5%BC%8F_3.png" alt="冒泡事件"></li>
+</ul>
+</li>
+</ul>
+<h2 id="职责链模式的优缺点与适用场景"><a href="#职责链模式的优缺点与适用场景" class="headerlink" title="职责链模式的优缺点与适用场景"></a>职责链模式的优缺点与适用场景</h2><ul>
+<li>模式优点<ul>
+<li>使得一个对象无须知道是其他哪一个对象处理其请求，降低了系统的耦合度</li>
+<li>可简化对象之间的相互连接</li>
+<li>给对象职责的分配带来更多的灵活性</li>
+<li>增加一个新的具体请求处理者时无须修改原有系统的代码，只需要在客户端重新建链即可</li>
+</ul>
+</li>
+<li>模式缺点<ul>
+<li>不能保证请求一定会被处理</li>
+<li>对于比较长的职责链，系统性能将受到一定影响，在进行代码调试时不太方便</li>
+<li>如果建链不当，可能会造成循环调用，将导致系统陷入死循环</li>
+</ul>
+</li>
+<li>模式适用环境<ul>
+<li>有多个对象可以处理同一个请求，具体哪个对象处理该请求待运行时刻再确定</li>
+<li>在不明确指定接收者的情况下，向多个对象中的一个提交一个请求</li>
+<li>可动态指定一组对象处理请求</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/31/代理模式/" rel="next" title="代理模式">
+                <i class="fa fa-chevron-left"></i> 代理模式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/09/01/命令模式/" rel="prev" title="命令模式">
+                命令模式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80NTc0NC8yMjI1NQ=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Troy yuan</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/infernoyy" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:1085435176@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="1085435176" target="_blank" title="QQ">
+                      
+                        <i class="fa fa-fw fa-qq"></i>QQ</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#职责链模式"><span class="nav-number">1.</span> <span class="nav-text">职责链模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#职责链模式概述"><span class="nav-number">1.1.</span> <span class="nav-text">职责链模式概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#职责链模式的结构与实现"><span class="nav-number">1.2.</span> <span class="nav-text">职责链模式的结构与实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#职责链模式的应用实例"><span class="nav-number">1.3.</span> <span class="nav-text">职责链模式的应用实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#纯与不纯的职责链模式"><span class="nav-number">1.4.</span> <span class="nav-text">纯与不纯的职责链模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#职责链模式的优缺点与适用场景"><span class="nav-number">1.5.</span> <span class="nav-text">职责链模式的优缺点与适用场景</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Troy yuan</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+<div>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+本站总访问量 <span id="busuanzi_value_site_pv"></span> 次&nbsp&nbsp&nbsp
+本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
