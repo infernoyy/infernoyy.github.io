@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Mr.YY的博客">
 <meta property="og:description" content="sugarsql简介简单谈一下sugarsql。 一般我们去了解一项技术呢，最主要的看权威官网而不是私人博客。在我看来，因为有几项好处是私人博客比不了的。  权威性，这个不用多说。 准确性，私人博客一传十，十传百，错字错句难免会出现。 全面性，看一样管中规豹不太好，速食只能解一时困惑，还是找时间扫盲为主  步入正题，这个是官网http://www.codeisbug.com/用新不用旧，直接步入s">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-09-15T08:32:43.498Z">
+<meta property="og:updated_time" content="2019-09-15T08:41:44.653Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="sugarsql简介">
 <meta name="twitter:description" content="sugarsql简介简单谈一下sugarsql。 一般我们去了解一项技术呢，最主要的看权威官网而不是私人博客。在我看来，因为有几项好处是私人博客比不了的。  权威性，这个不用多说。 准确性，私人博客一传十，十传百，错字错句难免会出现。 全面性，看一样管中规豹不太好，速食只能解一时困惑，还是找时间扫盲为主  步入正题，这个是官网http://www.codeisbug.com/用新不用旧，直接步入s">
@@ -376,11 +376,11 @@
 <p>先看官网，鸽了，找时间补上。<br>未完待续。。。。。。</p>
 </blockquote>
 <p>补上之前的，怎么看还是官方写的比较好，也不需要我补充什么，写了个小例子，方便理解<br><a href="https://github.com/infernoyy/BlogCode/tree/master/SugarsqlTest" target="_blank" rel="noopener">https://github.com/infernoyy/BlogCode/tree/master/SugarsqlTest</a></p>
-<h2 id="问题整理"><a href="#问题整理" class="headerlink" title="问题整理"></a>问题整理</h2><p>Q：switch/case中多条件下的sql执行，实体类有很多，无法实现每个的查询？只需要执行某一sql。<br>A：<a href="http://www.codeisbug.com/Doc/8/1132" target="_blank" rel="noopener">http://www.codeisbug.com/Doc/8/1132</a>  官网<br>有实现方法。</p>
+<h2 id="问题整理"><a href="#问题整理" class="headerlink" title="问题整理"></a>问题整理</h2><p>Q：switch/case中多条件下的sql执行，实体类有很多，无法实现每个的查询？只需要执行某一sql。<br>A：<a href="http://www.codeisbug.com/Doc/8/1132" target="_blank" rel="noopener">http://www.codeisbug.com/Doc/8/1132</a>  官网有实现方法。</p>
 <blockquote>
 <p>var t12 = db.SqlQueryable<dynamic>(“select * from student”).ToPageList(1, 2);//返回动态类型</dynamic></p>
 </blockquote>
-<p>返回List、DataTable、DataSet等等数据类型供处理。</p>
+<p>也可以返回List、DataTable、DataSet等等数据类型供处理。</p>
 
       
     </div>
