@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="参考 ASP.NET Application Life Cycle Overview for IIS 5.0 and 6.0参考 ASP.NET Application Life Cycle Overview for IIS 7.0https://www.cnblogs.com/anlen/p/3612048.htmlhttps://www.cnblogs.com/ruanraun/p/apsn">
+<meta property="og:type" content="article">
+<meta property="og:title" content="IIS 5.0和6.0的ASP.NET应用程序生命周期概述">
+<meta property="og:url" content="/2019/11/02/IIS/index.html">
+<meta property="og:site_name" content="Mr.YY的博客">
+<meta property="og:description" content="参考 ASP.NET Application Life Cycle Overview for IIS 5.0 and 6.0参考 ASP.NET Application Life Cycle Overview for IIS 7.0https://www.cnblogs.com/anlen/p/3612048.htmlhttps://www.cnblogs.com/ruanraun/p/apsn">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="/images/IIS/IIS_1.gif">
+<meta property="og:image" content="/images/IIS/IIS_2.gif">
+<meta property="og:image" content="/images/IIS/IIS_3.gif">
+<meta property="og:image" content="/images/IIS/IIS_4.jpg">
+<meta property="og:updated_time" content="2019-11-03T05:54:22.771Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="IIS 5.0和6.0的ASP.NET应用程序生命周期概述">
+<meta name="twitter:description" content="参考 ASP.NET Application Life Cycle Overview for IIS 5.0 and 6.0参考 ASP.NET Application Life Cycle Overview for IIS 7.0https://www.cnblogs.com/anlen/p/3612048.htmlhttps://www.cnblogs.com/ruanraun/p/apsn">
+<meta name="twitter:image" content="/images/IIS/IIS_1.gif">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="/2019/11/02/IIS/">
+
+
+
+
+
+  <title>IIS 5.0和6.0的ASP.NET应用程序生命周期概述 | Mr.YY的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Mr.YY的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/2019/11/02/IIS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Troy yuan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.YY的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">IIS 5.0和6.0的ASP.NET应用程序生命周期概述</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-02T23:18:19+08:00">
+                2019-11-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/其他/" itemprop="url" rel="index">
+                    <span itemprop="name">其他</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>参考 <a href="https://docs.microsoft.com/en-us/previous-versions/aspnet/ms178473(v=vs.100)?redirectedfrom=MSDN" target="_blank" rel="noopener">ASP.NET Application Life Cycle Overview for IIS 5.0 and 6.0</a><br>参考 <a href="https://docs.microsoft.com/en-us/previous-versions/aspnet/bb470252(v=vs.100)?redirectedfrom=MSDN" target="_blank" rel="noopener">ASP.NET Application Life Cycle Overview for IIS 7.0</a><br><a href="https://www.cnblogs.com/anlen/p/3612048.html" target="_blank" rel="noopener">https://www.cnblogs.com/anlen/p/3612048.html</a><br><a href="https://www.cnblogs.com/ruanraun/p/apsnet.html" target="_blank" rel="noopener">https://www.cnblogs.com/ruanraun/p/apsnet.html</a></p>
+</blockquote>
+<h1 id="什么是IIS？"><a href="#什么是IIS？" class="headerlink" title="什么是IIS？"></a>什么是IIS？</h1><p>IIS是一种Web（网页）服务组件，其中包括Web服务器、FTP服务器、NNTP服务器和SMTP服务器，分别用于网页浏览、文件传输、新闻服务和邮件发送等方面。<br>对于IIS来说，它依赖一个叫做 HTTP.SYS 的内置驱动程序来监听来自外部的 HTTP请求。</p>
+<p><img src="/images/IIS/IIS_1.gif" alt="生命周期概述"></p>
+<p>IIS根据文件的后缀名识别这些Asp、Java、VBscript、Asp.Net等程序发布的页面。<br>服务器获取所请求的页面（也可以是多媒体、文件（也有后缀名）等）的后缀名以后，接下来会在服务器端寻找可以处理这类后缀名的应用程序。<br>IIS不可能处理各种后缀名的应用程序，要处理这些，就要借助 ISAPI 应用程序（NOTE：Internet Server Application Programe Interface，互联网服务器应用程序接口）。ISAPI实际上只是一个接口，起到一个代理的作用，它的主要工作是映射所请求的页面(文件)  和与此后缀名相对应的实际的处理程序。<br>除了映射文件与其对应的处理程序以外，ISAPI 还需要做一些其他的工作：从HTTP.SYS中获取当前的Httq请求信息，并且将这些信息保存到 HttpWorkerRequest 类中。在相互隔离的应用程序域AppDomain中加载HttpRuntime。调用 HttpRuntime的ProcessRequest方法。</p>
+<p>所有的.aspx文件实际上都是由 aspnet_isapi.dll 。这个程序来处理的，当IIS把对于.aspx页面的请求提通过ISAPI交给了aspnet_isapi.dll以后，接着就是只是等待结果，返回给用户（实际是IIS 接收返回的数据流，并重新返还给 HTTP.SYS，最后，HTTP.SYS 再将这些数据返回给客户端浏览器。）。现在我们应该知道：Asp.Net 只是服务器(IIS)的一个组成部分而已，它是一个 ISAPI扩展。</p>
+<h1 id="文件编译"><a href="#文件编译" class="headerlink" title="文件编译"></a>文件编译</h1><p>优先编译顶级项（编译的第一批项），仅当依赖项更改时才会重新编译顶级项</p>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>App_GlobalResources</td>
+<td>编译应用程序的全局资源并生成资源程序集。 应用程序的 Bin 文件夹中的任何程序集都链接到资源程序集。</td>
+</tr>
+<tr>
+<td>App_WebResources</td>
+<td>创建并编译 Web 服务的代理类型。 所生成的 Web 引用程序集将链接到资源程序集（如存在）。</td>
+</tr>
+<tr>
+<td>Web.config 文件中定义的配置文件属性</td>
+<td>如果应用程序的 Web.config 文件中定义了配置文件属性，则生成一个包含配置文件对象的程序集。</td>
+</tr>
+<tr>
+<td>App_Code</td>
+<td>生成源代码文件并创建一个或更多个程序集。 所有代码程序集和配置文件程序集都链接到资源和 Web 引用程序集（如果有）。</td>
+</tr>
+<tr>
+<td>Global.asax</td>
+<td>编译应用程序对象并将其链接到所有先前产生的程序集。</td>
+</tr>
+</tbody></table>
+<p>编译文件夹、页和其他项</p>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>App_LocalResources</td>
+<td>如果包含被请求项的文件夹包含 App_LocalResources 文件夹，则编译本地资源文件夹的内容并将其链接到全局资源程序集。</td>
+</tr>
+<tr>
+<td>各个网页（.aspx 文件）、用户控件（.ascx 文件）、HTTP 处理程序（.ashx 文件）和 HTTP 模块（.asmx 文件）</td>
+<td>根据需要编译并链接到本地资源程序集和顶级程序集。</td>
+</tr>
+<tr>
+<td>主题、主控页、其他源文件</td>
+<td>在编译引用页时编译那些页所引用的各个主题、主控页和其他源代码文件的外观文件。</td>
+</tr>
+</tbody></table>
+<p>编译后的程序集缓存在服务器上并在后续请求时被重用，并且只要源代码未更改，就会在应用程序重新启动之间得到保留。 </p>
+<h1 id="应用程序生命周期概述"><a href="#应用程序生命周期概述" class="headerlink" title="应用程序生命周期概述"></a>应用程序生命周期概述</h1><p>在 IIS 6.0 中，有两个请求处理管道。 一个管道用于本机代码 ISAPI 筛选器和扩展组件。 另一个管道用于托管代码应用程序组件，如 ASP.NET。在 IIS 7.0 中，ASP.NET 运行时与 Web 服务器集成，这样就有了一个针对所有请求的统一的请求处理管道。</p>
+<ul>
+<li>浏览器向 Web 服务器（对于 ASP.NET 应用程序，通常为 IIS）发送请求为起点</li>
+<li>对所请求的文件的文件扩展名进行检查，确定应由哪个 ISAPI 扩展处理该请求，然后将该请求传递给合适的 ISAPI 扩展。ASP.NET 处理已映射到其上的文件扩展名，如 .aspx、.ascx、.ashx 和 .asmx。<blockquote>
+<p>如果文件扩展名尚未映射到 ASP.NET，则 ASP.NET 将不会接收该请求。(静态内容.htm 文件、Javascript文件、图片、CSS文件等等)</p>
+</blockquote>
+</li>
+</ul>
+<p><img src="/images/IIS/IIS_2.gif" alt="生命周期概述"></p>
+<ul>
+<li><p>当用户请求的文件的后缀名为： .aspx、.ascx、.ashx 和 .asmx时，IIS会把这个请求交由ISAPI ，ISAP找到aspnet_ISAPI，然后让aspnet_ISAPI进行处理。当 ASP.NET 接收到对应用程序中任何资源的第一个请求时，名为 ApplicationManager 的类会创建一个应用程序域（AppDomanin）。 应用程序域为全局变量提供应用程序隔离，并允许单独卸载每个应用程序。 在应用程序域中，将为名为 HostingEnvironment 的类创建一个实例，该实例提供对有关应用程序的信息（如存储该应用程序的文件夹的名称）的访问。</p>
+<blockquote>
+<p>ApplicationManager 对象在 ASP.NET 应用程序的宿主环境中提供对象生存期管理。也就是为 ASP.NET 宿主应用程序管理 ASP.NET 应用程序域。 该对象负责：<br>1、激活和初始化 ASP.NET 应用程序；<br>2、管理应用程序生存期和在应用程序中注册的对象的生存期；<br>3、公开宿主环境使用的对象以处理 ASP.NET 应用程序请求；<br>4、提供任意给定时刻运行于宿主进程中的应用程序的列表；</p>
+</blockquote>
+</li>
+<li><p>创建了应用程序域并对 HostingEnvironment 对象进行了实例化之后，ASP.NET 将创建并初始化核心对象，如 HttpContext、HttpRequest 和HttpResponse。</p>
+<blockquote>
+<p>核心对象如下：<br>HttpContext 类包含特定于当前应用程序请求的对象，如 HttpRequest 和 HttpResponse 对象。<br>HttpRequest 对象包含有关当前请求的信息，包括 Cookie 和浏览器信息。<br>HttpResponse 对象包含发送到客户端的响应，包括所有呈现的输出和 Cookie。</p>
+</blockquote>
+</li>
+<li><p>初始化所有核心应用程序对象之后，将通过创建 HttpApplication 类的实例启动应用程序。</p>
+</li>
+</ul>
+<blockquote>
+<p><img src="/images/IIS/IIS_3.gif" alt="生命周期概述"></p>
+</blockquote>
+<p>创建 Global.asax 类（从 HttpApplication 类派生）的一个实例，并使用该派生类表示应用程序。</p>
+<ul>
+<li>最后由HttpApplication管线处理请求，在处理该请求时将由 HttpApplication 类执行以下事件</li>
+</ul>
+<blockquote>
+<p><img src="/images/IIS/IIS_4.jpg" alt="生命周期概述"></p>
+</blockquote>
+<blockquote>
+<p> 1.对请求进行验证，将检查浏览器发送的信息，并确定其是否包含潜在恶意标记。 有关更多信息，请参见ValidateRequest 和脚本侵入概述。<br> 2.如果已在 Web.config 文件的 UrlMappingsSection 节中配置了任何 URL，则执行 URL 映射。<br> 3.引发 BeginRequest 事件。在 ASP.NET 响应请求时作为 HTTP 执行管线链中的第一个事件发生。BeginRequest 事件发出信号表示创建任何给定的新请求。 此事件始终被引发，并且始终是请求处理期间发生的第一个事件。<br> 4.引发 AuthenticateRequest 事件。当安全模块已建立用户标识时发生。AuthenticateRequest 事件发出信号表示配置的身份验证机制已对当前请求进行了身份验证。 订阅 AuthenticateRequest 事件可确保在处理附加模块或事件处理程序之前对请求进行身份验证。<br> 5.引发 PostAuthenticateRequest 事件。当安全模块已建立用户标识时发生。PostAuthenticateRequest 事件在 AuthenticateRequest 事件发生之后引发。 预订 PostAuthenticateRequest 事件的功能可以访问由PostAuthenticateRequest 处理的任何数据。<br> 6.引发 AuthorizeRequest 事件。当安全模块已验证用户授权时发生。AuthorizeRequest 事件发出信号表示 ASP.NET 已对当前请求进行了授权。 订阅 AuthorizeRequest 事件可确保在处理附加的模块或事件处理程序之前对请求进行身份验证和授权。<br> 7.引发 PostAuthorizeRequest 事件。在当前请求的用户已获授权时发生。PostAuthorizeRequest 事件发出信号表示 ASP.NET 已对当前请求进行了授权。 订阅 PostAuthorizeRequest 事件可确保在处理附加的模块或处理程序之前对请求进行身份验证和授权。<br> 8.引发 ResolveRequestCache 事件。在 ASP.NET 完成授权事件以使缓存模块从缓存中为请求提供服务后发生，从而绕过事件处理程序（例如某个页或 XML Web services）的执行。<br> 9.引发 PostResolveRequestCache 事件。在 ASP.NET 跳过当前事件处理程序的执行并允许缓存模块满足来自缓存的请求时发生。<br> 10.根据所请求资源的文件扩展名（在应用程序的配置文件中映射），选择实现 IHttpHandler 的类，对请求进行处理。如果该请求针对从 Page 类派生的对象（页），并且需要对该页进行编译，则 ASP.NET 会在创建该页的实例之前对其进行编译。<br> 11.引发 PostMapRequestHandler 事件。在 ASP.NET 已将当前请求映射到相应的事件处理程序时发生。<br> 12.引发 AcquireRequestState 事件。当 ASP.NET 获取与当前请求关联的当前状态（如会话状态）时发生。AcquireRequestState 事件在创建了事件处理程序之后引发。<br> 13.引发 PostAcquireRequestState 事件。在已获得与当前请求关联的请求状态（例如会话状态）时发生。<br> PostAcquireRequestState 事件在 AcquireRequestState 事件发生之后引发。 预订 AcquireRequestState 事件的功能可以访问由PostAcquireRequestState 处理的任何数据。<br> 14.引发 PreRequestHandlerExecute 事件。恰好在 ASP.NET 开始执行事件处理程序（例如，某页或某个 XML Web services）前发生。<br> 15.为该请求调用合适的 IHttpHandler 类的 ProcessRequest 方法（或异步版IHttpAsyncHandler.BeginProcessRequest）。 例如，如果该请求针对某页，则当前的页实例将处理该请求。<br> 16.引发 PostRequestHandlerExecute 事件。在 ASP.NET 已将当前请求映射到相应的事件处理程序时发生。<br> 17.引发 ReleaseRequestState 事件。在 ASP.NET 已将当前请求映射到相应的事件处理程序时发生。<br> 18.引发 PostReleaseRequestState 事件。在 ASP.NET 已完成所有请求事件处理程序的执行并且请求状态数据已存储时发生。<br> 19.如果定义了 Filter 属性，则执行响应筛选。<br> 20.引发 UpdateRequestCache 事件。当 ASP.NET 执行完事件处理程序以使缓存模块存储将用于从缓存为后续请求提供服务的响应时发生。<br> 21.引发 PostUpdateRequestCache 事件。在 ASP.NET 完成缓存模块的更新并存储了用于从缓存中为后续请求提供服务的响应后，发生此事件。<br> 22.引发 EndRequest 事件。在 ASP.NET 响应请求时作为 HTTP 执行管线链中的最后一个事件发生。<br> 23.引发 PreSendRequestHeaders 事件。恰好在 ASP.NET 向客户端发送 HTTP 标头之前发生。<br> 24.引发 PreSendRequestContent 事件。</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/13/sunny-ngrok外网映射/" rel="next" title="sunny-ngrok外网映射">
+                <i class="fa fa-chevron-left"></i> sunny-ngrok外网映射
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/11/02/docker简介/" rel="prev" title="Docker简介">
+                Docker简介 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80NTc0NC8yMjI1NQ=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Troy yuan</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/infernoyy" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:1085435176@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="1085435176" target="_blank" title="QQ">
+                      
+                        <i class="fa fa-fw fa-qq"></i>QQ</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是IIS？"><span class="nav-number">1.</span> <span class="nav-text">什么是IIS？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文件编译"><span class="nav-number">2.</span> <span class="nav-text">文件编译</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#应用程序生命周期概述"><span class="nav-number">3.</span> <span class="nav-text">应用程序生命周期概述</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Troy yuan</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+<div>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+本站总访问量 <span id="busuanzi_value_site_pv"></span> 次&nbsp&nbsp&nbsp
+本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
