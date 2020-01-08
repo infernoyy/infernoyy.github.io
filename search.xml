@@ -1,0 +1,2814 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Set 和 Map 数据结构</title>
+    <url>/2019/12/31/Set%20%E5%92%8C%20Map%20%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</url>
+    <content><![CDATA[<h1 id="Set-和-Map-数据结构"><a href="#Set-和-Map-数据结构" class="headerlink" title="Set 和 Map 数据结构"></a>Set 和 Map 数据结构</h1><h2 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h2><h3 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//数组转化为Set</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">set</span> = new Set(array);</span><br></pre></td></tr></table></figure>
+
+<h3 id="Set-实例的属性和方法"><a href="#Set-实例的属性和方法" class="headerlink" title="Set 实例的属性和方法"></a>Set 实例的属性和方法</h3><p>Set 结构的实例有以下属性。</p>
+<ul>
+<li>Set.prototype.constructor：构造函数，默认就是Set函数。</li>
+<li>Set.prototype.size：返回Set实例的成员总数。</li>
+</ul>
+<p>Set 实例的方法分为两大类：操作方法（用于操作数据）和遍历方法（用于遍历成员）。下面先介绍四个操作方法。</p>
+<ul>
+<li>Set.prototype.add(value)：添加某个值，返回 Set 结构本身。</li>
+<li>Set.prototype.delete(value)：删除某个值，返回一个布尔值，表示删除是否成功。</li>
+<li>Set.prototype.has(value)：返回一个布尔值，表示该值是否为Set的成员。</li>
+<li>Set.prototype.clear()：清除所有成员，没有返回值。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//Array.from方法可以将 Set 结构转为数组。</span></span><br><span class="line"><span class="keyword">const</span> items = <span class="keyword">new</span> <span class="built_in">Set</span>([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]);</span><br><span class="line"><span class="keyword">const</span> array = <span class="built_in">Array</span>.from(items);</span><br><span class="line"></span><br><span class="line"><span class="comment">//可以作为去除数组重复成员的方法。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//去除字符串里面的重复字符</span></span><br><span class="line">[...new <span class="built_in">Set</span>(<span class="string">'ababbc'</span>)].join(<span class="string">''</span>)</span><br><span class="line"><span class="comment">//NaN不等于自身</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//这就提供了去除数组重复成员的另一种方法。</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">dedupe</span>(<span class="params">array</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">Array</span>.from(<span class="keyword">new</span> <span class="built_in">Set</span>(array));</span><br><span class="line">&#125;</span><br><span class="line">dedupe([<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]) <span class="comment">// [1, 2, 3]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="遍历操作"><a href="#遍历操作" class="headerlink" title="遍历操作"></a>遍历操作</h3><p>Set 结构的实例有四个遍历方法，可以用于遍历成员。</p>
+<ul>
+<li>Set.prototype.keys()：返回键名的遍历器</li>
+<li>Set.prototype.values()：返回键值的遍历器</li>
+<li>Set.prototype.entries()：返回键值对的遍历器</li>
+<li>Set.prototype.forEach()：使用回调函数遍历每个成员</li>
+</ul>
+<blockquote>
+<p>keys方法和values方法的行为完全一致</p>
+</blockquote>
+<p>map和filter</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="keyword">set</span> = new Set([1, 2, 3]);</span><br><span class="line"><span class="keyword">set</span> = new Set([...<span class="keyword">set</span>].map(x =&gt; x * 2));</span><br><span class="line">// 返回Set结构：&#123;<span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="keyword">set</span> = new Set([1, 2, 3, 4, 5]);</span><br><span class="line"><span class="keyword">set</span> = new Set([...<span class="keyword">set</span>].filter(x =&gt; (x % 2) == 0));</span><br><span class="line">// 返回Set结构：&#123;<span class="number">2</span>, <span class="number">4</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>并集（Union）、交集（Intersect）和差集（Difference）</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="keyword">new</span> <span class="built_in">Set</span>([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]);</span><br><span class="line"><span class="keyword">let</span> b = <span class="keyword">new</span> <span class="built_in">Set</span>([<span class="number">4</span>, <span class="number">3</span>, <span class="number">2</span>]);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 并集</span></span><br><span class="line"><span class="keyword">let</span> union = <span class="keyword">new</span> <span class="built_in">Set</span>([...a, ...b]);</span><br><span class="line"><span class="comment">// Set &#123;1, 2, 3, 4&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 交集</span></span><br><span class="line"><span class="keyword">let</span> intersect = <span class="keyword">new</span> <span class="built_in">Set</span>([...a].filter(<span class="function"><span class="params">x</span> =&gt;</span> b.has(x)));</span><br><span class="line"><span class="comment">// set &#123;2, 3&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 差集</span></span><br><span class="line"><span class="keyword">let</span> difference = <span class="keyword">new</span> <span class="built_in">Set</span>([...a].filter(<span class="function"><span class="params">x</span> =&gt;</span> !b.has(x)));</span><br><span class="line"><span class="comment">// Set &#123;1&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>遍历操作中，同步改变原来的 Set 结构</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//一种是利用原 Set 结构映射出一个新的结构，然后赋值给原来的 Set 结构；</span></span><br><span class="line"><span class="comment">// 方法一</span></span><br><span class="line"><span class="keyword">let</span> <span class="keyword">set</span> = new Set([1, 2, 3]);</span><br><span class="line"><span class="keyword">set</span> = new Set([...<span class="keyword">set</span>].map(val =&gt; val * 2));</span><br><span class="line">// <span class="keyword">set</span>的值是2, 4, 6</span><br><span class="line"></span><br><span class="line">//另一种是利用Array.from方法。</span><br><span class="line">// 方法二</span><br><span class="line">let <span class="keyword">set</span> = new Set([1, 2, 3]);</span><br><span class="line"><span class="keyword">set</span> = new Set(Array.from(<span class="keyword">set</span>, val =&gt; val * 2));</span><br><span class="line">// <span class="keyword">set</span>的值是2, 4, 6</span><br></pre></td></tr></table></figure>
+
+<h2 id="WeakSet"><a href="#WeakSet" class="headerlink" title="WeakSet"></a>WeakSet</h2><h3 id="含义"><a href="#含义" class="headerlink" title="含义"></a>含义</h3><p>它与 Set 有两个区别。</p>
+<p>首先，WeakSet 的成员只能是<strong><em>对象</em></strong>，而不能是其他类型的值。</p>
+<p>其次，WeakSet 中的对象都是弱引用，即垃圾回收机制不考虑 WeakSet 对该对象的引用，也就是说，如果其他对象都不再引用该对象，那么垃圾回收机制会自动回收该对象所占用的内存，不考虑该对象还存在于 WeakSet 之中。</p>
+<p>由于上面这个特点，WeakSet 的成员是不适合引用的。因此 ES6 规定 WeakSet 不可遍历。</p>
+<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><p>WeakSet 结构有以下三个方法。</p>
+<ul>
+<li>WeakSet.prototype.add(value)：向 WeakSet 实例添加一个新成员。</li>
+<li>WeakSet.prototype.delete(value)：清除 WeakSet 实例的指定成员。</li>
+<li>WeakSet.prototype.has(value)：返回一个布尔值，表示某个值是否在 WeakSet 实例之中。</li>
+</ul>
+<blockquote>
+<p>没有clear()<br>没有size和forEach属性</p>
+</blockquote>
+<p>WeakSet 的一个用处，是储存 DOM 节点，而不用担心这些节点从文档移除时，会引发内存泄漏。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> foos = <span class="keyword">new</span> <span class="built_in">WeakSet</span>()</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>() &#123;</span><br><span class="line">    foos.add(<span class="keyword">this</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  method () &#123;</span><br><span class="line">    <span class="keyword">if</span> (!foos.has(<span class="keyword">this</span>)) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">'Foo.prototype.method 只能在Foo的实例上调用！'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h2><h3 id="含义和基本用法"><a href="#含义和基本用法" class="headerlink" title="含义和基本用法"></a>含义和基本用法</h3><p>JavaScript 的对象（Object），本质上是键值对的集合（Hash 结构），但是传统上只能用字符串当作键。这给它的使用带来了很大的限制。</p>
+<p>为了解决这个问题，ES6 提供了 Map 数据结构。它类似于对象，也是键值对的集合，但是“键”的范围不限于字符串，各种类型的值（包括对象）都可以当作键。</p>
+<p>使用 Set 对象和 Map 对象，当作Map构造函数的参数，结果都生成了新的 Map 对象</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">set</span> = new Set([</span><br><span class="line">  ['foo', 1],</span><br><span class="line">  ['bar', 2]</span><br><span class="line">]);</span><br><span class="line">const m1 = new Map(<span class="keyword">set</span>);</span><br><span class="line">m1.<span class="keyword">get</span>('foo') // 1</span><br><span class="line"></span><br><span class="line">const m2 = new Map([['baz', 3]]);</span><br><span class="line">const m3 = new Map(m2);</span><br><span class="line">m3.<span class="keyword">get</span>('baz') // 3</span><br></pre></td></tr></table></figure>
+
+<p>注意，只有对同一个对象的引用，Map 结构才将其视为同一个键。这一点要非常小心。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> map = <span class="keyword">new</span> <span class="built_in">Map</span>();</span><br><span class="line"></span><br><span class="line">map.set([<span class="string">'a'</span>], <span class="number">555</span>);</span><br><span class="line">map.get([<span class="string">'a'</span>]) <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> map = <span class="keyword">new</span> <span class="built_in">Map</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> k1 = [<span class="string">'a'</span>];</span><br><span class="line"><span class="keyword">const</span> k2 = [<span class="string">'a'</span>];</span><br><span class="line"></span><br><span class="line">map</span><br><span class="line">.set(k1, <span class="number">111</span>)</span><br><span class="line">.set(k2, <span class="number">222</span>);</span><br><span class="line"></span><br><span class="line">map.get(k1) <span class="comment">// 111</span></span><br><span class="line">map.get(k2) <span class="comment">// 222</span></span><br></pre></td></tr></table></figure>
+
+<p>由上可知，Map 的键实际上是跟内存地址绑定的，只要内存地址不一样，就视为两个键。<br>这就解决了同名属性碰撞（clash）的问题，我们扩展别人的库的时候，如果使用对象作为键名，就不用担心自己的属性与原作者的属性同名。</p>
+<h3 id="实例的属性和操作方法"><a href="#实例的属性和操作方法" class="headerlink" title="实例的属性和操作方法"></a>实例的属性和操作方法</h3><p>（1）size 属性<br>（2）Map.prototype.set(key, value)<br>（3）Map.prototype.get(key)<br>（4）Map.prototype.has(key)<br>（5）Map.prototype.delete(key)<br>（6）Map.prototype.clear()</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> map = <span class="keyword">new</span> <span class="built_in">Map</span>([</span><br><span class="line">  [<span class="string">'name'</span>, <span class="string">'张三'</span>],</span><br><span class="line">  [<span class="string">'title'</span>, <span class="string">'Author'</span>]</span><br><span class="line">]);</span><br><span class="line"></span><br><span class="line">map.size <span class="comment">// 2</span></span><br><span class="line">map.has(<span class="string">'name'</span>) <span class="comment">// true</span></span><br><span class="line">map.get(<span class="string">'name'</span>) <span class="comment">// "张三"</span></span><br><span class="line">map.delete(<span class="string">'name'</span>) </span><br><span class="line">map.clear()</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> items = [</span><br><span class="line">  [<span class="string">'name'</span>, <span class="string">'张三'</span>],</span><br><span class="line">  [<span class="string">'title'</span>, <span class="string">'Author'</span>]</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> map = <span class="keyword">new</span> <span class="built_in">Map</span>();</span><br><span class="line"></span><br><span class="line">items.forEach(</span><br><span class="line">  ([key, value]) =&gt; map.set(key, value)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>只要两个值严格相等，Map 将其视为一个键<br>undefined、null、NaN也可以作为键。<br>虽然NaN不严格相等于自身，但 Map 将其视为同一个键。</p>
+</blockquote>
+<h3 id="遍历方法"><a href="#遍历方法" class="headerlink" title="遍历方法"></a>遍历方法</h3><p>Map 结构原生提供三个遍历器生成函数和一个遍历方法。</p>
+<ul>
+<li>Map.prototype.keys()：返回键名的遍历器。</li>
+<li>Map.prototype.values()：返回键值的遍历器。</li>
+<li>Map.prototype.entries()：返回所有成员的遍历器。</li>
+<li>Map.prototype.forEach()：遍历 Map 的所有成员。</li>
+</ul>
+<blockquote>
+<p>Map 的遍历顺序就是插入顺序。</p>
+</blockquote>
+<p>结合数组的map方法、filter方法，可以实现 Map 的遍历和过滤（Map 本身没有map和filter方法）。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> map0 = <span class="keyword">new</span> <span class="built_in">Map</span>()</span><br><span class="line">  .set(<span class="number">1</span>, <span class="string">'a'</span>)</span><br><span class="line">  .set(<span class="number">2</span>, <span class="string">'b'</span>)</span><br><span class="line">  .set(<span class="number">3</span>, <span class="string">'c'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> map1 = <span class="keyword">new</span> <span class="built_in">Map</span>(</span><br><span class="line">  [...map0].filter(<span class="function">(<span class="params">[k, v]</span>) =&gt;</span> k &lt; <span class="number">3</span>)</span><br><span class="line">);</span><br><span class="line"><span class="comment">// 产生 Map 结构 &#123;1 =&gt; 'a', 2 =&gt; 'b'&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> map2 = <span class="keyword">new</span> <span class="built_in">Map</span>(</span><br><span class="line">  [...map0].map(<span class="function">(<span class="params">[k, v]</span>) =&gt;</span> [k * <span class="number">2</span>, <span class="string">'_'</span> + v])</span><br><span class="line">    );</span><br><span class="line"><span class="comment">// 产生 Map 结构 &#123;2 =&gt; '_a', 4 =&gt; '_b', 6 =&gt; '_c'&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>forEach()</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">map.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">value, key, map</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"Key: %s, Value: %s"</span>, key, value);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="WeakMap"><a href="#WeakMap" class="headerlink" title="WeakMap"></a>WeakMap</h2><h3 id="含义-1"><a href="#含义-1" class="headerlink" title="含义"></a>含义</h3><p>WeakMap与Map的区别有两点。</p>
+<p>首先，WeakMap只接受对象作为键名（null除外），不接受其他类型的值作为键名。<br>其次，WeakMap的键名所指向的对象，不计入垃圾回收机制。</p>
+<h3 id="WeakMap-的语法"><a href="#WeakMap-的语法" class="headerlink" title="WeakMap 的语法"></a>WeakMap 的语法</h3><p>WeakMap只有四个方法可用：get()、set()、has()、delete()。</p>
+<h3 id="WeakMap-的用途"><a href="#WeakMap-的用途" class="headerlink" title="WeakMap 的用途"></a>WeakMap 的用途</h3><p>WeakMap 应用的典型场合就是 DOM 节点作为键名</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> myElement = <span class="built_in">document</span>.getElementById(<span class="string">'logo'</span>);</span><br><span class="line"><span class="keyword">let</span> myWeakmap = <span class="keyword">new</span> <span class="built_in">WeakMap</span>();</span><br><span class="line"></span><br><span class="line">myWeakmap.set(myElement, &#123;<span class="attr">timesClicked</span>: <span class="number">0</span>&#125;);</span><br><span class="line"></span><br><span class="line">myElement.addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> logoData = myWeakmap.get(myElement);</span><br><span class="line">  logoData.timesClicked++;</span><br><span class="line">&#125;, <span class="literal">false</span>);</span><br></pre></td></tr></table></figure>
+
+<p>WeakMap 的另一个用处是部署私有属性。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> _counter = <span class="keyword">new</span> <span class="built_in">WeakMap</span>();</span><br><span class="line"><span class="keyword">const</span> _action = <span class="keyword">new</span> <span class="built_in">WeakMap</span>();</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Countdown</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(counter, action) &#123;</span><br><span class="line">    _counter.set(<span class="keyword">this</span>, counter);</span><br><span class="line">    _action.set(<span class="keyword">this</span>, action);</span><br><span class="line">  &#125;</span><br><span class="line">  dec() &#123;</span><br><span class="line">    <span class="keyword">let</span> counter = _counter.get(<span class="keyword">this</span>);</span><br><span class="line">    <span class="keyword">if</span> (counter &lt; <span class="number">1</span>) <span class="keyword">return</span>;</span><br><span class="line">    counter--;</span><br><span class="line">    _counter.set(<span class="keyword">this</span>, counter);</span><br><span class="line">    <span class="keyword">if</span> (counter === <span class="number">0</span>) &#123;</span><br><span class="line">      _action.get(<span class="keyword">this</span>)();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> c = <span class="keyword">new</span> Countdown(<span class="number">2</span>, () =&gt; <span class="built_in">console</span>.log(<span class="string">'DONE'</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">//计数2-&gt;0 显示DONE</span></span><br><span class="line">c.dec()</span><br><span class="line">c.dec() <span class="comment">// DONE</span></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>ECMAScript 6</category>
+        <category>JS</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>控制反转和依赖注入的理解</title>
+    <url>/2019/12/30/%E6%8E%A7%E5%88%B6%E5%8F%8D%E8%BD%AC%E5%92%8C%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5/</url>
+    <content><![CDATA[<h1 id="控制反转和依赖注入的理解-通俗易懂"><a href="#控制反转和依赖注入的理解-通俗易懂" class="headerlink" title="控制反转和依赖注入的理解(通俗易懂)"></a>控制反转和依赖注入的理解(通俗易懂)</h1><h2 id="依赖注入例子"><a href="#依赖注入例子" class="headerlink" title="依赖注入例子"></a>依赖注入例子</h2><p>先来讲一讲，一个简单的依赖注入例子。</p>
+<ul>
+<li>依赖 如果在 Class A 中，有 Class B 的实例，则称 Class A 对 Class B 有一个依赖。例如下面类 Human 中用到一个 Father 对象，我们就说类 Human 对类 Father 有一个依赖。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">Human</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    Father father;</span><br><span class="line">    ...</span><br><span class="line">    public Human() &#123;</span><br><span class="line">        father = <span class="keyword">new</span> Father();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>仔细看这段代码我们会发现存在一些问题：</p>
+<p>(1). 如果现在要改变 father 生成方式，如需要用new Father(String name)初始化 father，需要修改 Human 代码；</p>
+<p>(2). 如果想测试不同 Father 对象对 Human 的影响很困难，因为 father 的初始化被写死在了 Human 的构造函数中；</p>
+<p>(3). 如果new Father()过程非常缓慢，单测时我们希望用已经初始化好的 father 对象 Mock 掉这个过程也很困难。</p>
+<ul>
+<li>依赖注入 上面将依赖在构造函数中直接初始化是一种 Hard init 方式，弊端在于两个类不够独立，不方便测试。我们还有另外一种 Init 方式，如下：</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">Human</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    Father father;</span><br><span class="line">    ...</span><br><span class="line">    public Human(Father father) &#123;</span><br><span class="line">        <span class="keyword">this</span>.father = father;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面代码中，我们将 father 对象作为构造函数的一个参数传入。在调用 Human 的构造方法之前外部就已经初始化好了 Father 对象。像这种非自己主动初始化依赖，而通过外部来传入依赖的方式，我们就称为依赖注入。<br>现在我们发现上面 1 中存在的两个问题都很好解决了，简单的说依赖注入主要有两个好处：</p>
+<p>(1). 解耦，将依赖之间解耦。</p>
+<p>(2). 因为已经解耦，所以方便做单元测试，尤其是 Mock 测试。</p>
+<h2 id="Ioc"><a href="#Ioc" class="headerlink" title="Ioc"></a>Ioc</h2><h3 id="IoC是什么"><a href="#IoC是什么" class="headerlink" title="IoC是什么"></a>IoC是什么</h3><p>Ioc—Inversion of Control，即“控制反转”，不是什么技术，而是一种设计思想。在Java开发中，Ioc意味着将你设计好的对象交给容器控制，而不是传统的在你的对象内部直接控制。如何理解好Ioc呢？理解好Ioc的关键是要明确“谁控制谁，控制什么，为何是反转（有反转就应该有正转了），哪些方面反转了”，那我们来深入分析一下：</p>
+<ul>
+<li><p>谁控制谁，控制什么：传统Java SE程序设计，我们直接在对象内部通过new进行创建对象，是程序主动去创建依赖对象；而IoC是有专门一个容器来创建这些对象，即由Ioc容器来控制对 象的创建；谁控制谁？当然是IoC 容器控制了对象；控制什么？那就是主要控制了外部资源获取（不只是对象包括比如文件等）。</p>
+</li>
+<li><p>为何是反转，哪些方面反转了：有反转就有正转，传统应用程序是由我们自己在对象中主动控制去直接获取依赖对象，也就是正转；而反转则是由容器来帮忙创建及注入依赖对象；为何是反转？因为由容器帮我们查找及注入依赖对象，对象只是被动的接受依赖对象，所以是反转；哪些方面反转了？依赖对象的获取被反转了。</p>
+</li>
+</ul>
+<p>　　用图例说明一下，传统程序设计如图2-1，都是主动去创建相关对象然后再组合起来：</p>
+<p>图1-1 传统应用程序示意图</p>
+<p><img src="/images/%E6%8E%A7%E5%88%B6%E5%8F%8D%E8%BD%AC%E5%92%8C%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5/%E6%8E%A7%E5%88%B6%E5%8F%8D%E8%BD%AC%E5%92%8C%E6%B3%A8%E5%85%A5%E4%BE%9D%E8%B5%96_1.jpg" alt="传统应用程序示意图"></p>
+<p>当有了IoC/DI的容器后，在客户端类中不再主动去创建这些对象了，如图2-2所示:</p>
+<p><img src="/images/%E6%8E%A7%E5%88%B6%E5%8F%8D%E8%BD%AC%E5%92%8C%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5/%E6%8E%A7%E5%88%B6%E5%8F%8D%E8%BD%AC%E5%92%8C%E6%B3%A8%E5%85%A5%E4%BE%9D%E8%B5%96_2.png" alt="IoC/DI的容器"></p>
+<p>图1-2有IoC/DI容器后程序结构示意图</p>
+<h3 id="IoC能做什么"><a href="#IoC能做什么" class="headerlink" title="IoC能做什么"></a>IoC能做什么</h3><p>　　IoC 不是一种技术，只是一种思想，一个重要的面向对象编程的法则，它能指导我们如何设计出松耦合、更优良的程序。传统应用程序都是由我们在类内部主动创建依赖对象，从而导致类与类之间高耦合，难于测试；有了IoC容器后，把创建和查找依赖对象的控制权交给了容器，由容器进行注入组合对象，所以对象与对象之间是 松散耦合，这样也方便测试，利于功能复用，更重要的是使得程序的整个体系结构变得非常灵活。</p>
+<p>　　其实IoC对编程带来的最大改变不是从代码上，而是从思想上，发生了“主从换位”的变化。应用程序原本是老大，要获取什么资源都是主动出击，但是在IoC/DI思想中，应用程序就变成被动的了，被动的等待IoC容器来创建并注入它所需要的资源了。</p>
+<p>　　IoC很好的体现了面向对象设计法则之一—— 好莱坞法则：“别找我们，我们找你”；即由IoC容器帮对象找相应的依赖对象并注入，而不是由对象主动去找。</p>
+<h3 id="IoC和DI"><a href="#IoC和DI" class="headerlink" title="IoC和DI"></a>IoC和DI</h3><p>　　DI—Dependency Injection，即“依赖注入”：组件之间依赖关系由容器在运行期决定，形象的说，即由容器动态的将某个依赖关系注入到组件之中。依赖注入的目的并非为软件系统带来更多功能，而是为了提升组件重用的频率，并为系统搭建一个灵活、可扩展的平台。通过依赖注入机制，我们只需要通过简单的配置，而无需任何代码就可指定目标需要的资源，完成自身的业务逻辑，而不需要关心具体的资源来自何处，由谁实现。</p>
+<p>　　理解DI的关键是：“谁依赖谁，为什么需要依赖，谁注入谁，注入了什么”，那我们来深入分析一下：</p>
+<ul>
+<li><p>谁依赖于谁：当然是应用程序依赖于IoC容器；</p>
+</li>
+<li><p>为什么需要依赖：应用程序需要IoC容器来提供对象需要的外部资源；</p>
+</li>
+<li><p>谁注入谁：很明显是IoC容器注入应用程序某个对象，应用程序依赖的对象；</p>
+</li>
+<li><p>注入了什么：就是注入某个对象所需要的外部资源（包括对象、资源、常量数据）。</p>
+</li>
+</ul>
+<p>　　IoC和DI由什么关系呢？其实它们是同一个概念的不同角度描述，由于控制反转概念比较含糊（可能只是理解为容器控制对象这一个层面，很难让人想到谁来维护对象关系），所以2004年大师级人物Martin Fowler又给出了一个新的名字：“依赖注入”，相对IoC 而言，“依赖注入”明确描述了“被注入对象依赖IoC容器配置依赖对象”。</p>
+<p>　　看过很多对Spring的Ioc理解的文章，好多人对Ioc和DI的解释都晦涩难懂，反正就是一种说不清，道不明的感觉，读完之后依然是一头雾水，感觉就是开涛这位技术牛人写得特别通俗易懂，他清楚地解释了IoC(控制反转) 和DI(依赖注入)中的每一个字，读完之后给人一种豁然开朗的感觉。我相信对于初学Spring框架的人对Ioc的理解应该是有很大帮助的。</p>
+<h2 id="分享Bromon的blog上对IoC与DI浅显易懂的讲解"><a href="#分享Bromon的blog上对IoC与DI浅显易懂的讲解" class="headerlink" title="分享Bromon的blog上对IoC与DI浅显易懂的讲解"></a>分享Bromon的blog上对IoC与DI浅显易懂的讲解</h2><h3 id="IoC-控制反转"><a href="#IoC-控制反转" class="headerlink" title="IoC(控制反转)"></a>IoC(控制反转)</h3><p>　　首先想说说IoC（Inversion of Control，控制反转）。这是spring的核心，贯穿始终。所谓IoC，对于spring框架来说，就是由spring来负责控制对象的生命周期和对象间的关系。这是什么意思呢，举个简单的例子，我们是如何找女朋友的？常见的情况是，我们到处去看哪里有长得漂亮身材又好的mm，然后打听她们的兴趣爱好、qq号、电话号、ip号、iq号………，想办法认识她们，投其所好送其所要，然后嘿嘿……这个过程是复杂深奥的，我们必须自己设计和面对每个环节。传统的程序开发也是如此，在一个对象中，如果要使用另外的对象，就必须得到它（自己new一个，或者从JNDI中查询一个），使用完之后还要将对象销毁（比如Connection等），对象始终会和其他的接口或类藕合起来。</p>
+<p>　　那么IoC是如何做的呢？有点像通过婚介找女朋友，在我和女朋友之间引入了一个第三者：婚姻介绍所。婚介管理了很多男男女女的资料，我可以向婚介提出一个列表，告诉它我想找个什么样的女朋友，比如长得像李嘉欣，身材像林熙雷，唱歌像周杰伦，速度像卡洛斯，技术像齐达内之类的，然后婚介就会按照我们的要求，提供一个mm，我们只需要去和她谈恋爱、结婚就行了。简单明了，如果婚介给我们的人选不符合要求，我们就会抛出异常。整个过程不再由我自己控制，而是有婚介这样一个类似容器的机构来控制。Spring所倡导的开发方式就是如此，所有的类都会在spring容器中登记，告诉spring你是个什么东西，你需要什么东西，然后spring会在系统运行到适当的时候，把你要的东西主动给你，同时也把你交给其他需要你的东西。所有的类的创建、销毁都由 spring来控制，也就是说控制对象生存周期的不再是引用它的对象，而是spring。对于某个具体的对象而言，以前是它控制其他对象，现在是所有对象都被spring控制，所以这叫控制反转。</p>
+<h3 id="DI-依赖注入"><a href="#DI-依赖注入" class="headerlink" title="DI(依赖注入)"></a>DI(依赖注入)</h3><p>　　IoC的一个重点是在系统运行中，动态的向某个对象提供它所需要的其他对象。这一点是通过DI（Dependency Injection，依赖注入）来实现的。比如对象A需要操作数据库，以前我们总是要在A中自己编写代码来获得一个Connection对象，有了 spring我们就只需要告诉spring，A中需要一个Connection，至于这个Connection怎么构造，何时构造，A不需要知道。在系统运行时，spring会在适当的时候制造一个Connection，然后像打针一样，注射到A当中，这样就完成了对各个对象之间关系的控制。A需要依赖 Connection才能正常运行，而这个Connection是由spring注入到A中的，依赖注入的名字就这么来的。那么DI是如何实现的呢？ Java 1.3之后一个重要特征是反射（reflection），它允许程序在运行的时候动态的生成对象、执行对象的方法、改变对象的属性，spring就是通过反射来实现注入的。</p>
+<p>　　理解了IoC和DI的概念后，一切都将变得简单明了，剩下的工作只是在spring的框架中堆积木而已。</p>
+<h2 id="我对IoC-控制反转-和DI-依赖注入-的理解"><a href="#我对IoC-控制反转-和DI-依赖注入-的理解" class="headerlink" title="我对IoC(控制反转)和DI(依赖注入)的理解"></a>我对IoC(控制反转)和DI(依赖注入)的理解</h2><p>　　在平时的java应用开发中，我们要实现某一个功能或者说是完成某个业务逻辑时至少需要两个或以上的对象来协作完成，在没有使用Spring的时候，每个对象在需要使用他的合作对象时，自己均要使用像new object() 这样的语法来将合作对象创建出来，这个合作对象是由自己主动创建出来的，创建合作对象的主动权在自己手上，自己需要哪个合作对象，就主动去创建，创建合作对象的主动权和创建时机是由自己把控的，而这样就会使得对象间的耦合度高了，A对象需要使用合作对象B来共同完成一件事，A要使用B，那么A就对B产生了依赖，也就是A和B之间存在一种耦合关系，并且是紧密耦合在一起，而使用了Spring之后就不一样了，创建合作对象B的工作是由Spring来做的，Spring创建好B对象，然后存储到一个容器里面，当A对象需要使用B对象时，Spring就从存放对象的那个容器里面取出A要使用的那个B对象，然后交给A对象使用，至于Spring是如何创建那个对象，以及什么时候创建好对象的，A对象不需要关心这些细节问题(你是什么时候生的，怎么生出来的我可不关心，能帮我干活就行)，A得到Spring给我们的对象之后，两个人一起协作完成要完成的工作即可。</p>
+<p>　　所以控制反转IoC(Inversion of Control)是说创建对象的控制权进行转移，以前创建对象的主动权和创建时机是由自己把控的，而现在这种权力转移到第三方，比如转移交给了IoC容器，它就是一个专门用来创建对象的工厂，你要什么对象，它就给你什么对象，有了 IoC容器，依赖关系就变了，原先的依赖关系就没了，它们都依赖IoC容器了，通过IoC容器来建立它们之间的关系。</p>
+<p>　　这是我对Spring的IoC(控制反转)的理解。DI(依赖注入)其实就是IOC的另外一种说法，DI是由Martin Fowler 在2004年初的一篇论文中首次提出的。他总结：控制的什么被反转了？就是：获得依赖对象的方式反转了。</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>　　对于Spring Ioc这个核心概念，我相信每一个学习Spring的人都会有自己的理解。这种概念上的理解没有绝对的标准答案，仁者见仁智者见智。如果有理解不到位或者理解错的地方，欢迎广大园友指正！</p>
+]]></content>
+      <categories>
+        <category>C#</category>
+        <category>.NET</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>盘古分词</title>
+    <url>/2019/12/16/%E7%9B%98%E5%8F%A4%E5%88%86%E8%AF%8D/</url>
+    <content><![CDATA[<h1 id="盘古分词Lucene-net"><a href="#盘古分词Lucene-net" class="headerlink" title="盘古分词Lucene.net"></a>盘古分词Lucene.net</h1><h2 id="官网"><a href="#官网" class="headerlink" title="官网"></a>官网</h2><p><a href="http://lucenenet.apache.org/index.html" target="_blank" rel="noopener">http://lucenenet.apache.org/index.html</a></p>
+<p><a href="https://archive.codeplex.com/?p=pangusegment" target="_blank" rel="noopener">https://archive.codeplex.com/?p=pangusegment</a> <strong>项目描述</strong></p>
+<p>开发人员可以基于Lucene.net实现全文检索的功能</p>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>Lucene.net并不是一个爬行搜索引擎，也不会自动地索引内容。我们得先将要索引的文档中的文本抽取出来，然后再将其加到Lucene.net索引中。标准的步骤是先初始化一个Analyzer、打开一个IndexWriter、然后再将文档一个接一个地加进去。一旦完成这些步骤，索引就可以在关闭前得到优化，同时所做的改变也会生效。这个过程可能比开发者习惯的方式更加手工化一些，但却在数据的索引上给予你更多的灵活性，而且其效率也很高。</p>
+<h2 id="demo"><a href="#demo" class="headerlink" title="demo"></a>demo</h2><p><a href="https://github.com/infernoyy/BlogCode" target="_blank" rel="noopener">https://github.com/infernoyy/BlogCode</a>  路径下的<strong>Lucene.Net.Analysis.PanGu-master.zip</strong></p>
+]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>github代码管理</title>
+    <url>/2019/12/16/github%E4%BB%A3%E7%A0%81%E7%AE%A1%E7%90%86/</url>
+    <content><![CDATA[<h1 id="github代码管理"><a href="#github代码管理" class="headerlink" title="github代码管理"></a>github代码管理</h1><h2 id="代码管理步骤"><a href="#代码管理步骤" class="headerlink" title="代码管理步骤"></a>代码管理步骤</h2><p>1、代码仓库优先建立好，git提前安装<br>2、新建文件夹，右击Git Bash Here<br>3、克隆远端仓库</p>
+<blockquote>
+<p>git clone <a href="https://github.com/infernoyy/BlogCode.git" target="_blank" rel="noopener">https://github.com/infernoyy/BlogCode.git</a></p>
+</blockquote>
+<p>4、cd 你的文件夹<br>5、添加、提交、推送</p>
+<ul>
+<li><p>git add .<br>注：别忘记后面的.，此操作是把Test文件夹下面的文件都添加进来）</p>
+</li>
+<li><p>git commit  -m  “提交信息”<br>（注：“提交信息”里面换成你需要，如“first commit”）</p>
+</li>
+<li><p>git push -u origin master   （注：此操作目的是把本地仓库push到github上面，此步骤需要你输入帐号和密码）</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>跨域(同源策略)</title>
+    <url>/2019/11/05/%E8%B7%A8%E5%9F%9F/</url>
+    <content><![CDATA[<p>跨域的问题来源于“同源策略”。</p>
+<h1 id="什么是同源策略？"><a href="#什么是同源策略？" class="headerlink" title="什么是同源策略？"></a>什么是同源策略？</h1><blockquote>
+<p>参考 <a href="https://baike.baidu.com/item/同源策略/3927875?fr=aladdin" target="_blank" rel="noopener">百度百科 - 同源策略</a></p>
+</blockquote>
+<p>同源策略（Same origin policy）是一种约定，它是浏览器最核心也最基本的安全功能，如果缺少了同源策略，则浏览器的正常功能可能都会受到影响。可以说Web是构建在同源策略基础之上的，浏览器只是针对同源策略的一种实现。</p>
+<p>同源策略，它是由Netscape提出的一个著名的安全策略。<br>现在所有支持JavaScript 的浏览器都会使用这个策略。<br>所谓同源是指，域名，协议，端口相同。<br>当一个浏览器的两个tab页中分别打开来 百度和谷歌的页面<br>当浏览器的百度tab页执行一个脚本的时候会检查这个脚本是属于哪个页面的，<br>即检查是否同源，只有和百度同源的脚本才会被执行。 [1]<br>如果非同源，那么在请求数据时，浏览器会在控制台中报一个异常，提示拒绝访问。<br>同源策略是浏览器的行为，是为了保护本地数据不被JavaScript代码获取回来的数据污染，因此拦截的是客户端发出的请求回来的数据接收，即请求发送了，服务器响应了，但是无法被浏览器接收。</p>
+<h1 id="跨域问题解决原理"><a href="#跨域问题解决原理" class="headerlink" title="跨域问题解决原理"></a>跨域问题解决原理</h1><p>CORS全称Cross-Origin Resource Sharing，中文全称跨域资源共享。它解决跨域问题的原理是通过向http的请求报文和响应式报文里面加入相应的标识告诉浏览器他能访问哪些域名的请求。比如，我们向响应报文里面增加这个Access-Control-Allow-Origin:<a href="http://localhost:8081，就表示支持http://localhost:8081里面的所有请求访问系统资源。" target="_blank" rel="noopener">http://localhost:8081，就表示支持http://localhost:8081里面的所有请求访问系统资源。</a></p>
+<h1 id="WebAPI实现跨域请求"><a href="#WebAPI实现跨域请求" class="headerlink" title="WebAPI实现跨域请求"></a>WebAPI实现跨域请求</h1><p>以WebApi为例</p>
+<h2 id="microsoft-apsnet-webapi-cors"><a href="#microsoft-apsnet-webapi-cors" class="headerlink" title="microsoft.apsnet.webapi.cors"></a>microsoft.apsnet.webapi.cors</h2><p>在WebAPI项目中使用NuGet搜索“microsoft.apsnet.webapi.cors”，安装第一个<br>工具–&gt;NuGet包管理器–&gt;管理解决方案的NuGet程序包</p>
+<p><img src="/images/%E5%85%B6%E4%BB%96/%E8%B7%A8%E5%9F%9F_1.png" alt="Nuget"></p>
+<h2 id="APP-Start-WebApiConfig-cs"><a href="#APP-Start-WebApiConfig-cs" class="headerlink" title="APP_Start - WebApiConfig.cs"></a>APP_Start - WebApiConfig.cs</h2><p>然后在APP_Start文件夹下面的WebApiConfig.cs文件夹配置跨域</p>
+<pre><code>using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.Cors;
+using Microsoft.Owin.Security.OAuth;
+using Newtonsoft.Json.Serialization;
+
+namespace WebApi
+{
+    public static class WebApiConfig
+    {
+        public static void Register(HttpConfiguration config)
+        {
+            //跨域配置
+            config.EnableCors(new EnableCorsAttribute(&quot;*&quot;, &quot;*&quot;, &quot;*&quot;));
+
+            // Web API 路由
+            config.MapHttpAttributeRoutes();
+
+            config.Routes.MapHttpRoute(
+                name: &quot;DefaultApi&quot;,
+                routeTemplate: &quot;api/{controller}/{id}&quot;,
+                defaults: new { id = RouteParameter.Optional }
+            );
+
+        }
+    }
+}</code></pre><blockquote>
+<p>这里 * 指的是任何访问都可以链接到我们的系统，如果只想对某一些进行api跨域，可以在 * 出做相应的限制。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>IIS 5.0和6.0的ASP.NET应用程序生命周期概述</title>
+    <url>/2019/11/02/IIS/</url>
+    <content><![CDATA[<blockquote>
+<p>参考 <a href="https://docs.microsoft.com/en-us/previous-versions/aspnet/ms178473(v=vs.100)?redirectedfrom=MSDN" target="_blank" rel="noopener">ASP.NET Application Life Cycle Overview for IIS 5.0 and 6.0</a><br>参考 <a href="https://docs.microsoft.com/en-us/previous-versions/aspnet/bb470252(v=vs.100)?redirectedfrom=MSDN" target="_blank" rel="noopener">ASP.NET Application Life Cycle Overview for IIS 7.0</a><br><a href="https://www.cnblogs.com/anlen/p/3612048.html" target="_blank" rel="noopener">https://www.cnblogs.com/anlen/p/3612048.html</a><br><a href="https://www.cnblogs.com/ruanraun/p/apsnet.html" target="_blank" rel="noopener">https://www.cnblogs.com/ruanraun/p/apsnet.html</a></p>
+</blockquote>
+<h1 id="什么是IIS？"><a href="#什么是IIS？" class="headerlink" title="什么是IIS？"></a>什么是IIS？</h1><p>IIS是一种Web（网页）服务组件，其中包括Web服务器、FTP服务器、NNTP服务器和SMTP服务器，分别用于网页浏览、文件传输、新闻服务和邮件发送等方面。<br>对于IIS来说，它依赖一个叫做 HTTP.SYS 的内置驱动程序来监听来自外部的 HTTP请求。</p>
+<p><img src="/images/IIS/IIS_1.gif" alt="生命周期概述"></p>
+<p>IIS根据文件的后缀名识别这些Asp、Java、VBscript、Asp.Net等程序发布的页面。<br>服务器获取所请求的页面（也可以是多媒体、文件（也有后缀名）等）的后缀名以后，接下来会在服务器端寻找可以处理这类后缀名的应用程序。<br>IIS不可能处理各种后缀名的应用程序，要处理这些，就要借助 ISAPI 应用程序（NOTE：Internet Server Application Programe Interface，互联网服务器应用程序接口）。ISAPI实际上只是一个接口，起到一个代理的作用，它的主要工作是映射所请求的页面(文件)  和与此后缀名相对应的实际的处理程序。<br>除了映射文件与其对应的处理程序以外，ISAPI 还需要做一些其他的工作：从HTTP.SYS中获取当前的Httq请求信息，并且将这些信息保存到 HttpWorkerRequest 类中。在相互隔离的应用程序域AppDomain中加载HttpRuntime。调用 HttpRuntime的ProcessRequest方法。</p>
+<p>所有的.aspx文件实际上都是由 aspnet_isapi.dll 。这个程序来处理的，当IIS把对于.aspx页面的请求提通过ISAPI交给了aspnet_isapi.dll以后，接着就是只是等待结果，返回给用户（实际是IIS 接收返回的数据流，并重新返还给 HTTP.SYS，最后，HTTP.SYS 再将这些数据返回给客户端浏览器。）。现在我们应该知道：Asp.Net 只是服务器(IIS)的一个组成部分而已，它是一个 ISAPI扩展。</p>
+<h1 id="文件编译"><a href="#文件编译" class="headerlink" title="文件编译"></a>文件编译</h1><p>优先编译顶级项（编译的第一批项），仅当依赖项更改时才会重新编译顶级项</p>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>App_GlobalResources</td>
+<td>编译应用程序的全局资源并生成资源程序集。 应用程序的 Bin 文件夹中的任何程序集都链接到资源程序集。</td>
+</tr>
+<tr>
+<td>App_WebResources</td>
+<td>创建并编译 Web 服务的代理类型。 所生成的 Web 引用程序集将链接到资源程序集（如存在）。</td>
+</tr>
+<tr>
+<td>Web.config 文件中定义的配置文件属性</td>
+<td>如果应用程序的 Web.config 文件中定义了配置文件属性，则生成一个包含配置文件对象的程序集。</td>
+</tr>
+<tr>
+<td>App_Code</td>
+<td>生成源代码文件并创建一个或更多个程序集。 所有代码程序集和配置文件程序集都链接到资源和 Web 引用程序集（如果有）。</td>
+</tr>
+<tr>
+<td>Global.asax</td>
+<td>编译应用程序对象并将其链接到所有先前产生的程序集。</td>
+</tr>
+</tbody></table>
+<p>编译文件夹、页和其他项</p>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>App_LocalResources</td>
+<td>如果包含被请求项的文件夹包含 App_LocalResources 文件夹，则编译本地资源文件夹的内容并将其链接到全局资源程序集。</td>
+</tr>
+<tr>
+<td>各个网页（.aspx 文件）、用户控件（.ascx 文件）、HTTP 处理程序（.ashx 文件）和 HTTP 模块（.asmx 文件）</td>
+<td>根据需要编译并链接到本地资源程序集和顶级程序集。</td>
+</tr>
+<tr>
+<td>主题、主控页、其他源文件</td>
+<td>在编译引用页时编译那些页所引用的各个主题、主控页和其他源代码文件的外观文件。</td>
+</tr>
+</tbody></table>
+<p>编译后的程序集缓存在服务器上并在后续请求时被重用，并且只要源代码未更改，就会在应用程序重新启动之间得到保留。 </p>
+<h1 id="应用程序生命周期概述"><a href="#应用程序生命周期概述" class="headerlink" title="应用程序生命周期概述"></a>应用程序生命周期概述</h1><p>在 IIS 6.0 中，有两个请求处理管道。 一个管道用于本机代码 ISAPI 筛选器和扩展组件。 另一个管道用于托管代码应用程序组件，如 ASP.NET。在 IIS 7.0 中，ASP.NET 运行时与 Web 服务器集成，这样就有了一个针对所有请求的统一的请求处理管道。</p>
+<ul>
+<li>浏览器向 Web 服务器（对于 ASP.NET 应用程序，通常为 IIS）发送请求为起点</li>
+<li>对所请求的文件的文件扩展名进行检查，确定应由哪个 ISAPI 扩展处理该请求，然后将该请求传递给合适的 ISAPI 扩展。ASP.NET 处理已映射到其上的文件扩展名，如 .aspx、.ascx、.ashx 和 .asmx。<blockquote>
+<p>如果文件扩展名尚未映射到 ASP.NET，则 ASP.NET 将不会接收该请求。(静态内容.htm 文件、Javascript文件、图片、CSS文件等等)</p>
+</blockquote>
+</li>
+</ul>
+<p><img src="/images/IIS/IIS_2.gif" alt="生命周期概述"></p>
+<ul>
+<li><p>当用户请求的文件的后缀名为： .aspx、.ascx、.ashx 和 .asmx时，IIS会把这个请求交由ISAPI ，ISAP找到aspnet_ISAPI，然后让aspnet_ISAPI进行处理。当 ASP.NET 接收到对应用程序中任何资源的第一个请求时，名为 ApplicationManager 的类会创建一个应用程序域（AppDomanin）。 应用程序域为全局变量提供应用程序隔离，并允许单独卸载每个应用程序。 在应用程序域中，将为名为 HostingEnvironment 的类创建一个实例，该实例提供对有关应用程序的信息（如存储该应用程序的文件夹的名称）的访问。</p>
+<blockquote>
+<p>ApplicationManager 对象在 ASP.NET 应用程序的宿主环境中提供对象生存期管理。也就是为 ASP.NET 宿主应用程序管理 ASP.NET 应用程序域。 该对象负责：<br>1、激活和初始化 ASP.NET 应用程序；<br>2、管理应用程序生存期和在应用程序中注册的对象的生存期；<br>3、公开宿主环境使用的对象以处理 ASP.NET 应用程序请求；<br>4、提供任意给定时刻运行于宿主进程中的应用程序的列表；</p>
+</blockquote>
+</li>
+<li><p>创建了应用程序域并对 HostingEnvironment 对象进行了实例化之后，ASP.NET 将创建并初始化核心对象，如 HttpContext、HttpRequest 和HttpResponse。</p>
+<blockquote>
+<p>核心对象如下：<br>HttpContext 类包含特定于当前应用程序请求的对象，如 HttpRequest 和 HttpResponse 对象。<br>HttpRequest 对象包含有关当前请求的信息，包括 Cookie 和浏览器信息。<br>HttpResponse 对象包含发送到客户端的响应，包括所有呈现的输出和 Cookie。</p>
+</blockquote>
+</li>
+<li><p>初始化所有核心应用程序对象之后，将通过创建 HttpApplication 类的实例启动应用程序。</p>
+</li>
+</ul>
+<blockquote>
+<p><img src="/images/IIS/IIS_3.gif" alt="生命周期概述"></p>
+</blockquote>
+<p>创建 Global.asax 类（从 HttpApplication 类派生）的一个实例，并使用该派生类表示应用程序。</p>
+<ul>
+<li>最后由HttpApplication管线处理请求，在处理该请求时将由 HttpApplication 类执行以下事件</li>
+</ul>
+<blockquote>
+<p><img src="/images/IIS/IIS_4.jpg" alt="生命周期概述"></p>
+</blockquote>
+<blockquote>
+<p> 1.对请求进行验证，将检查浏览器发送的信息，并确定其是否包含潜在恶意标记。 有关更多信息，请参见ValidateRequest 和脚本侵入概述。<br> 2.如果已在 Web.config 文件的 UrlMappingsSection 节中配置了任何 URL，则执行 URL 映射。<br> 3.引发 BeginRequest 事件。在 ASP.NET 响应请求时作为 HTTP 执行管线链中的第一个事件发生。BeginRequest 事件发出信号表示创建任何给定的新请求。 此事件始终被引发，并且始终是请求处理期间发生的第一个事件。<br> 4.引发 AuthenticateRequest 事件。当安全模块已建立用户标识时发生。AuthenticateRequest 事件发出信号表示配置的身份验证机制已对当前请求进行了身份验证。 订阅 AuthenticateRequest 事件可确保在处理附加模块或事件处理程序之前对请求进行身份验证。<br> 5.引发 PostAuthenticateRequest 事件。当安全模块已建立用户标识时发生。PostAuthenticateRequest 事件在 AuthenticateRequest 事件发生之后引发。 预订 PostAuthenticateRequest 事件的功能可以访问由PostAuthenticateRequest 处理的任何数据。<br> 6.引发 AuthorizeRequest 事件。当安全模块已验证用户授权时发生。AuthorizeRequest 事件发出信号表示 ASP.NET 已对当前请求进行了授权。 订阅 AuthorizeRequest 事件可确保在处理附加的模块或事件处理程序之前对请求进行身份验证和授权。<br> 7.引发 PostAuthorizeRequest 事件。在当前请求的用户已获授权时发生。PostAuthorizeRequest 事件发出信号表示 ASP.NET 已对当前请求进行了授权。 订阅 PostAuthorizeRequest 事件可确保在处理附加的模块或处理程序之前对请求进行身份验证和授权。<br> 8.引发 ResolveRequestCache 事件。在 ASP.NET 完成授权事件以使缓存模块从缓存中为请求提供服务后发生，从而绕过事件处理程序（例如某个页或 XML Web services）的执行。<br> 9.引发 PostResolveRequestCache 事件。在 ASP.NET 跳过当前事件处理程序的执行并允许缓存模块满足来自缓存的请求时发生。<br> 10.根据所请求资源的文件扩展名（在应用程序的配置文件中映射），选择实现 IHttpHandler 的类，对请求进行处理。如果该请求针对从 Page 类派生的对象（页），并且需要对该页进行编译，则 ASP.NET 会在创建该页的实例之前对其进行编译。<br> 11.引发 PostMapRequestHandler 事件。在 ASP.NET 已将当前请求映射到相应的事件处理程序时发生。<br> 12.引发 AcquireRequestState 事件。当 ASP.NET 获取与当前请求关联的当前状态（如会话状态）时发生。AcquireRequestState 事件在创建了事件处理程序之后引发。<br> 13.引发 PostAcquireRequestState 事件。在已获得与当前请求关联的请求状态（例如会话状态）时发生。<br> PostAcquireRequestState 事件在 AcquireRequestState 事件发生之后引发。 预订 AcquireRequestState 事件的功能可以访问由PostAcquireRequestState 处理的任何数据。<br> 14.引发 PreRequestHandlerExecute 事件。恰好在 ASP.NET 开始执行事件处理程序（例如，某页或某个 XML Web services）前发生。<br> 15.为该请求调用合适的 IHttpHandler 类的 ProcessRequest 方法（或异步版IHttpAsyncHandler.BeginProcessRequest）。 例如，如果该请求针对某页，则当前的页实例将处理该请求。<br> 16.引发 PostRequestHandlerExecute 事件。在 ASP.NET 已将当前请求映射到相应的事件处理程序时发生。<br> 17.引发 ReleaseRequestState 事件。在 ASP.NET 已将当前请求映射到相应的事件处理程序时发生。<br> 18.引发 PostReleaseRequestState 事件。在 ASP.NET 已完成所有请求事件处理程序的执行并且请求状态数据已存储时发生。<br> 19.如果定义了 Filter 属性，则执行响应筛选。<br> 20.引发 UpdateRequestCache 事件。当 ASP.NET 执行完事件处理程序以使缓存模块存储将用于从缓存为后续请求提供服务的响应时发生。<br> 21.引发 PostUpdateRequestCache 事件。在 ASP.NET 完成缓存模块的更新并存储了用于从缓存中为后续请求提供服务的响应后，发生此事件。<br> 22.引发 EndRequest 事件。在 ASP.NET 响应请求时作为 HTTP 执行管线链中的最后一个事件发生。<br> 23.引发 PreSendRequestHeaders 事件。恰好在 ASP.NET 向客户端发送 HTTP 标头之前发生。<br> 24.引发 PreSendRequestContent 事件。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Docker简介</title>
+    <url>/2019/11/02/docker%E7%AE%80%E4%BB%8B/</url>
+    <content><![CDATA[<p>Docker的思想来自于集装箱，在一艘大船上，可以把货物规整的摆放起来。并且各种各样的货物被集装箱标准化了，集装箱和集装箱之间不会互相影响。现在都流行云计算了，云计算就好比大货轮。docker就是集装箱。</p>
+<h1 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h1><h2 id="传统开发"><a href="#传统开发" class="headerlink" title="传统开发"></a>传统开发</h2><p>将多环境多语言兼容</p>
+<p><img src="/images/IIS/Docker%E7%AE%80%E4%BB%8B_00.png" alt="Docker简介"><br><img src="/images/IIS/Docker%E7%AE%80%E4%BB%8B_01.png" alt="Docker简介"><br><img src="/images/IIS/Docker%E7%AE%80%E4%BB%8B_1.png" alt="Docker简介"></p>
+<h1 id="docker的组织结构"><a href="#docker的组织结构" class="headerlink" title="docker的组织结构"></a>docker的组织结构</h1><p><img src="/images/IIS/Docker%E7%AE%80%E4%BB%8B_2.png" alt="Docker简介"></p>
+<h2 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h2><p>持续集成、版本控制、可移植性、隔离性和安全性</p>
+<ul>
+<li>持续部署与测试<br>Docker在开发与运维的世界中具有极大的吸引力，因为它能保持跨环境的一致性。在开发与发布的生命周期中，不同的环境具有细微的不同，这些差异可能是由于不同安装包的版本和依赖关系引起的。然而，Docker可以通过确保从开发到产品发布整个过程环境的一致性来解决这个问题Docker容器通过相关配置，保持容器内部所有的配置和依赖关系始终不变。最终，你可以在开发到产品发布的整个过程中使用相同的容器来确保没有任何差异或者人工干预。<br>使用Docker，你还可以确保开发者不需要配置完全相同的产品环境，他们可以在他们自己的系统上通过VirtualBox建立虚拟机来运行Docker容器。Docker的魅力在于它同样可以让你在亚马逊EC2实例上运行相同的容器。如果你需要在一个产品发布周期中完成一次升级，你可以很容易地将需要变更的东西放到Docker容器中，测试它们，并且使你已经存在的容器执行相同的变更。这种灵活性就是使用Docker的一个主要好处。和标准部署与集成过程一样，Docker可以让你构建、测试和发布镜像，这个镜像可以跨多个服务器进行部署。哪怕安装一个新的安全补丁，整个过程也是一样的。你可以安装补丁，然后测试它，并且将这个补丁发布到产品中。</li>
+<li>多云平台<br>Docker最大的好处之一就是可移植性。在过去的几年里，所有主流的云计算提供商，包括亚马逊AWS和谷歌的GCP，都将Docker融入到他们的平台并增加了各自的支持。Docker容器能运行在亚马逊的EC2实例、谷歌的GCP实例、Rackspace服务器或者VirtualBox这些提供主机操作系统的平台上。举例来说，如果运行在亚马逊EC2实例上的Docker容器能够很容易地移植到其他几个平台上，比如说VirtualBox，并且达到类似的一致性和功能性，那这将允许你从基础设施层中抽象出来。除了AWS和GCP，Docker在其他不同的IaaS提供商也运行的非常好，例如微软的Azure、OpenStack和可以被具有不同配置的管理者所使用的Chef、Puppet、Ansible等。</li>
+<li>环境标准化和版本控制<br>通过上面的讨论，Docker容器可以在不同的开发与产品发布生命周期中确保一致性，进而标准化你的环境。除此之外，Docker容器还可以像git仓库一样，可以让你提交变更到Docker镜像中并通过不同的版本来管理它们。设想如果你因为完成了一个组件的升级而导致你整个环境都损坏了，Docker可以让你轻松地回滚到这个镜像的前一个版本。这整个过程可以在几分钟内完成，如果和虚拟机的备份或者镜像创建流程对比，那Docker算相当快的，它可以让你快速地进行复制和实现冗余。此外，启动Docker就和运行一个进程一样快。</li>
+<li>隔离性<br>Docker可以确保你的应用程序与资源是分隔开的。几个月前，Gartner发表了一篇报告，这份报告说明了运行Docker 容器进行资源隔离的效果和虚拟机（VM）管理程序一样的好，但是管理与控制方面还需要进行完善。<br>我们考虑这样一个场景，你在你的虚拟机中运行了很多应用程序，这些应用程序包括团队协作软件（例如Confluence）、问题追踪软件（例如JIRA）、集中身份管理系统（例如Crowd）等等。由于这些软件运行在不同的端口上，所以你必须使用Apache或者Nginx来做反向代理。到目前为止，一切都很正常，但是随着你的环境向前推进，你需要在你现有的环境中配置一个内容管理系统（例如Alfresco）。这时候有个问题发生了，这个软件需要一个不同版本的Apache Tomcat，为了满足这个需求，你只能将你现有的软件迁移到另一个版本的Tomcat上，或者找到适合你现有Tomcat的内容管理系统（Alfresco）版本。<br>对于上述场景，使用Docker就不用做这些事情了。Docker能够确保每个容器都拥有自己的资源，并且和其他容器是隔离的。你可以用不同的容器来运行使用不同堆栈的应用程序。除此之外，如果你想在服务器上直接删除一些应用程序是比较困难的，因为这样可能引发依赖关系冲突。而Docker可以帮你确保应用程序被完全清除，因为不同的应用程序运行在不同的容器上，如果你不在需要一款应用程序，那你可以简单地通过删除容器来删除这个应用程序，并且在你的宿主机操作系统上不会留下任何的临时文件或者配置文件。<br>除了上述好处，Docker还能确保每个应用程序只使用分配给它的资源（包括CPU、内存和磁盘空间）。一个特殊的软件将不会使用你全部的可用资源，要不然这将导致性能降低，甚至让其他应用程序完全停止工作。</li>
+<li>安全性<br>如上所述，Gartner也承认Docker正在快速地发展。从安全角度来看，Docker确保运行在容器中的应用程序和其他容器中的应用程序是完全分隔与隔离的，在通信流量和管理上赋予你完全的控制权。Docker容器不能窥视运行在其他容器中的进程。从体系结构角度来看，每个容器只使用着自己的资源（从进程到网络堆栈）。<br>作为紧固安全的一种手段，Docker将宿主机操作系统上的敏感挂载点（例如/proc和/sys）作为只读挂载点，并且使用一种写时复制系统来确保容器不能读取其他容器的数据。Docker也限制了宿主机操作系统上的一些系统调用，并且和SELinux与AppArmor一起运行的很好。此外，在Docker Hub上可以使用的Docker镜像都通过数字签名来确保其可靠性。由于Docker容器是隔离的，并且资源是受限制的，所以即使你其中一个应用程序被黑，也不会影响运行在其它Docker容器上的应用程序。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>sunny-ngrok外网映射</title>
+    <url>/2019/10/13/sunny-ngrok%E5%A4%96%E7%BD%91%E6%98%A0%E5%B0%84/</url>
+    <content><![CDATA[<p>最近又摸索了一下小程序。</p>
+<p>后台数据从webapi调用，那就要租云服务器，查了价格那个贵那个穷。</p>
+<p>穷则变！想办法呗————外网映射内网，即外网访问本地IIS。</p>
+<p>附文档：<br><a href="http://www.ngrok.cc/_book/general/open.html" target="_blank" rel="noopener">Sunny-Ngrok</a></p>
+<blockquote>
+<p>tips：免费的只能小量数据，做做webapi问题不大，但网站就算了，脚本加载超级慢。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>访问者模式</title>
+    <url>/2019/09/01/%E8%AE%BF%E9%97%AE%E8%80%85%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<h1 id="访问者模式"><a href="#访问者模式" class="headerlink" title="访问者模式"></a>访问者模式</h1><h2 id="访问者模式概述"><a href="#访问者模式概述" class="headerlink" title="访问者模式概述"></a>访问者模式概述</h2><p><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BF%E9%97%AE%E8%80%85%E6%A8%A1%E5%BC%8F_1.png" alt="访问者模式"></p>
+<ul>
+<li><p>分析</p>
+<ul>
+<li><p>处方单：<br>•  药品信息的集合，包含一种或多种不同类型的药品信息<br>•  不同类型的工作人员（例如划价人员和药房工作人员）在操作同一个药品信息集合时将提供不同的处理方式<br>•  可能会增加新类型的工作人员来操作处方单</p>
+</li>
+<li><p>软件开发：<br>•  处方单                     对象结构<br>•  药品信息                    元素<br>•  工作人员                    访问者</p>
+</li>
+<li><p>对象结构中存储了多种不同类型的对象信息</p>
+</li>
+<li><p>对同一对象结构中的元素的操作方式并不唯一，可能需要提供多种不同的处理方式</p>
+</li>
+<li><p>还有可能增加新的处理方式</p>
+</li>
+<li><p>访问者模式：<br>表示一个作用于某对象结构中的各个元素的操作。访问者模式让你可以在不改变各元素的类的前提下定义作用于这些元素的新操作。</p>
+</li>
+<li><p>访问者模式的定义</p>
+<ul>
+<li>它为操作存储不同类型元素的对象结构提供了一种解决方案</li>
+<li>用户可以对不同类型的元素施加不同的操作</li>
+</ul>
+</li>
+<li><p>访问者模式的结构</p>
+<ul>
+<li>访问者模式包含以下5个角色：<ul>
+<li>Visitor（抽象访问者）</li>
+<li>ConcreteVisitor（具体访问者）</li>
+<li>Element（抽象元素）</li>
+<li>ConcreteElement（具体元素）</li>
+<li>ObjectStructure（对象结构）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="访问者模式的优缺点与适用环境"><a href="#访问者模式的优缺点与适用环境" class="headerlink" title="访问者模式的优缺点与适用环境"></a>访问者模式的优缺点与适用环境</h2><ul>
+<li>模式优点<ul>
+<li>增加新的访问操作很方便</li>
+<li>将有关元素对象的访问行为集中到一个访问者对象中，而不是分散在一个个的元素类中，类的职责更加清晰</li>
+<li>让用户能够在不修改现有元素类层次结构的情况下，定义作用于该层次结构的操作</li>
+</ul>
+</li>
+<li>模式缺点<ul>
+<li>增加新的元素类很困难</li>
+<li>破坏封装</li>
+</ul>
+</li>
+<li>模式适用环境<ul>
+<li>一个对象结构包含多个类型的对象，希望对这些对象实施一些依赖其具体类型的操作</li>
+<li>需要对一个对象结构中的对象进行很多不同的且不相关的操作，并需要避免让这些操作“污染”这些对象的类，也不希望在增加新操作时修改这些类</li>
+<li>对象结构中对象对应的类很少改变，但经常需要在此对象结构上定义新的操作</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>设计模式</category>
+        <category>第26章 备忘录模式</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>模板方式模式</title>
+    <url>/2019/09/01/%E6%A8%A1%E6%9D%BF%E6%96%B9%E5%BC%8F%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<h1 id="模板方法模式"><a href="#模板方法模式" class="headerlink" title="模板方法模式"></a>模板方法模式</h1><h2 id="模板方法模式概述"><a href="#模板方法模式概述" class="headerlink" title="模板方法模式概述"></a>模板方法模式概述</h2><p><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F_1.png" alt="模板方法模式"></p>
+<ul>
+<li><p>分析</p>
+<ul>
+<li>请客吃饭：(1) 点单  (2) 吃东西 (3) 买单</li>
+<li>软件开发：某个方法的实现需要多个步骤（类似“请客”），其中有些步骤是固定的（类似“点单”和“买单”），而有些步骤并不固定，存在可变性（类似“吃东西”）</li>
+<li>模板方法模式：基本方法（“点单”、“吃东西”和“买单”）<blockquote>
+<p>分别是：具体方法、抽象方法、具体方法<br>模板方法（ “请客”）</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>模板方法模式：<br>定义一个操作中算法的框架，而将一些步骤延迟到子类中。模板方法模式使得子类不改变一个算法的结构即可重定义该算法的某些特定步骤。</p>
+</li>
+</ul>
+<h2 id="模板方法模式的结构与实现"><a href="#模板方法模式的结构与实现" class="headerlink" title="模板方法模式的结构与实现"></a>模板方法模式的结构与实现</h2><ul>
+<li>模板方法模式的结构<ul>
+<li>模板方法模式包含以下两个角色：<br>•  AbstractClass（抽象类）<br>•  ConcreteClass（具体子类）</li>
+</ul>
+</li>
+<li>模板方法模式的实现<ul>
+<li>模板方法 (Template Method)</li>
+<li>基本方法 (Primitive Method)<br>•  抽象方法(Abstract Method)<br>•  具体方法(Concrete Method)<br>•  钩子方法(Hook Method)</li>
+</ul>
+</li>
+</ul>
+<h2 id="模板方法模式的优缺点与适用环境"><a href="#模板方法模式的优缺点与适用环境" class="headerlink" title="模板方法模式的优缺点与适用环境"></a>模板方法模式的优缺点与适用环境</h2><ul>
+<li>模式优点<ul>
+<li>在父类中形式化地定义一个算法，而由它的子类来实现细节的处理，在子类实现详细的处理算法时并不会改变算法中步骤的执行次序</li>
+<li>提取了类库中的公共行为，将公共行为放在父类中，而通过其子类来实现不同的行为</li>
+<li>可实现一种反向控制结构，通过子类覆盖父类的钩子方法来决定某一特定步骤是否需要执行</li>
+<li>更换和增加新的子类很方便，符合单一职责原则和开闭原则</li>
+</ul>
+</li>
+<li>模式缺点<ul>
+<li>需要为每一个基本方法的不同实现提供一个子类，如果父类中可变的基本方法太多，将会导致类的个数增加，系统会更加庞大，设计也会更加抽象（可结合桥接模式）</li>
+</ul>
+</li>
+<li>模式适用环境<ul>
+<li>一次性实现一个算法的不变部分，并将可变的行为留给子类来实现</li>
+<li>各子类中公共的行为应被提取出来，并集中到一个公共父类中，以避免代码重复</li>
+<li>需要通过子类来决定父类算法中某个步骤是否执行，实现子类对父类的反向控制</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>设计模式</category>
+        <category>第25章 模板方法模式</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>策略模式</title>
+    <url>/2019/09/01/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<h1 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h1><h2 id="策略模式概述"><a href="#策略模式概述" class="headerlink" title="策略模式概述"></a>策略模式概述</h2><p><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F_1.png" alt="策略模式"></p>
+<ul>
+<li>分析<ul>
+<li>实现某个目标的途径不止一条，可根据实际情况选择一条合适的途径</li>
+<li>软件开发：<br>•  多种算法，例如排序、查找、打折等<br>•  使用硬编码(Hard Coding)实现将导致系统违背开闭原则，扩展性差，且维护困难<br>•  可以定义一些独立的类来封装不同的算法，每一个类封装一种具体的算法策略类</li>
+</ul>
+</li>
+<li>策略模式：<br>定义一系列算法，将每一个算法封装起来，并让它们可以相互替换。策略模式让算法可以独立于使用它的客户变化。</li>
+<li>策略模式的定义<ul>
+<li>又称为政策(Policy)模式</li>
+<li>每一个封装算法的类称之为策略(Strategy)类</li>
+<li>策略模式提供了一种可插入式(Pluggable)算法的实现方案</li>
+</ul>
+</li>
+</ul>
+<h2 id="策略模式的结构与实现"><a href="#策略模式的结构与实现" class="headerlink" title="策略模式的结构与实现"></a>策略模式的结构与实现</h2><ul>
+<li>策略模式的结构<ul>
+<li>策略模式包含以下3个角色：<br>•  Context（环境类）<br>•  Strategy（抽象策略类）<br>•  ConcreteStrategy（具体策略类）</li>
+</ul>
+</li>
+</ul>
+<h2 id="策略模式的优缺点与适用环境"><a href="#策略模式的优缺点与适用环境" class="headerlink" title="策略模式的优缺点与适用环境"></a>策略模式的优缺点与适用环境</h2><ul>
+<li>模式优点<ul>
+<li>提供了对开闭原则的完美支持，用户可以在不修改原有系统的基础上选择算法或行为，也可以灵活地增加新的算法或行为</li>
+<li>提供了管理相关的算法族的办法</li>
+<li>提供了一种可以替换继承关系的办法</li>
+<li>可以避免多重条件选择语句</li>
+<li>提供了一种算法的复用机制，不同的环境类可以方便地复用策略类</li>
+</ul>
+</li>
+<li>模式缺点<ul>
+<li>客户端必须知道所有的策略类，并自行决定使用哪一个策略类</li>
+<li>将造成系统产生很多具体策略类</li>
+<li>无法同时在客户端使用多个策略类</li>
+</ul>
+</li>
+<li>模式适用环境<ul>
+<li>一个系统需要动态地在几种算法中选择一种</li>
+<li>避免使用难以维护的多重条件选择语句</li>
+<li>不希望客户端知道复杂的、与算法相关的数据结构，提高算法的保密性与安全性</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>设计模式</category>
+        <category>第24章 策略模式</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>状态模式</title>
+    <url>/2019/09/01/%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<h1 id="状态模式"><a href="#状态模式" class="headerlink" title="状态模式"></a>状态模式</h1><p>解决系统中复杂对象的状态转换以及不同状态下行为的封装问题。<br><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F_1.png" alt="状态模式"></p>
+<h2 id="状态模式-1"><a href="#状态模式-1" class="headerlink" title="状态模式"></a>状态模式</h2><ul>
+<li>分析<ul>
+<li>在软件系统中：<br>•  有些对象具有多种状态<br>•  这些状态在某些情况下能够相互转换<br>•  对象在不同的状态下将具有不同的行为</li>
+<li>复杂的条件判断语句来进行状态的判断和转换操作  导致代码的可维护性和灵活性下降  出现新的状态时，代码的扩展性很差，客户端代码也需要进行相应的修改，违背了开闭原则</li>
+</ul>
+</li>
+<li>状态模式：<br>允许一个对象在其内部状态改变时改变它的行为。对象看起来似乎修改了它的类。</li>
+<li>状态模式的定义<ul>
+<li>又名状态对象(Objects for States)</li>
+<li>用于解决系统中复杂对象的状态转换以及不同状态下行为的封装问题</li>
+<li>将一个对象的状态从该对象中分离出来，封装到专门的状态类中，使得对象状态可以灵活变化</li>
+<li>对于客户端而言，无须关心对象状态的转换以及对象所处的当前状态，无论对于何种状态的对象，客户端都可以一致处理</li>
+</ul>
+</li>
+</ul>
+<h2 id="状态模式的结构与实现"><a href="#状态模式的结构与实现" class="headerlink" title="状态模式的结构与实现"></a>状态模式的结构与实现</h2><ul>
+<li>状态模式的结构<ul>
+<li>状态模式包含以下3个角色：<br>•  Context（环境类）<br>•  State（抽象状态类）<br>•  ConcreteState（具体状态类）</li>
+</ul>
+</li>
+</ul>
+<h2 id="共享状态"><a href="#共享状态" class="headerlink" title="共享状态"></a>共享状态</h2><ul>
+<li>动机<ul>
+<li>在有些情况下，多个环境对象可能需要共享同一个状态</li>
+<li>如果希望在系统中实现多个环境对象共享一个或多个状态对象，那么需要将这些状态对象定义为环境类的静态成员对象</li>
+</ul>
+</li>
+</ul>
+<h2 id="使用环境类实现状态转换"><a href="#使用环境类实现状态转换" class="headerlink" title="使用环境类实现状态转换"></a>使用环境类实现状态转换</h2><ul>
+<li>动机<ul>
+<li>对于客户端而言，无须关心状态类，可以为环境类设置默认的状态类，将状态的转换工作交给环境类（或具体状态类）来完成，具体的转换细节对于客户端而言是透明的</li>
+<li>可以通过环境类来实现状态转换，环境类作为一个状态管理器，统一实现各种状态之间的转换操作</li>
+</ul>
+</li>
+</ul>
+<h2 id="状态模式的优缺点与适用环境"><a href="#状态模式的优缺点与适用环境" class="headerlink" title="状态模式的优缺点与适用环境"></a>状态模式的优缺点与适用环境</h2><ul>
+<li>模式优点<ul>
+<li>封装了状态的转换规则，可以对状态转换代码进行集中管理，而不是分散在一个个业务方法中</li>
+<li>将所有与某个状态有关的行为放到一个类中，只需要注入一个不同的状态对象即可使环境对象拥有不同的行为</li>
+<li>允许状态转换逻辑与状态对象合成一体，而不是提供一个巨大的条件语句块，可以避免使用庞大的条件语句来将业务方法和状态转换代码交织在一起</li>
+<li>可以让多个环境对象共享一个状态对象，从而减少系统中对象的个数</li>
+</ul>
+</li>
+<li>模式缺点<ul>
+<li>会增加系统中类和对象的个数，导致系统运行开销增大</li>
+<li>结构与实现都较为复杂，如果使用不当将导致程序结构和代码混乱，增加系统设计的难度</li>
+<li>对开闭原则的支持并不太好，增加新的状态类需要修改负责状态转换的源代码，否则无法转换到新增状态；而且修改某个状态类的行为也需要修改对应类的源代码</li>
+</ul>
+</li>
+<li>模式适用环境<ul>
+<li>对象的行为依赖于它的状态（例如某些属性值），状态的改变将导致行为的变化</li>
+<li>在代码中包含大量与对象状态有关的条件语句，这些条件语句的出现会导致代码的可维护性和灵活性变差，不能方便地增加和删除状态，并且导致客户类与类库之间的耦合增强</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>设计模式</category>
+        <category>第23章 状态模式</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>观察者模式</title>
+    <url>/2019/09/01/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<h1 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a>观察者模式</h1><p><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F_1.png" alt="观察者模式"></p>
+<h2 id="观察者模式概述"><a href="#观察者模式概述" class="headerlink" title="观察者模式概述"></a>观察者模式概述</h2><ul>
+<li>分析<ul>
+<li>交通信号灯 &lt;–&gt; 观察目标</li>
+<li>汽车（汽车驾驶员） &lt;–&gt; 观察者</li>
+</ul>
+</li>
+</ul>
+<p><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F_2.png" alt="观察者模式"></p>
+<ul>
+<li>分析<ul>
+<li>软件系统：一个对象的状态或行为的变化将导致其他对象的状态或行为也发生改变，它们之间将产生联动</li>
+<li>观察者模式：<br>•  定义了对象之间一种一对多的依赖关系，让一个对象的改变能够影响其他对象<br>•  发生改变的对象称为观察目标，被通知的对象称为观察者<br>•  一个观察目标可以对应多个观察者</li>
+</ul>
+</li>
+<li>观察者模式：<br>定义对象之间的一种一对多依赖关系，使得每当一个对象状态发生改变时，其相关依赖对象都得到通知并被自动更新。</li>
+<li>观察者模式的定义<ul>
+<li>别名<br>•  发布-订阅(Publish/Subscribe)模式<br>•  模型-视图(Model/View)模式<br>•  源-监听器(Source/Listener)模式<br>•  从属者(Dependents)模式</li>
+</ul>
+</li>
+</ul>
+<h2 id="观察者模式的结构与实现"><a href="#观察者模式的结构与实现" class="headerlink" title="观察者模式的结构与实现"></a>观察者模式的结构与实现</h2><ul>
+<li>观察者模式的结构<ul>
+<li>观察者模式包含以下4个角色：<br>•  Subject（目标）<br>•  ConcreteSubject（具体目标）<br>•  Observer（观察者）<br>•  ConcreteObserver（具体观察者）</li>
+</ul>
+</li>
+<li>观察者模式的实现<ul>
+<li>说明：<br>•  有时候在具体观察者类ConcreteObserver中需要使用到具体目标类ConcreteSubject中的状态（属性），会存在关联或依赖关系<br>•  如果在具体层之间具有关联关系，系统的扩展性将受到一定的影响，增加新的具体目标类有时候需要修改原有观察者的代码，在一定程度上违背了开闭原则，但是如果原有观察者类无须关联新增的具体目标，则系统扩展性不受影响</li>
+</ul>
+</li>
+</ul>
+<h2 id="观察者模式与-NET中的委托事件模型"><a href="#观察者模式与-NET中的委托事件模型" class="headerlink" title="观察者模式与.NET中的委托事件模型"></a>观察者模式与.NET中的委托事件模型</h2><ul>
+<li>分析<ul>
+<li>事件源对象充当观察目标角色，委托对象充当抽象观察者角色，事件处理对象充当具体观察者角色</li>
+<li>如果事件源对象的某个事件触发，则调用事件处理对象中的事件处理程序来对事件进行处理</li>
+<li>C#事件注册方法语法：</li>
+<li>eventSource表示事件源，someEvent表示定义在事件源中的事件，SomeEventHandler表示用于处理事件的委托，someMethod表示与委托SomeEventHandler具有相同函数签名的事件处理方法</li>
+<li>只需要修改someMethod，即可实现相同的事件对应不同的事件处理程序</li>
+<li>.NET中的事件处理模型是观察者模式的一种变形，它与观察者模式的实现原理本质上是一致的</li>
+</ul>
+</li>
+</ul>
+<h2 id="观察者模式与MVC"><a href="#观察者模式与MVC" class="headerlink" title="观察者模式与MVC"></a>观察者模式与MVC</h2><ul>
+<li>MVC(Model-View-Controller)架构<ul>
+<li>模型(Model)，视图(View)和控制器(Controller)</li>
+<li>模型可对应于观察者模式中的观察目标，而视图对应于观察者，控制器可充当两者之间的中介者</li>
+<li>当模型层的数据发生改变时，视图层将自动改变其显示内容</li>
+</ul>
+</li>
+</ul>
+<p><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F_3.png" alt="观察者模式"></p>
+<h2 id="观察者模式的优缺点与适用环境"><a href="#观察者模式的优缺点与适用环境" class="headerlink" title="观察者模式的优缺点与适用环境"></a>观察者模式的优缺点与适用环境</h2><ul>
+<li>模式优点<ul>
+<li>可以实现表示层和数据逻辑层的分离</li>
+<li>在观察目标和观察者之间建立一个抽象的耦合</li>
+<li>支持广播通信，简化了一对多系统设计的难度</li>
+<li>符合开闭原则，增加新的具体观察者无须修改原有系统代码，在具体观察者与观察目标之间不存在关联关系的情况下，增加新的观察目标也很方便</li>
+</ul>
+</li>
+<li>模式缺点<ul>
+<li>将所有的观察者都通知到会花费很多时间</li>
+<li>如果存在循环依赖时可能导致系统崩溃</li>
+<li>没有相应的机制让观察者知道所观察的目标对象是怎么发生变化的，而只是知道观察目标发生了变化</li>
+</ul>
+</li>
+<li>模式适用环境<ul>
+<li>一个抽象模型有两个方面，其中一个方面依赖于另一个方面，将这两个方面封装在独立的对象中使它们可以各自独立地改变和复用</li>
+<li>一个对象的改变将导致一个或多个其他对象发生改变，且并不知道具体有多少对象将发生改变，也不知道这些对象是谁</li>
+<li>需要在系统中创建一个触发链</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>设计模式</category>
+        <category>第22章 观察者模式</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>备忘录模式</title>
+    <url>/2019/09/01/%E5%A4%87%E5%BF%98%E5%BD%95%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<h1 id="备忘录模式"><a href="#备忘录模式" class="headerlink" title="备忘录模式"></a>备忘录模式</h1><p>提供对象状态的撤销机制，需要恢复某一历史状态可以使用备忘录模式进行设计。</p>
+<blockquote>
+<p>应用在 ctrl+z 以及 悔棋 等等</p>
+</blockquote>
+<h2 id="备忘录模式-1"><a href="#备忘录模式-1" class="headerlink" title="备忘录模式"></a>备忘录模式</h2><ul>
+<li>分析<ul>
+<li>通过使用备忘录模式可以让系统恢复到某一特定的历史状态</li>
+<li>首先保存软件系统的历史状态，当用户需要取消错误操作并且返回到某个历史状态时，可以取出事先保存的历史状态来覆盖当前状态</li>
+</ul>
+</li>
+<li>备忘录模式：<br>在不破坏封装的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态，这样就可以在以后将对象恢复到原先保存的状态。</li>
+<li>备忘录模式的定义<ul>
+<li>别名为标记(Token)模式</li>
+<li>提供了一种状态恢复的实现机制，使得用户可以方便地回到一个特定的历史步骤</li>
+<li>当前在很多软件所提供的撤销(Undo)操作中就使用了备忘录模式</li>
+</ul>
+</li>
+</ul>
+<h2 id="备忘录模式的结构与实现"><a href="#备忘录模式的结构与实现" class="headerlink" title="备忘录模式的结构与实现"></a>备忘录模式的结构与实现</h2><ul>
+<li>备忘录模式的结构<ul>
+<li>备忘录模式包含以下3个角色：<br>•  Originator（原发器）<br>•  Memento（备忘录)<br>•  Caretaker（负责人）</li>
+</ul>
+</li>
+</ul>
+<h2 id="实现多次撤销"><a href="#实现多次撤销" class="headerlink" title="实现多次撤销"></a>实现多次撤销</h2><ul>
+<li>动机<ul>
+<li>有时候用户需要撤销多步操作</li>
+<li>实现方案：在负责人类中定义一个集合来存储多个备忘录，每个备忘录负责保存一个历史状态，在撤销时可以对备忘录集合进行逆向遍历，回到一个指定的历史状态，还可以对备忘录集合进行正向遍历，实现重做(Redo)或恢复操作，即取消撤销，让对象状态得到恢复</li>
+</ul>
+</li>
+</ul>
+<h2 id="备忘录模式的优缺点与适用环境"><a href="#备忘录模式的优缺点与适用环境" class="headerlink" title="备忘录模式的优缺点与适用环境"></a>备忘录模式的优缺点与适用环境</h2><ul>
+<li>模式优点<ul>
+<li>提供了一种状态恢复的实现机制，使得用户可以方便地回到一个特定的历史步骤</li>
+<li>实现了对信息的封装，一个备忘录对象是一种原发器对象状态的表示，不会被其他代码所改动</li>
+</ul>
+</li>
+<li>模式缺点<ul>
+<li>资源消耗过大，如果需要保存的原发器类的成员变量太多，就不可避免地需要占用大量的存储空间，每保存一次对象的状态都需要消耗一定的系统资源</li>
+</ul>
+</li>
+<li>模式适用环境<ul>
+<li>保存一个对象在某一个时刻的全部状态或部分状态，这样以后需要时能够恢复到先前的状态，实现撤销操作</li>
+<li>防止外界对象破坏一个对象历史状态的封装性，避免将对象历史状态的实现细节暴露给外界对象</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>设计模式</category>
+        <category>第21章 备忘录模式</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>中介者模式</title>
+    <url>/2019/09/01/%E4%B8%AD%E4%BB%8B%E8%80%85%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<h1 id="中介者模式"><a href="#中介者模式" class="headerlink" title="中介者模式"></a>中介者模式</h1><p>引入中介者，将原本对象之间的两两交互转化为每个对象与中介者之间的交互。<br>降低耦合度，使系统更加灵活，也易于扩展。</p>
+<h2 id="中介者模式概述"><a href="#中介者模式概述" class="headerlink" title="中介者模式概述"></a>中介者模式概述</h2><p><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E4%B8%AD%E4%BB%8B%E8%80%85%E6%A8%A1%E5%BC%8F_1.png" alt="中介者模式"></p>
+<ul>
+<li><p>分析</p>
+<ul>
+<li>QQ聊天的两种方式：<br>•  (1) 用户与用户直接聊天，用户与用户之间存在多对多的联系，这将导致系统中用户之间的关系非常复杂，一个用户如果要将相同的信息或文件发送给其他所有用户，必须一个一个地发送<br>•  (2) 通过QQ群聊天，用户只需要将信息或文件发送到群中或上传为群共享文件即可，群的作用就是将发送者所发送的信息和文件转发给每一个接收者，将极大地减少系统中用户之间的两两通信</li>
+<li>软件开发：<br>•  网状结构：多对多联系将导致系统非常复杂，几乎每个对象都需要与其他对象发生相互作用，而这种相互作用表现为一个对象与另外一个对象的直接耦合，这将导致一个过度耦合的系统<br><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E4%B8%AD%E4%BB%8B%E8%80%85%E6%A8%A1%E5%BC%8F_2.png" alt="中介者模式"><br>•  星型结构：中介者模式将系统的网状结构变成以中介者为中心的星型结构，同事对象不再直接与另一个对象联系，它通过中介者对象与另一个对象发生相互作用。系统的结构不会因为新对象的引入带来大量的修改工作<br><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E4%B8%AD%E4%BB%8B%E8%80%85%E6%A8%A1%E5%BC%8F_3.png" alt="中介者模式"></li>
+</ul>
+</li>
+<li><p>中介者模式：<br>定义一个对象来封装一系列对象的交互。中介者模式使各对象之间不需要显式地相互引用，从而使其耦合松散，而且让你可以独立地改变它们之间的交互。</p>
+</li>
+<li><p>中介者模式的定义</p>
+<ul>
+<li>又称为调停者模式</li>
+<li>在中介者模式中，通过引入中介者来简化对象之间的复杂交互</li>
+<li>中介者模式是迪米特法则的一个典型应用</li>
+<li>对象之间多对多的复杂关系转化为相对简单的一对多关系</li>
+</ul>
+</li>
+</ul>
+<h2 id="中介者模式的结构与实现"><a href="#中介者模式的结构与实现" class="headerlink" title="中介者模式的结构与实现"></a>中介者模式的结构与实现</h2><ul>
+<li><p>中介者模式的结构</p>
+<ul>
+<li>中介者模式包含以下4个角色：<br>•  Mediator（抽象中介者）<br>•  ConcreteMediator（具体中介者）<br>•  Colleague（抽象同事类）<br>•  ConcreteColleague（具体同事类）</li>
+</ul>
+</li>
+<li><p>中介者模式的实现</p>
+<ul>
+<li>中介者类的职责<br>•  中转作用（结构性）：各个同事对象不再需要显式地引用其他同事，当需要和其他同事进行通信时，可通过中介者来实现间接调用<br>•  协调作用（行为性）：中介者可以更进一步的对同事之间的关系进行封装，同事可以一致地和中介者进行交互，而不需要指明中介者需要具体怎么做，中介者根据封装在自身内部的协调逻辑对同事的请求进行进一步处理，将同事成员之间的关系行为进行分离和封装</li>
+</ul>
+</li>
+</ul>
+<h2 id="中介者模式的优缺点与适用环境"><a href="#中介者模式的优缺点与适用环境" class="headerlink" title="中介者模式的优缺点与适用环境"></a>中介者模式的优缺点与适用环境</h2><ul>
+<li>模式优点<ul>
+<li>简化了对象之间的交互，它用中介者和同事的一对多交互代替了原来同事之间的多对多交互，将原本难以理解的网状结构转换成相对简单的星型结构</li>
+<li>可将各同事对象解耦</li>
+<li>可以减少子类生成，中介者模式将原本分布于多个对象间的行为集中在一起，改变这些行为只需生成新的中介者子类即可，这使得各个同事类可被重用，无须直接对同事类进行扩展</li>
+</ul>
+</li>
+<li>模式缺点<ul>
+<li>在具体中介者类中包含了大量的同事之间的交互细节，可能会导致具体中介者类非常复杂，使得系统难以维护</li>
+</ul>
+</li>
+<li>模式适用环境<ul>
+<li>系统中对象之间存在复杂的引用关系，系统结构混乱且难以理解</li>
+<li>一个对象由于引用了其他很多对象并且直接和这些对象通信，导致难以复用该对象</li>
+<li>想通过一个中间类来封装多个类中的行为，又不想生成太多的子类</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>设计模式</category>
+        <category>第20章 中介者模式</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>迭代器模式</title>
+    <url>/2019/09/01/%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<h1 id="迭代器模式"><a href="#迭代器模式" class="headerlink" title="迭代器模式"></a>迭代器模式</h1><p>将数据的遍历功能从聚合对象中分离，聚合对象只负责存储数据，而遍历数据由迭代器来完成，简化聚合对象的设计，更符合单一职责原则的要求。</p>
+<h2 id="迭代器概述"><a href="#迭代器概述" class="headerlink" title="迭代器概述"></a>迭代器概述</h2><p><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A8%A1%E5%BC%8F_1.png" alt="迭代器模式"></p>
+<ul>
+<li>分析<ul>
+<li>电视机   存储电视频道的集合  聚合类(Aggregate Classes)</li>
+<li>电视机遥控器   操作电视频道    迭代器(Iterator)</li>
+<li>访问一个聚合对象中的元素但又不需要暴露它的内部结构</li>
+<li>聚合对象的两个职责：<ul>
+<li>存储数据，聚合对象的基本职责</li>
+<li>遍历数据，既是可变化的，又是可分离的</li>
+</ul>
+</li>
+<li>将遍历数据的行为从聚合对象中分离出来，封装在迭代器对象中</li>
+<li>由迭代器来提供遍历聚合对象内部数据的行为，简化聚合对象的设计，更符合单一职责原则</li>
+</ul>
+</li>
+<li>迭代器模式：<br>提供一种方法顺序访问一个聚合对象中各个元素，且不用暴露该对象的内部表示。</li>
+<li>迭代器模式的定义<ul>
+<li>又名游标(Cursor)模式</li>
+<li>通过引入迭代器，客户端无须了解聚合对象的内部结构即可实现对聚合对象中成员的遍历，还可以根据需要很方便地增加新的遍历方式</li>
+</ul>
+</li>
+</ul>
+<h2 id="NET内置迭代器"><a href="#NET内置迭代器" class="headerlink" title=".NET内置迭代器"></a>.NET内置迭代器</h2><p><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A8%A1%E5%BC%8F_2.png" alt="迭代器模式"></p>
+<h2 id="迭代器模式的优缺点与适用环境"><a href="#迭代器模式的优缺点与适用环境" class="headerlink" title="迭代器模式的优缺点与适用环境"></a>迭代器模式的优缺点与适用环境</h2><ul>
+<li>模式优点<ul>
+<li>支持以不同的方式遍历一个聚合对象，在同一个聚合对象上可以定义多种遍历方式</li>
+<li>简化了聚合类</li>
+<li>由于引入了抽象层，增加新的聚合类和迭代器类都很方便，无须修改原有代码，符合开闭原则</li>
+</ul>
+</li>
+<li>模式缺点<ul>
+<li>在增加新的聚合类时需要对应地增加新的迭代器类，类的个数成对增加，这在一定程度上增加了系统的复杂性</li>
+<li>抽象迭代器的设计难度较大，需要充分考虑到系统将来的扩展。在自定义迭代器时，创建一个考虑全面的抽象迭代器并不是一件很容易的事情</li>
+</ul>
+</li>
+<li>模式适用环境<ul>
+<li>访问一个聚合对象的内容而无须暴露它的内部表示</li>
+<li>需要为一个聚合对象提供多种遍历方式</li>
+<li>为遍历不同的聚合结构提供一个统一的接口，在该接口的实现类中为不同的聚合结构提供不同的遍历方式，而客户端可以一致性地操作该接口</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>设计模式</category>
+        <category>第19章 迭代器模式</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>解释器模式</title>
+    <url>/2019/09/01/%E8%A7%A3%E9%87%8A%E5%99%A8%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<blockquote>
+<p>文法之类的<br>略</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>设计模式</category>
+        <category>第18章 解释器模式</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>命令模式</title>
+    <url>/2019/09/01/%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<h1 id="命令模式"><a href="#命令模式" class="headerlink" title="命令模式"></a>命令模式</h1><p>请求发送者与请求接收者解耦，发送者通过命令对象来间接引用接收者。<br>灵活性较高，不修改源码让发送者对应不同接收者。</p>
+<h2 id="命令模式概述"><a href="#命令模式概述" class="headerlink" title="命令模式概述"></a>命令模式概述</h2><p><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%81%8C%E8%B4%A3%E9%93%BE%E6%A8%A1%E5%BC%8F_1.png" alt="职责链模式"></p>
+<ul>
+<li>分析<ul>
+<li>现实生活<br>•  相同的开关可以通过不同的电线来控制不同的电器<br>•  开关 &lt;–&gt; 请求发送者<br>•  电灯 &lt;–&gt; 请求的最终接收者和处理者<br>•  开关和电灯之间并不存在直接耦合关系，它们通过电线连接在一起，使用不同的电线可以连接不同的请求接收者</li>
+<li>软件开发<br>•  按钮 &lt;–&gt; 请求发送者<br>•  事件处理类 &lt;–&gt; 请求的最终接收者和处理者<br>•  发送者与接收者之间引入了新的命令对象（类似电线），将发送者的请求封装在命令对象中，再通过命令对象来调用接收者的方法<br>•  相同的按钮可以对应不同的事件处理类</li>
+</ul>
+</li>
+<li>动机<ul>
+<li>将请求发送者和接收者完全解耦</li>
+<li>发送者与接收者之间没有直接引用关系</li>
+<li>发送请求的对象只需要知道如何发送请求，而不必知道如何完成请求</li>
+</ul>
+</li>
+<li>命令模式：<br>将一个请求封装为一个对象，从而让你可以用不同的请求对客户进行参数化，对请求排队或者记录请求日志，以及支持可撤销的操作。</li>
+<li>命令模式的定义<ul>
+<li>别名为动作(Action)模式或事务(Transaction)模式</li>
+<li>“用不同的请求对客户进行参数化”</li>
+<li>“对请求排队”</li>
+<li>“记录请求日志”</li>
+<li>“支持可撤销操作”</li>
+</ul>
+</li>
+</ul>
+<h2 id="命令模式的结构与实现"><a href="#命令模式的结构与实现" class="headerlink" title="命令模式的结构与实现"></a>命令模式的结构与实现</h2><ul>
+<li>命令模式的结构<ul>
+<li>命令模式包含以下4个角色：</li>
+</ul>
+</li>
+<li>Command（抽象命令类）</li>
+<li>ConcreteCommand（具体命令类）</li>
+<li>Invoker（调用者）</li>
+<li>Receiver（接收者）</li>
+<li>命令模式的实现<ul>
+<li>命令模式的本质是对请求进行封装</li>
+<li>一个请求对应于一个命令，将发出命令的责任和执行命令的责任分开</li>
+<li>命令模式允许请求的一方和接收的一方独立开来，使得请求的一方不必知道接收请求的一方的接口，更不必知道请求如何被接收、操作是否被执行、何时被执行，以及是怎么被执行的</li>
+</ul>
+</li>
+</ul>
+<h2 id="命令模式的应用实例"><a href="#命令模式的应用实例" class="headerlink" title="命令模式的应用实例"></a>命令模式的应用实例</h2><p>为了用户使用方便，某系统提供了一系列功能键，用户可以自定义功能键的功能，例如功能键FunctionButton可以用于退出系统（由SystemExitClass类来实现），也可以用于显示帮助文档（由DisplayHelpClass类来实现）。</p>
+<p>用户可以通过修改配置文件来改变功能键的用途，现使用命令模式来设计该系统，使得功能键类与功能类之间解耦，可为同一个功能键设置不同的功能。</p>
+<ul>
+<li>结果及分析<ul>
+<li>如果需要更换具体命令类，无须修改源代码，只需修改配置文件，完全符合开闭原则</li>
+<li>每一个具体命令类对应一个请求的处理者（接收者），通过向请求发送者注入不同的具体命令对象可以使相同的发送者对应不同的接收者，从而实现“将一个请求封装为一个对象，用不同的请求对客户进行参数化”，客户端只需要将具体命令对象作为参数注入请求发送者，无须直接操作请求的接收者</li>
+</ul>
+</li>
+</ul>
+<h2 id="实现命令队列"><a href="#实现命令队列" class="headerlink" title="实现命令队列"></a>实现命令队列</h2><ul>
+<li>动机<ul>
+<li>当一个请求发送者发送一个请求时，有不止一个请求接收者产生响应，这些请求接收者将逐个执行业务方法，完成对请求的处理</li>
+<li>增加一个CommandQueue类，由该类负责存储多个命令对象，而不同的命令对象可以对应不同的请求接收者</li>
+<li>批处理</li>
+</ul>
+</li>
+</ul>
+<h2 id="记录请求日志"><a href="#记录请求日志" class="headerlink" title="记录请求日志"></a>记录请求日志</h2><ul>
+<li>动机<ul>
+<li>将请求的历史记录保存下来，通常以日志文件(Log File)的形式永久存储在计算机中<br>•  为系统提供一种恢复机制<br>•  可以用于实现批处理<br>•  防止因为断电或者系统重启等原因造成请求丢失，而且可以避免重新发送全部请求时造成某些命令的重复执行</li>
+</ul>
+</li>
+<li>实现<ul>
+<li>将发送请求的命令对象通过序列化写到日志文件中</li>
+<li>命令类必须使用属性[Serializable]标记为可序列化</li>
+</ul>
+</li>
+</ul>
+<p><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%81%8C%E8%B4%A3%E9%93%BE%E6%A8%A1%E5%BC%8F_2.png" alt="职责链模式"></p>
+<h2 id="实现撤销操作"><a href="#实现撤销操作" class="headerlink" title="实现撤销操作"></a>实现撤销操作</h2><ul>
+<li>实例<ul>
+<li>可以通过对命令类进行修改使得系统支持撤销(Undo)操作和恢复(Redo)操作</li>
+</ul>
+</li>
+<li>设计一个简易计算器，该计算器可以实现简单的数学运算，还可以对运算实施撤销操作。</li>
+</ul>
+<h2 id="宏命令"><a href="#宏命令" class="headerlink" title="宏命令"></a>宏命令</h2><ul>
+<li>动机<ul>
+<li>宏命令(Macro Command)又称为组合命令(Composite Command)，它是组合模式和命令模式联用的产物</li>
+<li>宏命令是一个具体命令类，它拥有一个集合，在该集合中包含了对其他命令对象的引用</li>
+<li>当调用宏命令的Execute()方法时，将递归调用它所包含的每个成员命令的Execute()方法。一个宏命令的成员可以是简单命令，还可以继续是宏命令</li>
+<li>执行一个宏命令将触发多个具体命令的执行，从而实现对命令的批处理</li>
+</ul>
+</li>
+</ul>
+<h2 id="命令模式的优缺点与适用环境"><a href="#命令模式的优缺点与适用环境" class="headerlink" title="命令模式的优缺点与适用环境"></a>命令模式的优缺点与适用环境</h2><ul>
+<li>模式优点<ul>
+<li>降低了系统的耦合度</li>
+<li>新的命令可以很容易地加入到系统中，符合开闭原则</li>
+<li>可以比较容易地设计一个命令队列或宏命令（组合命令）</li>
+<li>为请求的撤销(Undo)和恢复(Redo)操作提供了一种设计和实现方案</li>
+</ul>
+</li>
+<li>模式缺点<ul>
+<li>使用命令模式可能会导致某些系统有过多的具体命令类（针对每一个对请求接收者的调用操作都需要设计一个具体命令类）</li>
+</ul>
+</li>
+<li>模式适用环境<ul>
+<li>系统需要将请求调用者和请求接收者解耦，使得调用者和接收者不直接交互</li>
+<li>系统需要在不同的时间指定请求、将请求排队和执行请求</li>
+<li>系统需要支持命令的撤销(Undo)操作和恢复(Redo)操作</li>
+<li>系统需要将一组操作组合在一起形成宏命令</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>设计模式</category>
+        <category>第17章 命令模式</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>职责链模式</title>
+    <url>/2019/09/01/%E8%81%8C%E8%B4%A3%E9%93%BE%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<h1 id="职责链模式"><a href="#职责链模式" class="headerlink" title="职责链模式"></a>职责链模式</h1><p>行为型模式关注系统中对象之间的交互，研究系统在运行时对象之间的相互通信与协作，进一步明确对象的职责。<br>系统中多个对象处理同一请求，将所有的处理请求连成一条链，让请求沿着该链进行传递。如果链上对象可以处理则处理，不能处理转发给下家。<br>将请求的发送者和接收者解耦，无需关心请求细节和传递过程。</p>
+<p>16.1  行为型模式</p>
+<ul>
+<li><p>行为型模式(Behavioral Pattern) 关注系统中对象之间的交互，研究系统在运行时对象之间的相互通信与协作，进一步明确对象的职责</p>
+</li>
+<li><p>行为型模式：不仅仅关注类和对象本身，还重点关注它们之间的相互作用和职责划分</p>
+</li>
+<li><p>类行为型模式</p>
+</li>
+<li><p>使用继承关系在几个类之间分配行为，主要通过多态等方式来分配父类与子类的职责</p>
+</li>
+<li><p>对象行为型模式</p>
+</li>
+<li><p>使用对象的关联关系来分配行为，主要通过对象关联等方式来分配两个或多个类的职责</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>模式名称</th>
+<th>定义</th>
+<th>学习难度</th>
+<th>使用频率</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>职责链模式(Chain of Responsibility Pattern)</td>
+<td>避免将一个请求的发送者与接收者耦合在一起，让多个对象都有机会处理请求。将接收请求的对象连接成一条链，并且沿着这条链传递请求，直到有一个对象能够处理它为止。</td>
+<td>★★★☆☆</td>
+<td>★★☆☆☆</td>
+</tr>
+<tr>
+<td>命令模式(Command Pattern)</td>
+<td>将一个请求封装为一个对象，从而让你可以用不同的请求对客户进行参数化，对请求排队或者记录请求日志，以及支持可撤销的操作。</td>
+<td>★★★☆☆</td>
+<td>★★★★☆</td>
+</tr>
+<tr>
+<td>解释器模式(Interpreter Pattern)</td>
+<td>给定一个语言，定义它的文法的一种表示，并定义一个解释器，这个解释器使用该表示来解释语言中的句子。</td>
+<td>★★★★★</td>
+<td>★☆☆☆☆</td>
+</tr>
+<tr>
+<td>迭代器模式(Iterator Pattern)</td>
+<td>提供一种方法顺序访问一个聚合对象中的各个元素，且不用暴露该对象的内部表示。</td>
+<td>★★★☆☆</td>
+<td>★★★★★</td>
+</tr>
+<tr>
+<td>中介者模式(Mediator Pattern)</td>
+<td>定义一个对象来封装一系列对象的交互。中介者模式使各对象之间不需要显式地相互引用，从而使其耦合松散，而且让你可以独立地改变它们之间的交互。</td>
+<td>★★★☆☆</td>
+<td>★★☆☆☆</td>
+</tr>
+<tr>
+<td>备忘录模式(Memento Pattern)</td>
+<td>在不破坏封装的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态，这样可以在以后将对象恢复到原先保存的状态。</td>
+<td>★★☆☆☆</td>
+<td>★★☆☆☆</td>
+</tr>
+<tr>
+<td>观察者模式(Observer Pattern)</td>
+<td>定义对象之间的一种一对多依赖关系，使得每当一个对象状态发生改变时，其相关依赖对象都得到通知并被自动更新。</td>
+<td>★★★☆☆</td>
+<td>★★★★★</td>
+</tr>
+<tr>
+<td>状态模式(State Pattern)</td>
+<td>允许一个对象在其内部状态改变时改变它的行为。对象看起来似乎修改了它的类。</td>
+<td>★★★☆☆</td>
+<td>★★★☆☆</td>
+</tr>
+<tr>
+<td>策略模式(Strategy Pattern)</td>
+<td>定义一系列算法，将每一个算法封装起来，并让它们可以相互替换，策略模式让算法可以独立于使用它的客户变化。</td>
+<td>★☆☆☆☆</td>
+<td>★★★★☆</td>
+</tr>
+<tr>
+<td>模板方法模式(Template Method Pattern)</td>
+<td>定义一个操作中算法的框架，而将一些步骤延迟到子类中。模板方法模式使得子类不改变一个算法的结构即可重定义该算法的某些特定步骤。</td>
+<td>★★☆☆☆</td>
+<td>★★★☆☆</td>
+</tr>
+<tr>
+<td>访问者模式(Visitor Pattern)</td>
+<td>表示一个作用于某对象结构中的各个元素的操作。访问者模式让你可以在不改变各元素的类的前提下定义作用于这些元素的新操作。</td>
+<td>★★★★☆</td>
+<td>★☆☆☆☆</td>
+</tr>
+</tbody></table>
+<h2 id="职责链模式概述"><a href="#职责链模式概述" class="headerlink" title="职责链模式概述"></a>职责链模式概述</h2><p><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%81%8C%E8%B4%A3%E9%93%BE%E6%A8%A1%E5%BC%8F_1.png" alt="职责链模式"></p>
+<ul>
+<li><p>分析</p>
+<ul>
+<li>辅导员、系主任、院长、校长都可以处理奖学金申请表，他们构成一个处理申请表的链式结构，申请表沿着这条链进行传递，这条链就称为职责链</li>
+<li>职责链可以是一条直线、一个环或者一个树形结构，最常见的职责链是直线型，即沿着一条单向的链来传递请求</li>
+</ul>
+</li>
+<li><p>职责链模式：<br>避免将一个请求的发送者与接收者耦合在一起，让多个对象都有机会处理请求。将接收请求的对象连接成一条链，并且沿着这条链传递请求，直到有一个对象能够处理它为止。</p>
+</li>
+<li><p>职责链模式的定义</p>
+<ul>
+<li>又称为责任链模式（翻译不同，）</li>
+<li>将请求的处理者组织成一条链，并让请求沿着链传递，由链上的处理者对请求进行相应的处理</li>
+<li>客户端无须关心请求的处理细节以及请求的传递，只需将请求发送到链上，将请求的发送者和请求的处理者解耦</li>
+</ul>
+</li>
+</ul>
+<h2 id="职责链模式的结构与实现"><a href="#职责链模式的结构与实现" class="headerlink" title="职责链模式的结构与实现"></a>职责链模式的结构与实现</h2><ul>
+<li>职责链模式的结构<ul>
+<li>职责链模式包含以下两个角色：<br>•  Handler（抽象处理者）<br>•  ConcreteHandler（具体处理者）</li>
+</ul>
+</li>
+</ul>
+<h2 id="职责链模式的应用实例"><a href="#职责链模式的应用实例" class="headerlink" title="职责链模式的应用实例"></a>职责链模式的应用实例</h2><p>某企业的SCM(Supply Chain Management，供应链管理)系统中包含一个采购审批子系统。该企业的采购审批是分级进行的，即根据采购金额的不同由不同层次的主管人员来审批，主任可以审批5万元以下（不包括5万元）的采购单，副董事长可以审批5万元至10万元（不包括10万元）的采购单，董事长可以审批10万元至50万元（不包括50万元）的采购单，50万元及以上的采购单就需要开董事会讨论决定。如下图所示：</p>
+<p><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%81%8C%E8%B4%A3%E9%93%BE%E6%A8%A1%E5%BC%8F_1.png" alt="采购单分级审批示意图"></p>
+<p>可以使用职责链模式设计并实现该系统。</p>
+<h2 id="纯与不纯的职责链模式"><a href="#纯与不纯的职责链模式" class="headerlink" title="纯与不纯的职责链模式"></a>纯与不纯的职责链模式</h2><ul>
+<li>纯的职责链模式<ul>
+<li>一个具体处理者对象只能在两个行为中选择一个：要么承担全部责任，要么将责任推给下家</li>
+<li>不允许出现某一个具体处理者对象在承担了一部分或全部责任后又将责任向下传递的情况</li>
+<li>一个请求必须被某一个处理者对象所接收，不能出现某个请求未被任何一个处理者对象处理的情况</li>
+</ul>
+</li>
+<li>不纯的职责链模式<ul>
+<li>允许某个请求被一个具体处理者部分处理后向下传递，或者一个具体处理者处理完某请求后其后继处理者可以继续处理该请求</li>
+<li>一个请求可以最终不被任何处理者对象所接收并处理</li>
+<li>JavaScript的事件浮升(Event Bubbling)处理机制<br><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%81%8C%E8%B4%A3%E9%93%BE%E6%A8%A1%E5%BC%8F_3.png" alt="冒泡事件"></li>
+</ul>
+</li>
+</ul>
+<h2 id="职责链模式的优缺点与适用场景"><a href="#职责链模式的优缺点与适用场景" class="headerlink" title="职责链模式的优缺点与适用场景"></a>职责链模式的优缺点与适用场景</h2><ul>
+<li>模式优点<ul>
+<li>使得一个对象无须知道是其他哪一个对象处理其请求，降低了系统的耦合度</li>
+<li>可简化对象之间的相互连接</li>
+<li>给对象职责的分配带来更多的灵活性</li>
+<li>增加一个新的具体请求处理者时无须修改原有系统的代码，只需要在客户端重新建链即可</li>
+</ul>
+</li>
+<li>模式缺点<ul>
+<li>不能保证请求一定会被处理</li>
+<li>对于比较长的职责链，系统性能将受到一定影响，在进行代码调试时不太方便</li>
+<li>如果建链不当，可能会造成循环调用，将导致系统陷入死循环</li>
+</ul>
+</li>
+<li>模式适用环境<ul>
+<li>有多个对象可以处理同一个请求，具体哪个对象处理该请求待运行时刻再确定</li>
+<li>在不明确指定接收者的情况下，向多个对象中的一个提交一个请求</li>
+<li>可动态指定一组对象处理请求</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>设计模式</category>
+        <category>第16章 职责链模式</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>代理模式</title>
+    <url>/2019/08/31/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<h1 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a>代理模式</h1><p>当用户无法直接访问某个对象或访问困难，可以通过代理对象来间接访问，为了保证客户端的透明性，所访问的真实对象与代理对象之间需要实现相同的接口。</p>
+<p>根据使用目的不同，分为：保护代理、远程代理、虚拟代理、缓冲代理……</p>
+<p><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F_1.png" alt="代理模式"></p>
+<h2 id="代理模式概述"><a href="#代理模式概述" class="headerlink" title="代理模式概述"></a>代理模式概述</h2><ul>
+<li><p>分析</p>
+<ul>
+<li>代购商品：顾客  代购网站  商品</li>
+<li>软件开发：客户端  代理对象  真实对象</li>
+</ul>
+</li>
+<li><p>代理模式：</p>
+<ul>
+<li>给某一个对象提供一个代理或占位符，并由代理对象来控制对原对象的访问。</li>
+</ul>
+</li>
+<li><p>代理模式的定义</p>
+<ul>
+<li>引入一个新的代理对象</li>
+<li>代理对象在客户端对象和目标对象之间起到中介的作用</li>
+<li>去掉客户不能看到的内容和服务或者增添客户需要的额外的新服务</li>
+</ul>
+</li>
+</ul>
+<h2 id="代理模式的结构与实现"><a href="#代理模式的结构与实现" class="headerlink" title="代理模式的结构与实现"></a>代理模式的结构与实现</h2><ul>
+<li>代理模式的结构<ul>
+<li>代理模式包含以下3个角色：<br>•  Subject（抽象主题角色）<br>•  Proxy（代理主题角色）<br>•  RealSubject（真实主题角色）</li>
+</ul>
+</li>
+<li>几种常见的代理模式<ul>
+<li>远程代理(Remote Proxy)：为一个位于不同的地址空间的对象提供一个本地的代理对象，这个不同的地址空间可以在同一台主机中，也可以在另一台主机中，远程代理又称为大使(Ambassador)</li>
+<li>虚拟代理(Virtual Proxy)：如果需要创建一个资源消耗较大的对象，先创建一个消耗相对较小的对象来表示，真实对象只在需要时才会被真正创建</li>
+<li>保护代理(Protect Proxy)：控制对一个对象的访问，可以给不同的用户提供不同级别的使用权限</li>
+<li>缓冲代理(Cache Proxy)：为某一个目标操作的结果提供临时的存储空间，以便多个客户端可以共享这些结果</li>
+<li>智能引用代理(Smart Reference Proxy)：当一个对象被引用时，提供一些额外的操作，例如将对象被调用的次数记录下来等</li>
+</ul>
+</li>
+</ul>
+<h2 id="远程代理"><a href="#远程代理" class="headerlink" title="远程代理"></a>远程代理</h2><ul>
+<li>动机<ul>
+<li>客户端程序可以访问在远程主机上的对象，远程主机可能具有更好的计算性能与处理速度，可以快速地响应并处理客户端的请求</li>
+<li>可以将网络的细节隐藏起来，使得客户端不必考虑网络的存在</li>
+<li>客户端完全可以认为被代理的远程业务对象是在本地而不是在远程，而远程代理对象承担了大部分的网络通信工作，并负责对远程业务方法的调用</li>
+</ul>
+</li>
+</ul>
+<p><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F_2.png" alt="代理模式"></p>
+<h2 id="虚拟代理"><a href="#虚拟代理" class="headerlink" title="虚拟代理"></a>虚拟代理</h2><ul>
+<li>动机<ul>
+<li>对于一些占用系统资源较多或者加载时间较长的对象，可以给这些对象提供一个虚拟代理</li>
+<li>在真实对象创建成功之前虚拟代理扮演真实对象的替身，而当真实对象创建之后，虚拟代理将用户的请求转发给真实对象</li>
+<li>使用一个“虚假”的代理对象来代表真实对象，通过代理对象来间接引用真实对象，可以在一定程度上提高系统的性能</li>
+</ul>
+</li>
+<li>应用<ul>
+<li>由于对象本身的复杂性或者网络等原因导致一个对象需要较长的加载时间，此时可以用一个加载时间相对较短的代理对象来代表真实对象（结合多线程技术）</li>
+<li>一个对象的加载十分耗费系统资源，让那些占用大量内存或处理起来非常复杂的对象推迟到使用它们的时候才创建，而在此之前用一个相对来说占用资源较少的代理对象来代表真实对象，再通过代理对象来引用真实对象（用时间换取空间）</li>
+</ul>
+</li>
+</ul>
+<h2 id="缓冲代理"><a href="#缓冲代理" class="headerlink" title="缓冲代理"></a>缓冲代理</h2><ul>
+<li>动机<ul>
+<li>为某一个操作的结果提供临时的缓存存储空间，以便在后续使用中能够共享这些结果</li>
+<li>可以避免某些方法的重复执行，优化系统性能</li>
+</ul>
+</li>
+</ul>
+<h2 id="代理模式的优缺点与适用环境"><a href="#代理模式的优缺点与适用环境" class="headerlink" title="代理模式的优缺点与适用环境"></a>代理模式的优缺点与适用环境</h2><ul>
+<li>模式优点<ul>
+<li>能够协调调用者和被调用者，在一定程度上降低了系统的耦合度</li>
+<li>客户端可以针对抽象主题角色进行编程，增加和更换代理类无须修改源代码，符合开闭原则，系统具有较好的灵活性和可扩展性</li>
+<li>远程代理：可以将一些消耗资源较多的对象和操作移至性能更好的计算机上，提高了系统的整体运行效率</li>
+<li>虚拟代理：通过一个消耗资源较少的对象来代表一个消耗资源较多的对象，可以在一定程度上节省系统的运行开销</li>
+<li>缓冲代理：为某一个操作的结果提供临时的缓存存储空间，以便在后续使用中能够共享这些结果，优化系统性能，缩短执行时间</li>
+<li>保护代理：可以控制对一个对象的访问权限，为不同用户提供不同级别的使用权限</li>
+</ul>
+</li>
+<li>模式缺点<ul>
+<li>由于在客户端和真实主题之间增加了代理对象，因此有些类型的代理模式可能会造成请求的处理速度变慢（例如保护代理）</li>
+<li>实现代理模式需要额外的工作，而且有些代理模式的实现过程较为复杂（例如远程代理）</li>
+</ul>
+</li>
+<li>模式适用环境<ul>
+<li>当客户端对象需要访问远程主机中的对象时可以使用远程代理</li>
+<li>当需要用一个消耗资源较少的对象来代表一个消耗资源较多的对象，从而降低系统开销、缩短运行时间时可以使用虚拟代理</li>
+<li>当需要为某一个被频繁访问的操作结果提供一个临时存储空间，以供多个客户端共享访问这些结果时可以使用缓冲代理</li>
+<li>当需要控制对一个对象的访问，为不同用户提供不同级别的访问权限时可以使用保护代理</li>
+<li>当需要为一个对象的访问（引用）提供一些额外的操作时可以使用智能引用代理</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>设计模式</category>
+        <category>第15章 代理模式</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>sugarsql简介</title>
+    <url>/2019/08/31/sugarsql%E7%AE%80%E4%BB%8B/</url>
+    <content><![CDATA[<h1 id="sugarsql"><a href="#sugarsql" class="headerlink" title="sugarsql"></a>sugarsql</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>简单谈一下sugarsql。</p>
+<p>一般我们去了解一项技术呢，最主要的看权威官网而不是私人博客。<br>在我看来，因为有几项好处是私人博客比不了的。</p>
+<ul>
+<li>权威性，这个不用多说。</li>
+<li>准确性，私人博客一传十，十传百，错字错句难免会出现。</li>
+<li>全面性，看一样管中规豹不太好，速食只能解一时困惑，还是找时间扫盲为主</li>
+</ul>
+<p>步入正题，这个是官网<a href="http://www.codeisbug.com/" target="_blank" rel="noopener">http://www.codeisbug.com/</a><br>用新不用旧，直接步入sugarsql4的文档就好。</p>
+<p>SqlSugar是通过Queryable、Updateable、Deleteable和Insertable实现的增删查改。</p>
+<blockquote>
+<p>先看官网，鸽了，找时间补上。<br>未完待续。。。。。。</p>
+</blockquote>
+<p>补上之前的，怎么看还是官方写的比较好，也不需要我补充什么，写了个小例子，方便理解<br><a href="https://github.com/infernoyy/BlogCode/tree/master/SugarsqlTest" target="_blank" rel="noopener">https://github.com/infernoyy/BlogCode/tree/master/SugarsqlTest</a></p>
+<h2 id="问题整理"><a href="#问题整理" class="headerlink" title="问题整理"></a>问题整理</h2><p>Q：switch/case中多条件下的sql执行，实体类有很多，无法实现每个的查询？只需要执行某一sql。<br>A：<a href="http://www.codeisbug.com/Doc/8/1132" target="_blank" rel="noopener">http://www.codeisbug.com/Doc/8/1132</a>  官网有实现方法。</p>
+<blockquote>
+<p>var t12 = db.SqlQueryable<dynamic>(“select * from student”).ToPageList(1, 2);//返回动态类型</dynamic></p>
+</blockquote>
+<p>也可以返回List、DataTable、DataSet等等数据类型供处理。</p>
+]]></content>
+      <categories>
+        <category>.NET 4.+ &amp; .NET CORE</category>
+        <category>ORM框架</category>
+        <category>sqlsugar</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>享元模式</title>
+    <url>/2019/08/31/%E4%BA%AB%E5%85%83%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<h1 id="享元模式"><a href="#享元模式" class="headerlink" title="享元模式"></a>享元模式</h1><blockquote>
+<p>系统存在大量相同或者相似的对象时，享元模式通过共享技术实现相同或相似的细粒度对象的复用，节省内存空间，提高系统性能。</p>
+</blockquote>
+<h2 id="享元模式概述"><a href="#享元模式概述" class="headerlink" title="享元模式概述"></a>享元模式概述</h2><ul>
+<li>动机<ul>
+<li>如果一个软件系统在运行时所创建的相同或相似对象数量太多，将导致运行代价过高，带来系统资源浪费、性能下降等问题</li>
+<li>如何避免系统中出现大量相同或相似的对象，同时又不影响客户端程序通过面向对象的方式对这些对象进行操作呢？</li>
+</ul>
+</li>
+</ul>
+<p><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E4%BA%AB%E5%85%83%E6%A8%A1%E5%BC%8F_1.png" alt="享元模式"></p>
+<ul>
+<li>分析<ul>
+<li>享元模式：通过共享技术实现相同或相似对象的重用</li>
+<li>享元池(Flyweight Pool)：存储共享实例对象的地方</li>
+<li>内部状态(Intrinsic State)：存储在享元对象内部并且不会随环境改变而改变的状态，内部状态可以共享（例如：字符的内容）</li>
+<li>外部状态(Extrinsic State)：随环境改变而改变的、不可以共享的状态。享元对象的外部状态通常由客户端保存，并在享元对象被创建之后，需要使用的时候再传入到享元对象内部。一个外部状态与另一个外部状态之间是相互独立的（例如：字符的颜色和大小）</li>
+</ul>
+</li>
+<li>原理<ul>
+<li>(1) 将具有相同内部状态的对象存储在享元池中，享元池中的对象是可以实现共享的</li>
+<li>(2) 需要的时候将对象从享元池中取出，即可实现对象的复用</li>
+<li>(3) 通过向取出的对象注入不同的外部状态，可以得到一系列相似的对象，而这些对象在内存中实际上只存储一份</li>
+</ul>
+</li>
+<li>享元模式：<br>  运用共享技术有效地支持大量细粒度对象的复用。</li>
+<li>享元模式的定义<ul>
+<li>又称为轻量级模式</li>
+<li>要求能够被共享的对象必须是细粒度对象</li>
+</ul>
+</li>
+</ul>
+<h2 id="享元模式的结构与实现"><a href="#享元模式的结构与实现" class="headerlink" title="享元模式的结构与实现"></a>享元模式的结构与实现</h2><ul>
+<li>享元模式的结构<br>享元模式包含以下4个角色：<br>  •  Flyweight（抽象享元类）<br>  •  ConcreteFlyweight（具体享元类）<br>  •  UnsharedConcreteFlyweight（非共享具体享元类）<br>  •  FlyweightFactory（享元工厂类）</li>
+</ul>
+<h2 id="享元模式的结构与实现-1"><a href="#享元模式的结构与实现-1" class="headerlink" title="享元模式的结构与实现"></a>享元模式的结构与实现</h2><p>该软件公司开发人员通过对围棋软件进行分析发现，在图中，围棋棋盘中包含大量的黑子和白子，它们的形状、大小都一模一样，只是出现的位置不同而已。如果将每一个棋子都作为一个独立的对象存储在内存中，将导致该围棋软件在运行时所需内存空间较大，如何降低运行代价、提高系统性能是需要解决的一个问题。为了解决该问题，现使用享元模式来设计该围棋软件的棋子对象。</p>
+<ul>
+<li>动机<ul>
+<li>如何让相同的黑子或者白子能够多次重复显示但位于一个棋盘的不同地方？</li>
+<li>解决方案：将棋子的位置定义为棋子的一个外部状态，在需要时再进行设置</li>
+</ul>
+</li>
+</ul>
+<h2 id="单纯享元模式和复合享元模式"><a href="#单纯享元模式和复合享元模式" class="headerlink" title="单纯享元模式和复合享元模式"></a>单纯享元模式和复合享元模式</h2><ul>
+<li>单纯享元模式<ul>
+<li>所有的具体享元类都是可以共享的，不存在非共享具体享元类</li>
+</ul>
+</li>
+<li>复合享元模式<ul>
+<li>将一些单纯享元对象使用组合模式加以组合</li>
+<li>如果希望为多个内部状态不同的享元对象设置相同的外部状态，可以考虑使用复合享元模式</li>
+</ul>
+</li>
+</ul>
+<h2 id="享元模式的优缺点与适用环境"><a href="#享元模式的优缺点与适用环境" class="headerlink" title="享元模式的优缺点与适用环境"></a>享元模式的优缺点与适用环境</h2><ul>
+<li>模式优点<ul>
+<li>可以减少内存中对象的数量，使得相同或者相似的对象在内存中只保存一份，从而可以节约系统资源，提高系统性能</li>
+<li>外部状态相对独立，而且不会影响其内部状态，从而使得享元对象可以在不同的环境中被共享</li>
+</ul>
+</li>
+<li>模式缺点<ul>
+<li>使得系统变得复杂，需要分离出内部状态和外部状态，这使得程序的逻辑复杂化</li>
+<li>为了使对象可以共享，享元模式需要将享元对象的部分状态外部化，而读取外部状态将使得运行时间变长</li>
+</ul>
+</li>
+<li>模式适用环境<ul>
+<li>一个系统有大量相同或者相似的对象，造成内存的大量耗费</li>
+<li>对象的大部分状态都可以外部化，可以将这些外部状态传入对象中</li>
+<li>在使用享元模式时需要维护一个存储享元对象的享元池，而这需要耗费一定的系统资源，因此，在需要多次重复使用享元对象时才值得使用享元模式</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>设计模式</category>
+        <category>第14章 享元模式</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>外观模式</title>
+    <url>/2019/08/31/%E5%A4%96%E8%A7%82%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<h1 id="外观模式"><a href="#外观模式" class="headerlink" title="外观模式"></a>外观模式</h1><blockquote>
+<p>引入外观角色来简化客户端与子系统之间的交互，为复杂的子系统调用一个统一的入口，降低子系统与客户端的耦合度。</p>
+</blockquote>
+<h2 id="外观模式-1"><a href="#外观模式-1" class="headerlink" title="外观模式"></a>外观模式</h2><p><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%A4%96%E8%A7%82%E6%A8%A1%E5%BC%8F_1.png" alt="外观模式"></p>
+<ul>
+<li>分析<ul>
+<li>一个客户类需要和多个业务类交互，而这些需要交互的业务类经常会作为一个整体出现</li>
+<li>引入一个新的外观类(Facade)来负责和多个业务类【子系统(Subsystem)】进行交互，而客户类只需与外观类交互</li>
+<li>为多个业务类的调用提供了一个统一的入口，简化了类与类之间的交互</li>
+<li>没有外观类：每个客户类需要和多个子系统之间进行复杂的交互，系统的耦合度将很大</li>
+<li>引入外观类：客户类只需要直接与外观类交互，客户类与子系统之间原有的复杂引用关系由外观类来实现，从而降低了系统的耦合度</li>
+<li>一个子系统的外部与其内部的通信通过一个统一的外观类进行，外观类将客户类与子系统的内部复杂性分隔开，使得客户类只需要与外观角色打交道，而不需要与子系统内部的很多对象打交道</li>
+</ul>
+</li>
+<li>外观模式：为子系统中的一组接口提供一个统一的入口。外观模式定义了一个高层接口，这个接口使得这一子系统更加容易使用。</li>
+<li>外观模式的定义<ul>
+<li>又称为门面模式</li>
+<li>是迪米特法则的一种具体实现</li>
+<li>通过引入一个新的外观角色来降低原有系统的复杂度，同时降低客户类与子系统的耦合度</li>
+<li>所指的子系统是一个广义的概念，它可以是一个类、一个功能模块、系统的一个组成部分或者一个完整的系统</li>
+</ul>
+</li>
+</ul>
+<h2 id="外观模式的结构与实现"><a href="#外观模式的结构与实现" class="headerlink" title="外观模式的结构与实现"></a>外观模式的结构与实现</h2><ul>
+<li>外观模式的结构<br>外观模式包含以下2个角色：<br>•  Facade（外观角色）<br>•  SubSystem（子系统角色）</li>
+</ul>
+<h2 id="抽象外观类"><a href="#抽象外观类" class="headerlink" title="抽象外观类"></a>抽象外观类</h2><ul>
+<li>动机:<br>在标准的外观模式的结构图中，如果需要增加、删除或更换与外观类交互的子系统类，必须修改外观类或客户端的源代码，这将违背开闭原则，因此可以通过引入抽象外观类对系统进行改进，在一定程度上解决该问题</li>
+</ul>
+<h2 id="外观模式的优缺点与适用环境"><a href="#外观模式的优缺点与适用环境" class="headerlink" title="外观模式的优缺点与适用环境"></a>外观模式的优缺点与适用环境</h2><ul>
+<li>模式优点<ul>
+<li>它对客户端屏蔽了子系统组件，减少了客户端所需处理的对象数目，并使得子系统使用起来更加容易</li>
+<li>它实现了子系统与客户端之间的松耦合关系，这使得子系统的变化不会影响到调用它的客户端，只需要调整外观类即可</li>
+<li>一个子系统的修改对其他子系统没有任何影响，而且子系统的内部变化也不会影响到外观对象</li>
+</ul>
+</li>
+<li>模式缺点<ul>
+<li>不能很好地限制客户端直接使用子系统类，如果对客户端访问子系统类做太多的限制则减少了可变性和灵活性</li>
+<li>如果设计不当，增加新的子系统可能需要修改外观类的源代码，违背了开闭原则</li>
+</ul>
+</li>
+<li>模式适用环境<ul>
+<li>要为访问一系列复杂的子系统提供一个简单入口</li>
+<li>客户端程序与多个子系统之间存在很大的依赖性</li>
+<li>在层次化结构中，可以使用外观模式的定义系统中每一层的入口，层与层之间不直接产生联系，而是通过外观类建立联系，降低层之间的耦合度</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>设计模式</category>
+        <category>第13章 外观模式</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>装饰模式</title>
+    <url>/2019/08/31/%E8%A3%85%E9%A5%B0%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<p><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%A3%85%E9%A5%B0%E6%A8%A1%E5%BC%8F_1.png" alt="组合模式"></p>
+<h1 id="装饰模式"><a href="#装饰模式" class="headerlink" title="装饰模式"></a>装饰模式</h1><blockquote>
+<p>是一种替代继承的技术，是一种无需定义子类的方式给对象动态增加职责，使用对象的关联关系取代类之间的继承关系。</p>
+</blockquote>
+<h2 id="装饰模式概述"><a href="#装饰模式概述" class="headerlink" title="装饰模式概述"></a>装饰模式概述</h2><ul>
+<li>装饰模式分析<ul>
+<li>可以在不改变一个对象本身功能的基础上给对象增加额外的新行为</li>
+<li>是一种用于替代继承的技术，它通过一种无须定义子类的方式给对象动态增加职责，使用对象之间的关联关系取代类之间的继承关系</li>
+<li>引入了装饰类，在装饰类中既可以调用待装饰的原有类的方法，还可以增加新的方法，以扩展原有类的功能</li>
+</ul>
+</li>
+<li>装饰模式：动态地给一个对象增加一些额外的职责。就扩展功能而言，装饰模式提供了一种比使用子类更加灵活的替代方案。</li>
+<li>装饰模式的定义<ul>
+<li>以对客户透明的方式动态地给一个对象附加上更多的责任</li>
+<li>可以在不需要创建更多子类的情况下，让对象的功能得以扩展</li>
+</ul>
+</li>
+</ul>
+<h2 id="装饰模式的结构与实现"><a href="#装饰模式的结构与实现" class="headerlink" title="装饰模式的结构与实现"></a>装饰模式的结构与实现</h2><ul>
+<li>装饰模式的结构<br>装饰模式包含以下4个角色：<br>  •  Component（抽象构件）<br>  •  ConcreteComponent（具体构件）<br>  •  Decorator（抽象装饰类）<br>  •  ConcreteDecorator（具体装饰类）</li>
+</ul>
+<h2 id="透明装饰模式与半透明装饰模式"><a href="#透明装饰模式与半透明装饰模式" class="headerlink" title="透明装饰模式与半透明装饰模式"></a>透明装饰模式与半透明装饰模式</h2><ul>
+<li>透明装饰模式<ul>
+<li>透明(Transparent)装饰模式：要求客户端完全针对抽象编程，装饰模式的透明性要求客户端程序不应该将对象声明为具体构件类型或具体装饰类型，而应该全部声明为抽象构件类型</li>
+<li>对于客户端而言，具体构件对象和具体装饰对象没有任何区别</li>
+</ul>
+</li>
+<li>半透明装饰模式<ul>
+<li>半透明(Semi-transparent)装饰模式：用具体装饰类型来定义装饰之后的对象，而具体构件使用抽象构件类型来定义</li>
+<li>对于客户端而言，具体构件类型无须关心，是透明的；但是具体装饰类型必须指定，这是不透明的</li>
+</ul>
+</li>
+</ul>
+<h2 id="优缺点和适用环境"><a href="#优缺点和适用环境" class="headerlink" title="优缺点和适用环境"></a>优缺点和适用环境</h2><ul>
+<li>模式优点<ul>
+<li>对于扩展一个对象的功能，装饰模式比继承更加灵活，不会导致类的个数急剧增加</li>
+<li>可以通过一种动态的方式来扩展一个对象的功能，通过配置文件可以在运行时选择不同的具体装饰类，从而实现不同的行为</li>
+<li>可以对一个对象进行多次装饰</li>
+<li>具体构件类与具体装饰类可以独立变化，用户可以根据需要增加新的具体构件类和具体装饰类，且原有类库代码无须改变，符合开闭原则</li>
+</ul>
+</li>
+<li>模式缺点<ul>
+<li>使用装饰模式进行系统设计时将产生很多小对象，大量小对象的产生势必会占用更多的系统资源，在一定程度上影响程序的性能</li>
+<li>比继承更加易于出错，排错也更困难，对于多次装饰的对象，调试时寻找错误可能需要逐级排查，较为烦琐</li>
+</ul>
+</li>
+<li>模式适用环境<ul>
+<li>在不影响其他对象的情况下，以动态、透明的方式给单个对象添加职责</li>
+<li>当不能采用继承的方式对系统进行扩展或者采用继承不利于系统扩展和维护时可以使用装饰模式</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>设计模式</category>
+        <category>第12章 装饰模式</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>组合模式</title>
+    <url>/2019/08/31/%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<h1 id="组合模式"><a href="#组合模式" class="headerlink" title="组合模式"></a>组合模式</h1><p><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F_1.png" alt="组合模式"><br><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F_2.png" alt="组合模式"></p>
+<h2 id="组合模式概述"><a href="#组合模式概述" class="headerlink" title="组合模式概述"></a>组合模式概述</h2><ul>
+<li><p>分析</p>
+<ul>
+<li>在树形目录结构中，包含文件和文件夹两类不同的元素<br>  •  在文件夹中可以包含文件，还可以继续包含子文件夹<br>  •  在文件中不能再包含子文件或者子文件夹</li>
+<li>文件夹 容器(Container)</li>
+<li>文件  叶子(Leaf)</li>
+</ul>
+</li>
+<li><p>分析</p>
+<ul>
+<li>当容器对象的某一个方法被调用时，将遍历整个树形结构，寻找也包含这个方法的成员对象并调用执行，牵一而动百，其中使用了递归调用的机制来对整个结构进行处理</li>
+<li>由于容器对象和叶子对象在功能上的区别，在使用这些对象的代码中必须有区别地对待容器对象和叶子对象，而实际上大多数情况下客户端希望一致地处理它们，因为对于这些对象的区别对待将会使程序非常复杂</li>
+</ul>
+</li>
+<li><p>组合模式通过一种巧妙的设计方案使得用户可以一致性地处理整个树形结构或者树形结构的一部分，它描述了如何将容器对象和叶子对象进行递归组合，使得用户在使用时无须对它们进行区分，可以一致地对待容器对象和叶子对象。</p>
+</li>
+<li><p>组合模式：<br>组合多个对象形成树形结构以表示具有部分-整体关系的层次结构。组合模式让客户端可以统一对待单个对象和组合对象。</p>
+<ul>
+<li>组合模式定义</li>
+<li>又称为“部分-整体”(Part-Whole)模式</li>
+<li>将对象组织到树形结构中，可以用来描述整体与部分的关系</li>
+</ul>
+</li>
+</ul>
+<h2 id="组合模式的结构与实现"><a href="#组合模式的结构与实现" class="headerlink" title="组合模式的结构与实现"></a>组合模式的结构与实现</h2><ul>
+<li>组合模式的结构<br>组合模式包含以下3个角色：<br>  •  Component（抽象构件）<br>  •  Leaf（叶子构件）<br>  •  Composite（容器构件）</li>
+</ul>
+<h2 id="透明组合模式与安全组合模式"><a href="#透明组合模式与安全组合模式" class="headerlink" title="透明组合模式与安全组合模式"></a>透明组合模式与安全组合模式</h2><ul>
+<li>透明组合模式<ul>
+<li>抽象构件Component中声明了所有用于管理成员对象的方法，包括Add()、Remove()，以及GetChild()等方法</li>
+<li>在客户端看来，叶子对象与容器对象所提供的方法是一致的，客户端可以一致地对待所有的对象</li>
+<li>缺点是不够安全，因为叶子对象和容器对象在本质上是有区别的</li>
+</ul>
+</li>
+<li>安全组合模式<ul>
+<li>抽象构件Component中没有声明任何用于管理成员对象的方法，而是在Composite类中声明并实现这些方法</li>
+<li>对于叶子对象，客户端不可能调用到这些方法</li>
+<li>缺点是不够透明，客户端不能完全针对抽象编程，必须有区别地对待叶子构件和容器构件</li>
+</ul>
+</li>
+</ul>
+<h2 id="优缺点和适用环境"><a href="#优缺点和适用环境" class="headerlink" title="优缺点和适用环境"></a>优缺点和适用环境</h2><ul>
+<li>模式优点<ul>
+<li>可以清楚地定义分层次的复杂对象，表示对象的全部或部分层次，让客户端忽略了层次的差异，方便对整个层次结构进行控制</li>
+<li>客户端可以一致地使用一个组合结构或其中单个对象，不必关心处理的是单个对象还是整个组合结构，简化了客户端代码</li>
+<li>增加新的容器构件和叶子构件都很方便，符合开闭原则</li>
+<li>为树形结构的面向对象实现提供了一种灵活的解决方案</li>
+</ul>
+</li>
+<li>模式缺点<ul>
+<li>在增加新构件时很难对容器中的构件类型进行限制</li>
+<li>模式适用环境</li>
+<li>在具有整体和部分的层次结构中，希望通过一种方式忽略整体与部分的差异，客户端可以一致地对待它们</li>
+<li>在一个使用面向对象语言开发的系统中需要处理一个树形结构</li>
+<li>在一个系统中能够分离出叶子对象和容器对象，而且它们的类型不固定，需要增加一些新的类型</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>设计模式</category>
+        <category>第11章 组合模式</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>桥接模式</title>
+    <url>/2019/08/17/%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<h1 id="桥接模式"><a href="#桥接模式" class="headerlink" title="桥接模式"></a>桥接模式</h1><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;系统存在两个独立变化的维度，通过桥接模式可以将这两个维度分离出来，使两者可以独立扩展。可以处理多层继承存在的问题，通过抽象关联代替。由静态继承变为动态的组合，使系统更加灵活，并易于扩展，同时有效控制了系统中类的个数。</p>
+<h2 id="桥接模式概述"><a href="#桥接模式概述" class="headerlink" title="桥接模式概述"></a>桥接模式概述</h2><ul>
+<li>分析<ul>
+<li>蜡笔：颜色和型号两个不同的变化维度（即两个不同的变化原因）耦合在一起，无论是对颜色进行扩展还是对型号进行扩展都势必会影响另一个维度</li>
+<li>毛笔：颜色和型号实现了分离，增加新的颜色或者型号对另一方没有任何影响</li>
+</ul>
+</li>
+<li>桥接模式：<ul>
+<li>将抽象部分与它的实现部分解耦，使得两者都能够独立变化。</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>桥接模式的定义<ul>
+<li>又被称为柄体(Handle and Body)模式或接口(Interface)模式</li>
+<li>用抽象关联取代了传统的多层继承</li>
+<li>将类之间的静态继承关系转换为动态的对象组合关系</li>
+</ul>
+</li>
+</ul>
+<h2 id="桥接模式的结构与实现"><a href="#桥接模式的结构与实现" class="headerlink" title="桥接模式的结构与实现"></a>桥接模式的结构与实现</h2><ul>
+<li>桥接模式的结构<ul>
+<li>桥接模式包含以下4个角色：<br>  •  Abstraction（抽象类）<br>  •  RefinedAbstraction（扩充抽象类）<br>  •  Implementor（实现类接口）<br>  •  ConcreteImplementor（具体实现类）</li>
+</ul>
+</li>
+</ul>
+<h2 id="桥接模式与适配器模式的联用"><a href="#桥接模式与适配器模式的联用" class="headerlink" title="桥接模式与适配器模式的联用"></a>桥接模式与适配器模式的联用</h2><ul>
+<li>桥接模式：用于系统的初步设计，对于存在两个独立变化维度的类可以将其分为抽象化和实现化两个角色，使它们可以分别进行变化</li>
+<li>适配器模式：当发现系统与已有类无法协同工作时</li>
+</ul>
+<h2 id="优缺点和适用环境"><a href="#优缺点和适用环境" class="headerlink" title="优缺点和适用环境"></a>优缺点和适用环境</h2><ul>
+<li>模式优点<ul>
+<li>分离抽象接口及其实现部分</li>
+<li>可以取代多层继承方案，极大地减少了子类的个数</li>
+<li>提高了系统的可扩展性，在两个变化维度中任意扩展一个维度，不需要修改原有系统，符合开闭原则</li>
+</ul>
+</li>
+<li>模式缺点<ul>
+<li>会增加系统的理解与设计难度，由于关联关系建立在抽象层，要求开发者一开始就针对抽象层进行设计与编程</li>
+<li>正确识别出系统中两个独立变化的维度并不是一件容易的事情</li>
+</ul>
+</li>
+<li>模式适用环境<ul>
+<li>需要在抽象化和具体化之间增加更多的灵活性，避免在两个层次之间建立静态的继承关系</li>
+<li>抽象部分和实现部分可以以继承的方式独立扩展而互不影响</li>
+<li>一个类存在两个（或多个）独立变化的维度，且这两个（或多个）维度都需要独立地进行扩展</li>
+<li>不希望使用继承或因为多层继承导致系统类的个数急剧增加的系统</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>设计模式</category>
+        <category>第10章 桥接模式</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>适配器模式</title>
+    <url>/2019/08/17/%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<h1 id="适配器模式"><a href="#适配器模式" class="headerlink" title="适配器模式"></a>适配器模式</h1><h2 id="结构型模式"><a href="#结构型模式" class="headerlink" title="结构型模式"></a>结构型模式</h2><ul>
+<li>结构型模式(Structural Pattern)关注如何将现有类或对象组织在一起形成更加强大的结构<blockquote>
+<p>积木搭建成城堡</p>
+</blockquote>
+</li>
+<li>不同的结构型模式从不同的角度组合类或对象，它们在尽可能满足各种面向对象设计原则的同时为类或对象的组合提供一系列巧妙的解决方案</li>
+<li>类结构型模式<ul>
+<li>关心类的组合，由多个类组合成一个更大的系统，在类结构型模式中一般只存在继承关系和实现关系</li>
+</ul>
+</li>
+<li>对象结构型模式<ul>
+<li>关心类与对象的组合，通过关联关系，在一个类中定义另一个类的实例对象，然后通过该对象调用相应的方法</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>模式名称</th>
+<th>定义</th>
+<th>学习难度</th>
+<th>使用频率</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>适配器模式 (Adapter Pattern)</td>
+<td>将一个类的接口转换成客户希望的另一个接口。适配器模式让那些接口不兼容的类可以一起工作。</td>
+<td>★★☆☆☆</td>
+<td>★★★★☆</td>
+</tr>
+<tr>
+<td>桥接模式 (Bridge Pattern)</td>
+<td>将抽象部分与它的实现部分解耦，使得两者都能够独立变化。</td>
+<td>★★★☆☆</td>
+<td>★★★☆☆</td>
+</tr>
+<tr>
+<td>组合模式 (Composite Pattern)</td>
+<td>组合多个对象形成树形结构，以表示具有部分-整体关系的层次结构。组合模式让客户端可以统一对待单个对象和组合对象。</td>
+<td>★★★☆☆</td>
+<td>★★★★☆</td>
+</tr>
+<tr>
+<td>装饰模式 (Decorator Pattern)</td>
+<td>动态地给一个对象增加一些额外的职责。就扩展功能而言，装饰模式提供了一种比使用子类更加灵活的替代方案。</td>
+<td>★★★☆☆</td>
+<td>★★★☆☆</td>
+</tr>
+<tr>
+<td>外观模式 (Facade Pattern)</td>
+<td>为子系统中的一组接口提供一个统一的入口。外观模式定义了一个高层接口，这个接口使得这一子系统更加容易使用。</td>
+<td>★☆☆☆☆</td>
+<td>★★★★★</td>
+</tr>
+<tr>
+<td>享元模式 (Flyweight Pattern)</td>
+<td>运用共享技术有效地支持大量细粒度对象的复用。</td>
+<td>★★★★☆</td>
+<td>★☆☆☆☆</td>
+</tr>
+<tr>
+<td>代理模式 (Proxy Pattern)</td>
+<td>给某一个对象提供一个代理或占位符，并由代理对象来控制对原对象的访问。</td>
+<td>★★★☆☆</td>
+<td>★★★★☆</td>
+</tr>
+</tbody></table>
+<h2 id="适配器模式概述"><a href="#适配器模式概述" class="headerlink" title="适配器模式概述"></a>适配器模式概述</h2><ul>
+<li><p>分析</p>
+<ul>
+<li>现实生活：<br>  •  不兼容：生活用电220V  笔记电脑20V<br>  •  引入 AC Adapter（交流电适配器）<br>  •  例子如下：<ul>
+<li><blockquote>
+<p>1、美国电器 110V，中国 220V，就要有一个适配器将 110V 转化为 220V。 </p>
+</blockquote>
+</li>
+<li><blockquote>
+<p>2、JAVA JDK 1.1 提供了 Enumeration 接口，而在 1.2 中提供了 Iterator 接口，想要使用 1.2 的 JDK，则要将以前系统的 Enumeration 接口转化为 Iterator 接口，这时就需要适配器模式。</p>
+</blockquote>
+</li>
+<li><blockquote>
+<p>3、在 LINUX 上运行 WINDOWS 程序。 </p>
+</blockquote>
+</li>
+<li><blockquote>
+<p>4、JAVA 中的 jdbc。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>软件开发：<br>  •  存在不兼容的结构，例如方法名不一致<br>  •  引入适配器模式</li>
+</ul>
+</li>
+<li><p>适配器模式：<br>  将一个类的接口转换成客户希望的另一个接口。适配器模式让那些接口不兼容的类可以一起工作。</p>
+</li>
+<li><p>适配器模式的定义</p>
+<ul>
+<li>别名为包装器(Wrapper)模式</li>
+<li>定义中所提及的接口是指广义的接口，它可以表示一个方法或者方法的集合</li>
+</ul>
+</li>
+</ul>
+<h2 id="适配器模式的结构与实现"><a href="#适配器模式的结构与实现" class="headerlink" title="适配器模式的结构与实现"></a>适配器模式的结构与实现</h2><ul>
+<li>适配器模式的结构<ul>
+<li>适配器模式包含以下3个角色：<br>  •  Target（目标抽象类）<br>  •  Adapter（适配器类）<br>  •  Adaptee（适配者类）</li>
+</ul>
+</li>
+</ul>
+<h2 id="缺省适配器模式"><a href="#缺省适配器模式" class="headerlink" title="缺省适配器模式"></a>缺省适配器模式</h2><p>缺省适配器模式(Default Adapter Pattern)：<br>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当不需要实现一个接口所提供的所有方法时，可先设计一个抽象类实现该接口，并为接口中每个方法提供一个默认实现（空方法），那么该抽象类的子类可以选择性地覆盖父类的某些方法来实现需求，它适用于不想使用一个接口中的所有方法的情况，又称为单接口适配器模式。</p>
+<h2 id="双向适配器"><a href="#双向适配器" class="headerlink" title="双向适配器"></a>双向适配器</h2><blockquote>
+<p>适配器中同时包含对目标类和适配者类的引用，适配者可以通过它调用目标类中的方法，目标类也可以通过它调用适配者类中的方法。</p>
+</blockquote>
+<h2 id="优缺点和适用环境"><a href="#优缺点和适用环境" class="headerlink" title="优缺点和适用环境"></a>优缺点和适用环境</h2><ul>
+<li>模式优点<ul>
+<li>将目标类和适配者类解耦，通过引入一个适配器类来重用现有的适配者类，无须修改原有结构</li>
+<li>增加了类的透明性和复用性，提高了适配者的复用性，同一个适配者类可以在多个不同的系统中复用</li>
+<li>灵活性和扩展性非常好</li>
+<li>类适配器模式：置换一些适配者的方法很方便</li>
+<li>对象适配器模式：可以把多个不同的适配者适配到同一个目标，还可以适配一个适配者的子类</li>
+</ul>
+</li>
+<li>模式缺点<ul>
+<li>类适配器模式：<br>  (1) 一次最多只能适配一个适配者类，不能同时适配多个适配者；<br>  (2) 适配者类不能为最终类；<br>  (3) 目标抽象类只能为接口，不能为类</li>
+<li>对象适配器模式：在适配器中置换适配者类的某些方法比较麻烦</li>
+</ul>
+</li>
+<li>模式适用环境<ul>
+<li>系统需要使用一些现有的类，而这些类的接口不符合系统的需要，甚至没有这些类的源代码</li>
+<li>创建一个可以重复使用的类，用于和一些彼此之间没有太大关联的类，包括一些可能在将来引进的类一起工作</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>设计模式</category>
+        <category>第09章 适配器模式</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>单例模式</title>
+    <url>/2019/08/17/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<h1 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h1><h2 id="单例模式概述"><a href="#单例模式概述" class="headerlink" title="单例模式概述"></a>单例模式概述</h2><p>此核心结构只包含一个被称为单例类的特殊类。一个类只有一个实例且易被外界访问，控制实例个数，节约系统资源。</p>
+<p>例子：任务管理器、文件系统、计时工具、ID生成器等等…… ……</p>
+<ul>
+<li>如何保证一个类只有一个实例并且这个实例易于被访问？<ul>
+<li>(1) 全局变量：可以确保对象随时都可以被访问，但不能防止创建多个对象</li>
+<li>(2) 让类自身负责创建和保存它的唯一实例，并保证不能创建其他实例，它还提供一个访问该实例的方法</li>
+</ul>
+</li>
+<li>单例模式：<br>  确保一个类只有一个实例，并提供一个全局访问点来访问这个唯一实例。</li>
+<li>单例模式的定义<ul>
+<li>要点：<ul>
+<li>某个类只能有一个实例</li>
+<li>必须自行创建这个实例</li>
+<li>必须自行向整个系统提供这个实例</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="结构实现"><a href="#结构实现" class="headerlink" title="结构实现"></a>结构实现</h2><ul>
+<li>单例模式的结构<ul>
+<li>单例模式只包含一个单例角色：<br>  •  Singleton（单例）</li>
+<li>单例模式的实现注意点<ul>
+<li>私有构造函数</li>
+<li>静态私有成员变量（自身类型）</li>
+<li>静态公有的工厂方法</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="饿汉式单例与懒汉式单例"><a href="#饿汉式单例与懒汉式单例" class="headerlink" title="饿汉式单例与懒汉式单例"></a>饿汉式单例与懒汉式单例</h2><p>饿汉式单例类:<br><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F_1.png" alt="饿汉式单例类"><br>懒汉式单例类:<br><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F_2.png" alt="懒汉式单例类"></p>
+<ul>
+<li>饿汉式单例类与懒汉式单例类比较<ul>
+<li><strong>饿汉式单例类</strong>：无须考虑多个线程同时访问的问题；调用速度和反应时间优于懒汉式单例；资源利用效率不及懒汉式单例；系统加载时间可能会比较长</li>
+<li><strong>懒汉式单例类</strong>：实现了延迟加载；必须处理好多个线程同时访问的问题；需通过双重检查锁定等机制进行控制，将导致系统性能受到一定影响</li>
+</ul>
+</li>
+</ul>
+<h2 id="单例模式的优缺点与适用环境"><a href="#单例模式的优缺点与适用环境" class="headerlink" title="单例模式的优缺点与适用环境"></a>单例模式的优缺点与适用环境</h2><ul>
+<li><p>模式优点</p>
+<ul>
+<li>提供了对唯一实例的受控访问</li>
+<li>可以节约系统资源，提高系统的性能</li>
+<li>允许可变数目的实例（多例类）</li>
+</ul>
+</li>
+<li><p>模式缺点</p>
+<ul>
+<li>扩展困难（缺少抽象层）</li>
+<li>单例类的职责过重</li>
+<li>由于自动垃圾回收机制，可能会导致共享的单例对象的状态丢失<blockquote>
+<p>为对应的资源分配内存 → 初始化内存 → 使用资源 → 清理资源 → 释放内存<br>什么时候发生GC？<br>　　1、当应用程序分配新的对象，GC的代的预算大小已经达到阈值，比如GC的第0代（新分配的小于85000字节的对象）已满；<br>　　2、代码主动显式调用System.GC.Collect()；<br>　　3、其他特殊情况，比如，windows报告内存不足、CLR卸载AppDomain、CLR关闭，甚至某些极端情况下系统参数设置改变也可能导致GC回收</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>模式适用环境</p>
+<ul>
+<li>系统只需要一个实例对象，或者因为资源消耗太大而只允许创建一个对象</li>
+<li>客户调用类的单个实例只允许使用一个公共访问点，除了该公共访问点，不能通过其他途径访问该实例</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>设计模式</category>
+        <category>第08章 单例模式</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>原型模式</title>
+    <url>/2019/08/17/%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<h1 id="原型模式"><a href="#原型模式" class="headerlink" title="原型模式"></a>原型模式</h1><blockquote>
+<p>复制一个已有的对象来获取更多或者相似的对象。深克隆、浅克隆机制。</p>
+</blockquote>
+<h2 id="原型模式概述"><a href="#原型模式概述" class="headerlink" title="原型模式概述"></a>原型模式概述</h2><ul>
+<li>分析<ul>
+<li>孙悟空：根据自己的形状复制（克隆）出多个身外身</li>
+<li>软件开发：通过复制一个原型对象得到多个与原型对象一模一样的新对象</li>
+</ul>
+</li>
+</ul>
+<p>原型模式：<br>使用原型实例指定待创建对象的类型，并且通过复制这个原型来创建新的对象</p>
+<ul>
+<li>原型模式的定义<ul>
+<li>工作原理：将一个原型对象传给要发动创建的对象（即客户端对象），这个要发动创建的对象通过请求原型对象复制自己来实现创建过程</li>
+<li>创建新对象（也称为克隆对象）的工厂就是原型类自身，工厂方法由负责复制原型对象的克隆方法来实现</li>
+<li>通过克隆方法所创建的对象是全新的对象，它们在内存中拥有新的地址，每一个克隆对象都是独立的</li>
+<li>通过不同的方式对克隆对象进行修改以后，可以得到一系列相似但不完全相同的对象</li>
+</ul>
+</li>
+</ul>
+<h2 id="原型模式的结构与实现"><a href="#原型模式的结构与实现" class="headerlink" title="原型模式的结构与实现"></a>原型模式的结构与实现</h2><h3 id="原型模式的结构"><a href="#原型模式的结构" class="headerlink" title="原型模式的结构"></a>原型模式的结构</h3><ul>
+<li>原型模式包含以下3个角色：<br>  •  Prototype（抽象原型类）<br>  •  ConcretePrototype（具体原型类）<br>  •  Client（客户类）</li>
+</ul>
+<h3 id="浅克隆与深克隆"><a href="#浅克隆与深克隆" class="headerlink" title="浅克隆与深克隆"></a>浅克隆与深克隆</h3><ul>
+<li>浅克隆(Shallow Clone)：当原型对象被复制时，只复制它本身和其中包含的值类型的成员变量，而引用类型的成员变量并没有复制<br><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F_1.png" alt="浅克隆"></li>
+<li>深克隆(Deep Clone)：除了对象本身被复制外，对象所包含的所有成员变量也将被复制<br><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F_2.png" alt="深克隆"></li>
+</ul>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>原型模式的实现<br>C#中的MemberwiseClone()方法和ICloneable接口<br>在C#语言中，提供了一个MemberwiseClone()方法用于实现浅克隆，该方法使用起来很方便，直接调用一个已有对象的MemberwiseClone()方法即可实现克隆</p>
+<p>C#中的MemberwiseClone()方法和ICloneable接口<br>•  在C#语言中还提供了一个ICloneable接口，它也可以用来创建当前对象的副本<br>•  ICloneable接口充当了抽象原型类的角色，具体原型类通常作为实现该接口的子类</p>
+<h2 id="原型管理器"><a href="#原型管理器" class="headerlink" title="原型管理器"></a>原型管理器</h2><ul>
+<li>定义</li>
+<li>原型管理器(Prototype Manager)将多个原型对象存储在一个集合中供客户端使用，它是一个专门负责克隆对象的工厂，其中定义了一个集合用于存储原型对象，如果需要某个原型对象的一个克隆，可以通过复制集合中对应的原型对象来获得</li>
+</ul>
+<h2 id="优缺点与适用环境"><a href="#优缺点与适用环境" class="headerlink" title="优缺点与适用环境"></a>优缺点与适用环境</h2><ul>
+<li><p>模式优点</p>
+<ul>
+<li>简化对象的创建过程，通过复制一个已有实例可以提高新实例的创建效率</li>
+<li>扩展性较好</li>
+<li>提供了简化的创建结构，原型模式中产品的复制是通过封装在原型类中的克隆方法实现的，无须专门的工厂类来创建产品</li>
+<li>可以使用深克隆的方式保存对象的状态，以便在需要的时候使用，可辅助实现撤销操作<blockquote>
+<p>Ctrl+C和Ctrl+V是原型模式的经典操作（深克隆）</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>模式缺点</p>
+<ul>
+<li>需要为每一个类配备一个克隆方法，而且该克隆方法位于一个类的内部，当对已有的类进行改造时，需要修改源代码，违背了开闭原则</li>
+<li>在实现深克隆时需要编写较为复杂的代码，而且当对象之间存在多重的嵌套引用时，为了实现深克隆，每一层对象对应的类都必须支持深克隆，实现起来可能会比较麻烦</li>
+</ul>
+</li>
+<li><p>模式适用环境</p>
+<ul>
+<li>创建新对象成本较大，新对象可以通过复制已有对象来获得，如果是相似对象，则可以对其成员变量稍作修改</li>
+<li>系统要保存对象的状态，而对象的状态变化很小</li>
+<li>需要避免使用分层次的工厂类来创建分层次的对象，并且类的实例对象只有一个或很少的几个组合状态，通过复制原型对象得到新实例可能比使用构造函数创建一个新实例更加方便</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>设计模式</category>
+        <category>第07章 原型模式</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>建造者模式</title>
+    <url>/2019/08/17/%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<h1 id="建造者模式"><a href="#建造者模式" class="headerlink" title="建造者模式"></a>建造者模式</h1><h2 id="建造者模式概述"><a href="#建造者模式概述" class="headerlink" title="建造者模式概述"></a>建造者模式概述</h2><blockquote>
+<p>建造者模式可以将部件本身和它们的组装过程分开，关注如何一步步创建一个包含多个组成部分的复杂对象，用户只需要指定复杂对象的类型即可得到该对象，而无须知道其内部的具体构造细节。</p>
+</blockquote>
+<p>建造者模式：<br>将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示。</p>
+<ul>
+<li>建造者模式的定义<ul>
+<li>将客户端与包含多个部件的复杂对象的创建过程分离，客户端无须知道复杂对象的内部组成部分与装配方式，只需要知道所需建造者的类型即可</li>
+<li>关注如何逐步创建一个复杂的对象，不同的建造者定义了不同的创建过程</li>
+</ul>
+</li>
+</ul>
+<h2 id="建造者模式的结构与实现"><a href="#建造者模式的结构与实现" class="headerlink" title="建造者模式的结构与实现"></a>建造者模式的结构与实现</h2><ul>
+<li>建造者模式的结构</li>
+<li>建造者模式包含以下4个角色：<br>• Builder（抽象建造者）<br>• ConcreteBuilder（具体建造者）<br>• Product（产品）<br>• Director（指挥者）</li>
+</ul>
+<!-- ## 建造者模式的应用实例
+
+（游戏案例：创建游戏任务）
+- 结果及分析
+- 如果需要更换具体角色建造者，只需要修改配置文件
+- 当需要增加新的具体角色建造者时，只需将新增具体角色建造者作为抽象角色建造者的子类，然后修改配置文件即可，原有代码无须修改，完全符合开闭原则
+ -->
+<h2 id="优缺点与适用环境"><a href="#优缺点与适用环境" class="headerlink" title="优缺点与适用环境"></a>优缺点与适用环境</h2><ul>
+<li>模式优点<ul>
+<li>客户端不必知道产品内部组成的细节，将产品本身与产品的创建过程解耦，使得相同的创建过程可以创建不同的产品对象</li>
+<li>每一个具体建造者都相对独立，与其他的具体建造者无关，因此可以很方便地替换具体建造者或增加新的具体建造者，扩展方便，符合开闭原则</li>
+<li>可以更加精细地控制产品的创建过程</li>
+</ul>
+</li>
+<li>模式缺点<ul>
+<li>建造者模式所创建的产品一般具有较多的共同点，其组成部分相似，如果产品之间的差异性很大，不适合使用建造者模式，因此其使用范围受到一定的限制</li>
+<li>如果产品的内部变化复杂，可能会需要定义很多具体建造者类来实现这种变化，导致系统变得很庞大，增加了系统的理解难度和运行成本</li>
+<li>模式适用环境</li>
+<li>需要生成的产品对象有复杂的内部结构，这些产品对象通常包含多个成员变量</li>
+<li>需要生成的产品对象的属性相互依赖，需要指定其生成顺序</li>
+<li>对象的创建过程独立于创建该对象的类。在建造者模式中通过引入了指挥者类，将创建过程封装在指挥者类中，而不在建造者类和客户类中</li>
+<li>隔离复杂对象的创建和使用，并使得相同的创建过程可以创建不同的产品</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>设计模式</category>
+        <category>第06章 建造者模式</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>抽象工厂模式</title>
+    <url>/2019/08/17/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<h1 id="抽象工厂模式"><a href="#抽象工厂模式" class="headerlink" title="抽象工厂模式"></a>抽象工厂模式</h1><h2 id="产品等级结构与产品族"><a href="#产品等级结构与产品族" class="headerlink" title="产品等级结构与产品族"></a>产品等级结构与产品族</h2><ul>
+<li>工厂方法模式<ul>
+<li>每个具体工厂只有一个或者一组重载的工厂方法，只能生产一种产品，可能会导致系统中存在大量的工厂类，势必会增加系统的开销</li>
+</ul>
+</li>
+<li>抽象工厂模式<ul>
+<li>一个工厂可以生产一系列产品（一族产品），极大减少了工厂类的数量</li>
+</ul>
+</li>
+<li>概念<ul>
+<li>产品等级结构：产品等级结构即产品的继承结构</li>
+<li>产品族：产品族是指由同一个工厂生产的，位于不同产品等级结构中的一组产品</li>
+</ul>
+</li>
+</ul>
+<p><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F_1.png" alt="产品族、产品等级结构"></p>
+<h2 id="抽象工厂模式概述"><a href="#抽象工厂模式概述" class="headerlink" title="抽象工厂模式概述"></a>抽象工厂模式概述</h2><ul>
+<li>模式动机<ul>
+<li>当系统所提供的工厂生产的具体产品并不是一个简单的对象，而是多个位于不同产品等级结构、属于不同类型的具体产品时就可以使用抽象工厂模式</li>
+<li>抽象工厂模式是所有形式的工厂模式中最为抽象和最具一般性的一种形式</li>
+</ul>
+</li>
+<li>抽象工厂模式：<ul>
+<li>提供一个创建一系列相关或相互依赖对象的接口，而无须指定它们具体的类。</li>
+</ul>
+</li>
+<li>抽象工厂模式的定义<ul>
+<li>又称为工具(Kit)模式</li>
+<li>抽象工厂模式中的具体工厂不只是创建一种产品，它负责创建一族产品</li>
+<li>当一个工厂等级结构可以创建出分属于不同产品等级结构的一个产品族中的所有对象时，抽象工厂模式比工厂方法模式更为简单、更有效率</li>
+</ul>
+</li>
+</ul>
+<h2 id="开闭原则的倾斜性"><a href="#开闭原则的倾斜性" class="headerlink" title="开闭原则的倾斜性"></a>开闭原则的倾斜性</h2><ul>
+<li>增加产品族<ul>
+<li>对于增加新的产品族，抽象工厂模式很好地支持了开闭原则，只需要增加具体产品并对应增加一个新的具体工厂，对已有代码无须做任何修改</li>
+</ul>
+</li>
+<li>增加新的产品等级结构<ul>
+<li>对于增加新的产品等级结构，需要修改所有的工厂角色，包括抽象工厂类，在所有的工厂类中都需要增加生产新产品的方法，违背了开闭原则</li>
+</ul>
+</li>
+</ul>
+<h2 id="抽象工厂模式的优缺点与适用环境"><a href="#抽象工厂模式的优缺点与适用环境" class="headerlink" title="抽象工厂模式的优缺点与适用环境"></a>抽象工厂模式的优缺点与适用环境</h2><ul>
+<li>模式优点<ul>
+<li>隔离了具体类的生成，使得客户端并不需要知道什么被创建</li>
+<li>当一个产品族中的多个对象被设计成一起工作时，它能够保证客户端始终只使用同一个产品族中的对象</li>
+<li>增加新的产品族很方便，无须修改已有系统，符合开闭原则</li>
+</ul>
+</li>
+<li>模式缺点<ul>
+<li>增加新的产品等级结构麻烦，需要对原有系统进行较大的修改，甚至需要修改抽象层代码，这显然会带来较大的不便，违背了开闭原则</li>
+<li>模式适用环境</li>
+<li>一个系统不应当依赖于产品类实例如何被创建、组合和表达的细节</li>
+<li>系统中有多于一个的产品族，但每次只使用其中某一产品族</li>
+<li>属于同一个产品族的产品将在一起使用，这一约束必须在系统的设计中体现出来</li>
+<li>产品等级结构稳定，设计完成之后，不会向系统中增加新的产品等级结构或者删除已有的产品等级结构</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>设计模式</category>
+        <category>第05章 抽象工厂模式</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>工厂方法模式</title>
+    <url>/2019/08/11/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<h1 id="工厂方法模式"><a href="#工厂方法模式" class="headerlink" title="工厂方法模式"></a>工厂方法模式</h1><h2 id="工厂方法模式概述"><a href="#工厂方法模式概述" class="headerlink" title="工厂方法模式概述"></a>工厂方法模式概述</h2><p>错误示例：<br><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F_1.png" alt="错误示例"><br>正确示例：<br><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F_2.png" alt="正确示例"></p>
+<p>工厂方法模式：</p>
+<ul>
+<li>不再提供一个按钮工厂类来统一负责所有产品的创建，而是将具体按钮的创建过程交给专门的工厂子类去完成<br>如果出现新的按钮类型，只需要为这种新类型的按钮定义一个具体的工厂类就可以创建该新按钮的实例</li>
+<li>定义一个用于创建对象的接口，但是让子类决定将哪一个类实例化。工厂方法模式让一个类的实例化延迟到其子类。</li>
+</ul>
+<p>工厂方法模式的定义</p>
+<ul>
+<li>简称为工厂模式(Factory Pattern)</li>
+<li>又可称作虚拟构造器模式(Virtual Constructor Pattern)或多态工厂模式(Polymorphic Factory Pattern)</li>
+<li>工厂父类负责定义创建产品对象的公共接口，而工厂子类则负责生成具体的产品对象</li>
+<li>目的是将产品类的实例化操作延迟到工厂子类中完成，即通过工厂子类来确定究竟应该实例化哪一个具体产品类</li>
+</ul>
+<h2 id="工厂方法模式的结构与实现"><a href="#工厂方法模式的结构与实现" class="headerlink" title="工厂方法模式的结构与实现"></a>工厂方法模式的结构与实现</h2><p>工厂方法模式的结构</p>
+<ul>
+<li>工厂方法模式包含以下4个角色：<ul>
+<li>Product（抽象产品）</li>
+<li>ConcreteProduct（具体产品）</li>
+<li>Factory（抽象工厂）</li>
+<li>ConcreteFactory（具体工厂）</li>
+</ul>
+</li>
+<li>例子：</li>
+</ul>
+<p><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F_3.png" alt="代码示例"><br><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F_4.png" alt="代码示例"><br><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F_5.png" alt="代码示例"></p>
+<h2 id="配置文件与反射"><a href="#配置文件与反射" class="headerlink" title="配置文件与反射"></a>配置文件与反射</h2><p>配置文件</p>
+<ul>
+<li>纯文本文件，通常是XML文件，例如App.config、Web.config等</li>
+<li>可以将类名存储在配置文件中，例如具体工厂类的类名<br><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F_6.png" alt="代码示例"></li>
+</ul>
+<p>反射(Reflection)</p>
+<ul>
+<li>在运行时获得.NET中每一个类型（包括类、结构、委托、接口和枚举等）的成员，包括方法、属性、事件，以及构造函数等，还可以获得每个成员的名称、限定符和参数等</li>
+<li>由于获取了构造函数的信息，因此可以通过类名来直接创建对象，即使这个对象的类型在编译时是未知的<br><code>//导入命名空间</code><br><code>using System.Reflection;</code><br><code>Assembly assembly = Assembly.Load(&quot;程序集名称&quot;);</code><br><code>object obj = assembly.CreateInstance(&quot;命名空间.类&quot;);</code><br><code>//导入命名空间</code><br><code>using System.Reflection;</code><br><code>object obj = Assembly.Load(&quot;程序集名称&quot;).CreateInstance(&quot;命名空间.类&quot;);</code></li>
+</ul>
+<p><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F_6.png" alt="代码示例"></p>
+<h2 id="工厂方法的重载"><a href="#工厂方法的重载" class="headerlink" title="工厂方法的重载"></a>工厂方法的重载</h2><blockquote>
+<p>不同参数传参重载工厂方法</p>
+</blockquote>
+<h2 id="工厂方法的隐藏"><a href="#工厂方法的隐藏" class="headerlink" title="工厂方法的隐藏"></a>工厂方法的隐藏</h2><p><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F_7.png" alt="代码示例"></p>
+<blockquote>
+<p>在不new实体类的情况下创建对象，而是直接使用工厂对象</p>
+</blockquote>
+<h2 id="工厂方法模式的优缺点与适用环境"><a href="#工厂方法模式的优缺点与适用环境" class="headerlink" title="工厂方法模式的优缺点与适用环境"></a>工厂方法模式的优缺点与适用环境</h2><ul>
+<li>模式优点<ul>
+<li>工厂方法用来创建客户所需要的产品，同时还向客户隐藏了哪种具体产品类将被实例化这一细节</li>
+<li>能够让工厂自主确定创建何种产品对象，而如何创建这个对象的细节则完全封装在具体工厂内部</li>
+<li>在系统中加入新产品时，完全符合开闭原则</li>
+</ul>
+</li>
+<li>模式缺点<ul>
+<li>系统中类的个数将成对增加，在一定程度上增加了系统的复杂度，会给系统带来一些额外的开销</li>
+<li>增加了系统的抽象性和理解难度</li>
+</ul>
+</li>
+<li>模式适用环境<ul>
+<li>客户端不知道它所需要的对象的类（客户端不需要知道具体产品类的类名，只需要知道所对应的工厂即可，具体产品对象由具体工厂类创建）</li>
+<li>抽象工厂类通过其子类来指定创建哪个对象</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>设计模式</category>
+        <category>第04章 工厂方法模式</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>简单工厂模式</title>
+    <url>/2019/08/11/%E7%AE%80%E5%8D%95%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<h1 id="简单工厂模式"><a href="#简单工厂模式" class="headerlink" title="简单工厂模式"></a>简单工厂模式</h1><h2 id="创建型模式"><a href="#创建型模式" class="headerlink" title="创建型模式"></a>创建型模式</h2><ul>
+<li>创建型模式(Creational Pattern)关注对象的创建过程</li>
+<li>创建型模式对类的实例化过程进行了抽象，能够将软件模块中对象的创建和对象的使用分离，对用户隐藏了类的实例的创建细节</li>
+<li>创建型模式关注对象的创建过程，描述如何将对象的创建和使用分离，让用户在使用对象时无需关心对象的创建细节，从而降低系统耦合度，更易于修改和扩展。</li>
+</ul>
+<p>创建型模式关注点</p>
+<ul>
+<li>创建什么(What)</li>
+<li>由谁创建(Who)</li>
+<li>何时创建(When)</li>
+</ul>
+<h2 id="简单工厂模式概述"><a href="#简单工厂模式概述" class="headerlink" title="简单工厂模式概述"></a>简单工厂模式概述</h2><p>例子：<br><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%AE%80%E5%8D%95%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F.png" alt="简单工厂模式"><br>简单工厂模式基本实现流程</p>
+<ul>
+<li>具体产品类：将需要创建的各种不同产品对象的相关代码封装到具体产品类中</li>
+<li>抽象产品类：将具体产品类公共的代码进行抽象和提取后封装在一个抽象产品类中</li>
+<li>工厂类：提供一个工厂类用于创建各种产品，在工厂类中提供一个创建产品的工厂方法，该方法可以根据所传入参数的不同创建不同的具体产品对象</li>
+<li>客户端：只需调用工厂类的工厂方法并传入相应的参数即可得到一个产品对象</li>
+</ul>
+<blockquote>
+<p>简单工厂模式 (Simple Factory Pattern)：定义一个工厂类，它可以根据参数的不同返回不同类的实例，被创建的实例通常都具有共同的父类。</p>
+</blockquote>
+<p>简单工厂模式的定义:</p>
+<ul>
+<li>在简单工厂模式中用于创建实例的方法通常是静态(static)方法，因此又被称为静态工厂方法(Static Factory Method)模式</li>
+<li>要点：如果需要什么，只需要传入一个正确的参数，就可以获取所需要的对象，而无须知道其创建细节</li>
+</ul>
+<h2 id="创建对象和使用对象"><a href="#创建对象和使用对象" class="headerlink" title="创建对象和使用对象"></a>创建对象和使用对象</h2><ul>
+<li><p>C#语言创建对象的几种方式</p>
+<ul>
+<li>使用new关键字直接创建对象</li>
+<li>通过反射机制创建对象</li>
+<li>通过克隆方法创建对象</li>
+<li>通过工厂类创建对象</li>
+</ul>
+</li>
+<li><p>两个类A和B之间的关系应该仅仅是A创建B或者是A使用B，而不能两种关系都有。将对象的创建和使用分离，使得系统更加符合单一职责原则，有利于对功能的复用和系统的维护。</p>
+</li>
+<li><p>将对象的创建与使用分离的其他好处</p>
+<ul>
+<li>防止用来实例化一个类的数据和代码在多个类中到处都是，可以将有关创建的知识搬移到一个工厂类中，解决代码重复、创建蔓延的问题</li>
+<li>构造函数的名字都与类名相同，从构造函数和参数列表中大家很难了解不同构造函数所构造的产品的差异  将对象的创建过程封装在工厂类中，可以提供一系列名字完全不同的工厂方法，每一个工厂方法对应一个构造函数，客户端可以以一种更加可读、易懂的方式来创建对象</li>
+</ul>
+</li>
+<li><p>何时不需要工厂？</p>
+<ul>
+<li>无须为系统中的每一个类都配备一个工厂类</li>
+<li>如果一个类很简单，而且不存在太多变化，其构造过程也很简单，此时就无须为其提供工厂类，直接在使用之前实例化即可</li>
+<li>否则会导致工厂泛滥，增加系统的复杂度</li>
+<li>例如：string类</li>
+</ul>
+</li>
+<li><p>模式优点</p>
+<ul>
+<li>实现了对象创建和使用的分离</li>
+<li>客户端无须知道所创建的具体产品类的类名，只需要知道具体产品类所对应的参数即可</li>
+<li>通过引入配置文件，可以在不修改任何客户端代码的情况下更换和增加新的具体产品类，在一定程度上提高了系统的灵活性</li>
+</ul>
+</li>
+<li><p>模式缺点</p>
+<ul>
+<li>工厂类集中了所有产品的创建逻辑，职责过重，一旦不能正常工作，整个系统都要受到影响</li>
+<li>增加系统中类的个数（引入了新的工厂类），增加了系统的复杂度和理解难度</li>
+<li>系统扩展困难，一旦添加新产品不得不修改工厂逻辑</li>
+<li>由于使用了静态工厂方法，造成工厂角色无法形成基于继承的等级结构，工厂类不能得到很好地扩展</li>
+</ul>
+</li>
+<li><p>模式适用环境</p>
+<ul>
+<li>工厂类负责创建的对象比较少，由于创建的对象较少，不会造成工厂方法中的业务逻辑太过复杂</li>
+<li>客户端只知道传入工厂类的参数，对于如何创建对象并不关心</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>设计模式</category>
+        <category>第03章 简单工厂模式</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>面向对象设计原则</title>
+    <url>/2019/08/11/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/</url>
+    <content><![CDATA[<h1 id="面向对象设计原则"><a href="#面向对象设计原则" class="headerlink" title="面向对象设计原则"></a>面向对象设计原则</h1><h2 id="面向对象设计原则概述"><a href="#面向对象设计原则概述" class="headerlink" title="面向对象设计原则概述"></a>面向对象设计原则概述</h2><blockquote>
+<p>可维护性(Maintainability)：指软件能够被理解、改正、适应及扩展的难易程度<br>可复用性(Reusability)：指软件能够被重复使用的难易程度</p>
+</blockquote>
+<ul>
+<li>面向对象设计的目标之一在于支持可维护性复用，一方面需要实现设计方案或者源代码的复用，另一方面要确保系统能够易于扩展和修改，具有良好的可维护性</li>
+<li>面向对象设计原则为支持可维护性复用而诞生，是指导性原则，而非强制性原则</li>
+<li>每一个设计模式都符合一个或多个面向对象设计原则，面向对象设计原则是用于评价一个设计模式的使用效果的重要指标之一</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>设计原则名称</th>
+<th>定义</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>单一职责原则 ★★★★☆</td>
+<td>一个对象应该只包含单一的职责，并且该职责被完整地封装在一个类中</td>
+<td>类中不能承担太多职责，例如包括数据库连接方法，又包含与图标生成和显示相关的方法。难以重用。因为拥有不止一个变化的原因，违背单一职责原则。所以拆分功能。</td>
+</tr>
+<tr>
+<td>开闭原则 ★★★★★</td>
+<td>软件实体应当对扩展开放，对修改关闭</td>
+<td>抽象化是开闭原则的关键。定义一个相对稳定的抽象层，将不同的实现行为移至具体的实现层。（接口、抽象类），在不修改已有代码的基础上扩展系统的功能。</td>
+</tr>
+<tr>
+<td>里氏代换原则 ★★★★★</td>
+<td>所有引用基类的地方必须能透明地使用其子类的对象</td>
+<td>软件中将积累替换成子类对象ok不报异常，反之不成立。是实现开闭原则的基础。使用的时候将父类设计为抽象类或者接口，子类继承父类或实现父接口，实现父类声明的方法。 <br> 例如：我喜欢动物，所以喜欢狗。</td>
+</tr>
+<tr>
+<td>依赖倒转原则 ★★★★★</td>
+<td>高层模块不应该依赖低层模块，它们都应该依赖抽象。抽象不应该依赖于细节，细节应该依赖于抽象</td>
+<td>是面向对象设计的主要机制之一，是系统抽象化的具体实现。<br>针对接口编程而不是针对实现。 <br> 例如：将具体类写在配置文件中，系统在修改时只需修改配置文件而不是源代码。</td>
+</tr>
+<tr>
+<td>接口隔离原则 ★★☆☆☆</td>
+<td>客户端不应该依赖那些它不需要的接口</td>
+<td>接口太大就应该切分更小，客户端只需要知道与之相关的方法。<br>接口应该相对独立，干该干的事，不该干的事不干。<br>使用接口原则，需要注意接口的粒度，接口不能太小（接口泛滥不利维护），不能太大（违背接口隔离原则，灵活性差使用不方便</td>
+</tr>
+<tr>
+<td>合成复用原则 ★★★★☆</td>
+<td>优先使用对象组合，而不是继承来达到复用的目的</td>
+<td>（优先考虑）多使用组合/聚合（关联）关系，少用继承。<br>可以降低耦合度，有效使用继承有助于问题理解降低复杂度，滥用继承会增加系统构建和维护的难度以及系统的复杂度。</td>
+</tr>
+<tr>
+<td>迪米特法则 ★★★☆☆</td>
+<td>每一个软件单位对其他的单位都只有最少的知识，而且局限于那些与本单位密切相关的软件单位</td>
+<td>少与其他实体发生相互作用。模块修改，其他模块尽量不受影响，类之间保持松散的耦合关系。</td>
+</tr>
+</tbody></table>
+<h2 id="单一职责原则"><a href="#单一职责原则" class="headerlink" title="单一职责原则"></a>单一职责原则</h2><p>单一职责原则定义</p>
+<blockquote>
+<p>就一个类而言，应该仅有一个引起它变化的原因<br>单一职责原则分析 </p>
+<ul>
+<li>一个类（大到模块，小到方法）承担的职责越多，它被复用的可能性就越小</li>
+<li>当一个职责变化时，可能会影响其他职责的运作</li>
+<li>将这些职责进行分离，将不同的职责封装在不同的类中</li>
+<li>将不同的变化原因封装在不同的类中</li>
+<li>单一职责原则是实现高内聚、低耦合的指导方针</li>
+</ul>
+</blockquote>
+<h2 id="开闭原则"><a href="#开闭原则" class="headerlink" title="开闭原则"></a>开闭原则</h2><p>开闭原则定义 </p>
+<blockquote>
+<p>开闭原则是面向对象的可复用设计的第一块基石，是最重要的面向对象设计原则</p>
+</blockquote>
+<ul>
+<li>开闭原则分析 <ul>
+<li>开闭原则由Bertrand Meyer于1988年提出</li>
+<li>在开闭原则的定义中，软件实体可以是一个软件模块、一个由多个类组成的局部结构或一个独立的类</li>
+<li>开闭原则是指软件实体应尽量在不修改原有代码的情况下进行扩展</li>
+<li>开闭原则分析 </li>
+<li>抽象化是开闭原则的关键   </li>
+<li>相对稳定的抽象层 + 灵活的具体层    </li>
+<li>对可变性封装原则(Principle of Encapsulation of Variation, EVP)：找到系统的可变因素并将其封装起来</li>
+</ul>
+</li>
+</ul>
+<h2 id="里氏代换原则"><a href="#里氏代换原则" class="headerlink" title="里氏代换原则"></a>里氏代换原则</h2><ul>
+<li>里氏代换原则分析<ul>
+<li>在软件中将一个基类对象替换成它的子类对象，程序将不会产生任何错误和异常，反过来则不成立。如果一个软件实体使用的是一个子类对象的话，那么它不一定能够使用基类对象</li>
+<li>在程序中尽量使用基类类型来对对象进行定义，而在运行时再确定其子类类型</li>
+</ul>
+</li>
+</ul>
+<p>例子分析：</p>
+<ul>
+<li>我喜欢动物  我喜欢狗 </li>
+<li>因为狗是动物  </li>
+</ul>
+<h2 id="依赖倒转原则"><a href="#依赖倒转原则" class="headerlink" title="依赖倒转原则"></a>依赖倒转原则</h2><ul>
+<li>依赖倒转原则定义<ul>
+<li>要针对接口编程，不要针对实现编程</li>
+</ul>
+</li>
+<li>依赖倒转原则分析<ul>
+<li>在程序代码中传递参数时或在关联关系中，尽量引用层次高的抽象层类，即使用接口和抽象类进行变量类型声明、参数类型声明、方法返回类型声明，以及数据类型的转换等</li>
+<li>在程序中尽量使用抽象层进行编程，而将具体类写在配置文件中</li>
+<li>针对抽象层编程，将具体类的对象通过依赖注入(Dependency Injection, DI)的方式注入到其他对象<ul>
+<li>构造注入</li>
+<li>设值注入（Setter注入）</li>
+<li>接口注入</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>总结：开闭原则是目标，里氏代换原则是基础，依赖倒转原则是手段，相辅相成，互相补充，目标一致，角度不同而已。</p>
+<h2 id="接口隔离原则"><a href="#接口隔离原则" class="headerlink" title="接口隔离原则"></a>接口隔离原则</h2><ul>
+<li>接口隔离原则分析 <ul>
+<li>当一个接口太大时，需要将它分割成一些更细小的接口</li>
+<li>使用该接口的客户端仅需知道与之相关的方法即可</li>
+<li>每一个接口应该承担一种相对独立的角色，不干不该干的事，该干的事都要干</li>
+<li>“接口”定义(1)：一个类型所提供的所有方法特征的集合。一个接口代表一个角色，每个角色都有它特定的一个接口，“角色隔离原则”</li>
+<li>“接口”定义(2)：狭义的特定语言的接口。接口仅仅提供客户端需要的行为，客户端不需要的行为则隐藏起来，应当为客户端提供尽可能小的单独的接口，而不要提供大的总接口，每个接口中只包含一个客户端所需的方法，“定制服务”<blockquote>
+<p><strong>使用接口原则，需要注意接口的粒度，接口不能太小（接口泛滥不利维护），不能太大（违背接口隔离原则，灵活性差使用不方便）</strong></p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="合成复用原则"><a href="#合成复用原则" class="headerlink" title="合成复用原则"></a>合成复用原则</h2><ul>
+<li>合成复用原则分析 <ul>
+<li>合成复用原则就是在一个新的对象里通过关联关系（包括组合关系和聚合关系）来使用一些已有的对象，使之成为新对象的一部分</li>
+<li>新对象通过委派调用已有对象的方法达到复用功能的目的</li>
+<li>复用时要尽量使用组合/聚合关系（关联关系），少用继承</li>
+<li>继承复用：实现简单，易于扩展。破坏系统的封装性；从基类继承而来的实现是静态的，不可能在运行时发生改变，没有足够的灵活性；只能在有限的环境中使用。（“白箱”复用 ）</li>
+<li>组合/聚合复用：耦合度相对较低，有选择性地调用成员对象的操作；可以在运行时动态进行，新对象可以动态地引用与成员对象类型相同的其他对象。（“黑箱”复用 ）</li>
+</ul>
+</li>
+<li>Has-A某角色具有某个责任（使用组合/聚合）Is-A一个类是另一个类的一种（使用继承）</li>
+</ul>
+<blockquote>
+<p>下面类图中描述的例子。“人”被继承到“学生”、“经理”和“雇员”等子类。而实际上，学生”、“经理”和“雇员”分别描述一种角色，而“人”可以同时有几种不同的角色。比如，一个人既然是“经理”，就必然是“雇员”；而“人”可能同时还参加MBA课程，从而也是一个“学生”。使用继承来实现角色，则只能使每一个“人”具有Is-A角色，而且继承是静态的，这会使得一个“人”在成为“雇员”身份后，就永远为“雇员”，不能成为“学生”和“经理”，而这显然是不合理的。<br><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99_1.png" alt="案例"><br>这一错误的设计源自于把“角色”的等级结构和“人”的等级结构混淆起来，把“Has-A”角色误解为“Is -A”角色。因此要纠正这种错误，关键是区分“人”与“角色”的区别。下图所示的的设计就正确的做到了这一点。<br><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99_2.png" alt="案例"><br>从上图可以看出，每一个“人”都可以有一个以上的“角色”，所有一个“人”可以同时是“雇员”，又是“经理”，甚至同时又是“学生”。而且由于“人”与“角色”的耦合是通过合成的，因此，角色可以有动态的变化。一个“人”可以开始是“雇员”，然后晋升为“经理”，然后又由于他参加了MBA课程，又称为了“学生“。</p>
+</blockquote>
+<p>当一个类是另一个类的角色时，不应当使用继承描述这种关系。</p>
+<h2 id="迪米特法则"><a href="#迪米特法则" class="headerlink" title="迪米特法则"></a>迪米特法则</h2><p>迪米特法则又称为最少知识原则</p>
+<ul>
+<li>迪米特法则分析<ul>
+<li>迪米特法则来自于1987年美国东北大学(Northeastern University)一个名为“Demeter”的研究项目</li>
+<li>迪米特法则要求一个软件实体应当尽可能少地与其他实体发生相互作用</li>
+<li>应用迪米特法则可降低系统的耦合度，使类与类之间保持松散的耦合关系</li>
+<li>不要和“陌生人”说话 (Don’t talk to strangers.)</li>
+<li>只与你的直接朋友通信 (Talk only to your immediate friends.)<ol>
+<li>当前对象本身(this)</li>
+<li>以参数形式传入到当前对象方法中的对象</li>
+<li>当前对象的成员对象</li>
+<li>如果当前对象的成员对象是一个集合，那么集合中的元素也都是朋友</li>
+<li>当前对象所创建的对象</li>
+</ol>
+</li>
+<li>任何一个对象，如果满足上面的条件之一，就是当前对象的“朋友”，否则就是“陌生人”</li>
+<li>在应用迪米特法则时，一个对象只能与直接朋友发生交互，不要和“陌生人”发生直接交互，这样做可以降低系统的耦合度，一个对象的改变不会给太多其他对象带来影响</li>
+<li>迪米特法则要求在设计系统时，应该尽量减少对象之间的交互</li>
+<li>如果两个对象之间不必彼此直接通信，那么这两个对象就不应该发生任何直接的相互作用</li>
+<li>如果其中一个对象需要调用另一个对象的方法，可以通过“第三者”转发这个调用</li>
+<li>通过引入一个合理的“第三者”来降低现有对象之间的耦合度</li>
+<li>应用迪米特法则注意点：<ul>
+<li>在类的划分上，应当尽量创建松耦合的类，类之间的耦合度越低，越有利于复用，一个处在松耦合中的类一旦被修改，不会对关联的类造成太大影响</li>
+<li>在类的结构设计上，每一个类都应当尽量降低其成员变量和成员函数的访问权限</li>
+<li>在类的设计上，只要有可能，一个类型应当设计成不变类</li>
+<li>在对其他类的引用上，一个对象对其他对象的引用应当降到最低</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>设计模式</category>
+        <category>第02章 面向对象设计原则</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>设计模式概述</title>
+    <url>/2019/08/11/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%A6%82%E8%BF%B0/</url>
+    <content><![CDATA[<h1 id="第一章设计模式概述"><a href="#第一章设计模式概述" class="headerlink" title="第一章设计模式概述"></a>第一章设计模式概述</h1><h2 id="设计模式的诞生和发展"><a href="#设计模式的诞生和发展" class="headerlink" title="设计模式的诞生和发展"></a>设计模式的诞生和发展</h2><p>在特定环境下遇到特定问题采取他人使用过的一些成功的方案</p>
+<ol>
+<li>降低了分析、设计实现的难度。</li>
+<li>使系统具有跟好的可维护性和可复用性。</li>
+</ol>
+<p><strong>模式定义</strong>：<br>    模式是在特定环境下人们解决某类重复出现问题的一套或有效的解决方案。</p>
+<p>软件模式（1994年Gang of four四人组简称GOF发表）旨在用模式来统一沟通面向对象方法在分析、设计和实现之间的鸿沟。</p>
+<p>软件模式的基本结构由4个部分构成，即<strong>问题描述</strong>、<strong>前提条件</strong>（环境或约束条件）、<strong>解法</strong>和<strong>效果</strong>。</p>
+<p><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%A6%82%E8%BF%B0.png" alt="基本结构"></p>
+<p>软件模式与具体的应用邻域无关，在模式发现过程中需要遵循大三律：只有经过3个以上不同类型（或不同领域）的系统的校验，一个解决方案才能从候选模式升格为模式</p>
+<h2 id="设计模式的定义与分类"><a href="#设计模式的定义与分类" class="headerlink" title="设计模式的定义与分类"></a>设计模式的定义与分类</h2><h3 id="设计模式的定义"><a href="#设计模式的定义" class="headerlink" title="设计模式的定义"></a>设计模式的定义</h3><p>设计模式(Design Pattern)是一套被反复使用的、多数人知晓的、经过分类编目的、代码设计经验的总结，是一种用于对软件系统中不断重现的设计问题的解决方案进行文档化的技术，是一种共享专家设计经验的技术，目的：为了可重用代码、让代码更容易被他人理解、提高代码可靠性。<br>设计模式是在特定环境下为解决某一通用软件设计问题提供的一套定制的解决方案，该方案描述了对象和类之间的相互作用。</p>
+<h3 id="设计模式的基本要素"><a href="#设计模式的基本要素" class="headerlink" title="设计模式的基本要素"></a>设计模式的基本要素</h3><p>设计模式一般包含模式名称、问题、目的、解决方案、效果、实例代码和相关设计模式等基本要素，4个关键要素如下：</p>
+<ul>
+<li>模式名称 (Pattern Name) 根据功能或者模式结构来命名，一两个词描述模式的问题、解决方案和效果，以便于用户更好的理解模式并方便开发人员之间的交流。</li>
+<li>问题 (Problem) 何时使用模式，存在的问题和原因。</li>
+<li>解决方案 (Solution) 设计模式的组成成分，以及这些组成成分之间的相互关系，各自的职责和协作方式。</li>
+<li>效果 (Consequences)模式的应用情况以及在使用模式时应权衡的问题。模式的优缺点分析。</li>
+</ul>
+<h3 id="设计模式的分类"><a href="#设计模式的分类" class="headerlink" title="设计模式的分类"></a>设计模式的分类</h3><p>根据目的（模式是用来做什么的）可分为创建型(Creational)，结构型(Structural)和行为型(Behavioral)三类：</p>
+<ol>
+<li>创建型模式主要用于创建对象</li>
+<li>结构型模式主要用于处理类或对象的组合</li>
+<li>行为型模式主要用于描述类或对象如何交互和怎样分配职责</li>
+</ol>
+<p>根据范围，即模式主要是处理类之间的关系还是处理对象之间的关系，可分为类模式和对象模式两种：</p>
+<ol>
+<li>类模式处理类和子类之间的关系，这些关系通过继承建立，在编译时刻就被确定下来，是一种静态关系</li>
+<li>对象模式处理对象间的关系，这些关系在运行时变化，更具动态性</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>范围\目的</th>
+<th align="right">创建型模式</th>
+<th align="center">结构型模式</th>
+<th align="center">行为型模式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>类模式</td>
+<td align="right">工厂方法模式(Factory Method) ★★★★★</td>
+<td align="center">（类）适配器模式(Adapter) ★★★★☆</td>
+<td align="center">解释器模式(Interpreter) ★☆☆☆☆ <br>模板方法模式(Template Method) ★★★☆☆</td>
+</tr>
+<tr>
+<td>对象模式</td>
+<td align="right">抽象工厂模式(Abstract Factory) ★★★★★ <br> 建造者模式(Builder) ★★☆☆☆ <br> 原型模式(Prototype) ★★★☆☆ <br> 单例模式(Singleton) ★★★★☆</td>
+<td align="center">（对象）适配器模式 (Adapter) ★★★★☆ <br> 桥接模式(Bridge) ★★★☆☆ <br> 组合模式(Composite) ★★★★☆ <br> 装饰模式(Decorator) ★★★☆☆ <br> 外观模式(Facade) ★★★★★ <br> 享元模式(Flyweight) ★☆☆☆☆ <br> 代理模式(Proxy) ★★★★☆</td>
+<td align="center">职责链模式(Chain of Responsibility) ★★☆☆☆ <br> 命令模式(Command) ★★★★☆ <br> 迭代器模式(Iterator) ★★★★★ <br> 中介者模式(Mediator) ★★☆☆☆ <br> 备忘录模式(Memento) ★★☆☆☆ <br> 观察者模式(Observer) ★★★★★ <br> 状态模式(State) ★★★☆☆ <br> 策略模式(Strategy) ★★★★☆ <br> 访问者模式(Visitor) ★☆☆☆☆</td>
+</tr>
+</tbody></table>
+<p> 23种设计模式不单独存在，存在联系。通过两个或多个模式设计一个系统，在充分发挥每个模式的优势的同时使他们协作工作，完成复杂的设计。</p>
+<h2 id="设计模式的优点"><a href="#设计模式的优点" class="headerlink" title="设计模式的优点"></a>设计模式的优点</h2><ul>
+<li>融合了众多专家的经验，并以一种标准的形式供广大开发人员所用</li>
+<li>提供了一套通用的设计词汇和一种通用的语言，以方便开发人员之间进行沟通和交流，使得设计方案更加通俗易懂</li>
+<li>让人们可以更加简单方便地复用成功的设计和体系结构</li>
+<li>使得设计方案更加灵活，且易于修改</li>
+<li>将提高软件系统的开发效率和软件质量，且在一定程度上节约设计成本</li>
+<li>有助于初学者更深入地理解面向对象思想，方便阅读和学习现有类库与其他系统中的源代码，还可以提高软件的设计水平和代码质量</li>
+</ul>
+]]></content>
+      <categories>
+        <category>设计模式</category>
+        <category>第01章 设计模式简述</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>简谈Redius</title>
+    <url>/2019/08/05/%E7%AE%80%E8%B0%88Redius/</url>
+    <content><![CDATA[<h1 id="简谈Redius"><a href="#简谈Redius" class="headerlink" title="简谈Redius"></a>简谈Redius</h1><h2 id="redius简介"><a href="#redius简介" class="headerlink" title="redius简介"></a>redius简介</h2><p>要想了解redius，简介肯定要看百度百科的。<br>百度百科是这样说的。</p>
+<ul>
+<li>Redis开源</li>
+<li>使用ANSI C语言编写</li>
+<li>支持网络、可基于<strong>内存</strong><ul>
+<li>与memcached异同<ul>
+<li>同：为了保证效率，数据都是缓存在内存中。</li>
+<li>异：redis周期性的把更新的数据写入磁盘或者把修改操作写入追加的记录文件</li>
+<li>异：在此基础上实现了master-slave(主从)同步，从主服务器向任意数量的从服务器上同步</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>可持久化的日志型、Key-Value数据库<ul>
+<li>支持 string(字符串)、list(链表)、set(集合)、zset(sorted set –有序集合)和hash（哈希类型）</li>
+<li>支持push/pop、add/remove及取交集并集和差集及更丰富的操作，而且这些操作都是原子性的</li>
+</ul>
+</li>
+<li>很大程度补偿了memcached这类key/value存储的不足，在部分场合可以对关系数据库起到很好的补充作用</li>
+<li>提供多种语言的API，多语言客户端，使用方便</li>
+</ul>
+<p>从2010年3月15日起，Redis的开发工作由VMware主持。从2013年5月开始，Redis的开发由Pivotal赞助。</p>
+<h2 id="redius指令"><a href="#redius指令" class="headerlink" title="redius指令"></a>redius指令</h2><p>既然了解了redius，总要先会怎么使用<br>常用的命令如下：</p>
+<p>特殊指令</p>
+<ul>
+<li><code>TYPE key</code> —— 用来获取某key的类型</li>
+<li><code>KEYS pattern</code> —— 匹配所有符合模式的key，比如KEYS * 就列出所有的key了，当然，复杂度O(n)</li>
+<li><code>RANDOMKEY</code> —— 返回随机的一个key</li>
+<li><code>RENAME oldkey newkey</code> —— key也可以改名</li>
+</ul>
+<p>列表操作</p>
+<ul>
+<li><code>RPUSH key string</code> —— 将某个值加入到一个key列表末尾</li>
+<li><code>LPUSH key string</code> —— 将某个值加入到一个key列表头部</li>
+<li><code>LLEN key</code> —— 列表长度</li>
+<li><code>LRANGE key start end</code> —— 返回列表中某个范围的值，相当于mysql里面的分页查询那样</li>
+<li><code>LTRIM key start end</code> —— 只保留列表中某个范围的值</li>
+<li><code>LINDEX key index</code> —— 获取列表中特定索引号的值，要注意是O(n)复杂度</li>
+<li><code>LSET key index value</code> —— 设置列表中某个位置的值</li>
+<li><code>LPOP key</code></li>
+<li><code>RPOP key</code> —— 和上面的LPOP一样，就是类似栈或队列的那种取头取尾指令，可以当成消息队列来使用了</li>
+</ul>
+<p>集合操作</p>
+<ul>
+<li><code>SADD key member</code> —— 增加元素</li>
+<li><code>SREM key member</code> —— 删除元素</li>
+<li><code>SCARD key</code> —— 返回集合大小</li>
+<li><code>SISMEMBER key member</code> —— 判断某个值是否在集合中</li>
+<li><code>SINTER key1 key2 ... keyN</code> —— 获取多个集合的交集元素</li>
+<li><code>SMEMBERS key</code> —— 列出集合的所有元素</li>
+</ul>
+<h2 id="redius原理"><a href="#redius原理" class="headerlink" title="redius原理"></a>redius原理</h2><blockquote>
+<p>未完待续……</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>数据库</category>
+        <category>redius</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>如何创建个人微博</title>
+    <url>/2019/07/30/%E5%A6%82%E4%BD%95%E5%88%9B%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%BE%AE%E5%8D%9A/</url>
+    <content><![CDATA[<h1 id="如何创建个人微博"><a href="#如何创建个人微博" class="headerlink" title="如何创建个人微博"></a>如何创建个人微博</h1><p><strong>github+hexo（nexT）创建个人帅气blog</strong></p>
+<h2 id="安装node-js、npm、git"><a href="#安装node-js、npm、git" class="headerlink" title="安装node.js、npm、git"></a>安装node.js、npm、git</h2><p>官网安装，具体不教，请移步官网<a href="http://nodejs.cn/download/" target="_blank" rel="noopener">http://nodejs.cn/download/</a><br>淘宝镜像：<br><code>npm install -g cnpm --registry=https://registry.npm.taobao.org</code><br>查看是否成功(显示版本):<br><code>cnpm -v</code></p>
+<h2 id="创建个人仓库"><a href="#创建个人仓库" class="headerlink" title="创建个人仓库"></a>创建个人仓库</h2><ol>
+<li>新建一个名为  你的用户名.github.io  的仓库，且必须并唯一（必须以这个命名，每人只能有一个域名）</li>
+<li>配置ssh key</li>
+</ol>
+<ul>
+<li>登入账户 - 点击右上角的个人头像 - 下拉菜单Settings - SSH and GPG keys<br><img src="/images/20190730/ssh_key.png" alt="ssh_key"></li>
+<li>如果已经 key，delete原有的key。如果没有则新创建。</li>
+<li>点击New SSH key，输入 Title 和 Key</li>
+<li>Title随便命名<br><code>ssh-keygen -t rsa -b 4096 -C &quot;你的邮箱&quot;</code><br><code>cat ~/.ssh/id_rsa.pub，得到一串东西，就是key</code></li>
+<li>完整的复制这串很长的乱码，复制到打开的GitHub网页KEY框里，点击提交<br><img src="/images/20190730/ssh_key2.png" alt="ssh_key2"></li>
+<li>失败就重来，重新配置ssh key</li>
+</ul>
+<ol start="3">
+<li>安装hexo</li>
+</ol>
+<p><code>npm install -g hexo</code><br><code>hexo init 初始化</code><br><code>hexo g # 生成</code><br><code>hexo s # 启动服务</code></p>
+<h2 id="发布"><a href="#发布" class="headerlink" title="发布"></a>发布</h2><p>更改_config.yml文件<br><img src="/images/20190730/config_yml.png" alt="config_yml"><br><code>hexo s -g #生成并本地预览</code><br><code>hexo clean -g #清理缓存</code><br><code>hexo d -g #生成并上传</code></p>
+<p>p.s.hexo官网地址<a href="http://theme-next.iissnan.com/getting-started.html" target="_blank" rel="noopener">http://theme-next.iissnan.com/getting-started.html</a></p>
+<h2 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h2><p>个人觉得比较好用的插件可以推荐给大家</p>
+<ul>
+<li><p>音乐插件<br><code>npm install hexo-tag-mplayer --save</code><br>用法参考官方贴<a href="https://www.wshunli.com/posts/hexo-tag-mplayer.html&gt;" target="_blank" rel="noopener">https://www.wshunli.com/posts/hexo-tag-mplayer.html&gt;</a></p>
+</li>
+<li><p>增加评论功能<br>个人使用的是 来必力 <a href="https://www.livere.com/my_Livere" target="_blank" rel="noopener">https://www.livere.com/my_Livere</a><br>注册登录之后，查看安装代码<br><img src="/images/20190730/comment.png" alt="comment"><br>复制其中的uid，打开themes/next/&#95;config.yml，将其中的livere_uid值替换刚才的uid</p>
+</li>
+</ul>
+<h2 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h2><ul>
+<li><p><strong><em>图片加载不出来</em></strong><br>图片存放路径<br><img src="/images/20190730/problem1.png" alt="图片加载不出来"><br>引用资源方式如下：<br><code>![引用资源](/images/20190730/temp.png)</code></p>
+</li>
+<li><p><strong><em>主页面内容太多，预览取消</em></strong><br><img src="/images/20190730/problem2.png" alt="取消预览"></p>
+</li>
+<li><p><strong><em>文章分类</em></strong><br>我增加了 tags 和 categories（个人自行选择）<br>每篇文章的抬头<br><img src="/images/20190730/problem3-1.png" alt="文章抬头"><br>next主题的配置<br><img src="/images/20190730/problem3-2.png" alt="主题配置"><br>新增两标签页<br><code>hexo new page tags</code><br><code>hexo new page categories</code><br>/source/tags目录下的index.md修改为<br><img src="/images/20190730/problem3-3.png" alt="index.md"><br>/source/categories 相同</p>
+</li>
+<li><p><strong><em>发布git不成功(不能成功上传git)</em></strong><br><code>hexo clean</code><br><code>hexo deploy</code></p>
+</li>
+<li><p><strong><em>添加搜索功能</em></strong></p>
+</li>
+</ul>
+<ol>
+<li><p>根目录<code>cnpm install hexo-generator-searchdb --save</code></p>
+</li>
+<li><p>修改站点配置文件，根目录下的_config.yml底部添加</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">search:</span><br><span class="line">  path: search.xml</span><br><span class="line">  field: post</span><br><span class="line">  format: html</span><br><span class="line">  limit: 10000</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改主题配置文件<br>修改主体下的themes\next下config.yml配置文件，搜索local_search，修改enable为true</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">local_search:</span><br><span class="line">  enable: true</span><br><span class="line">  # if auto, trigger search by changing input</span><br><span class="line">  # if manual, trigger search by pressing enter key or search button</span><br><span class="line">  trigger: auto</span><br><span class="line">  # show top n results per article, show all results by setting to -1</span><br><span class="line">  top_n_per_article: 1</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<blockquote>
+<p>未完待续……</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>MarkDown常见语法</title>
+    <url>/2019/07/30/MarkDown%E5%B8%B8%E8%A7%81%E8%AF%AD%E6%B3%95/</url>
+    <content><![CDATA[<h1 id="MarkDown常见语法"><a href="#MarkDown常见语法" class="headerlink" title="MarkDown常见语法"></a>MarkDown常见语法</h1><h1 id="标题H1"><a href="#标题H1" class="headerlink" title="标题H1"></a>标题H1</h1><h2 id="标题H2"><a href="#标题H2" class="headerlink" title="标题H2"></a>标题H2</h2><h3 id="标题H3"><a href="#标题H3" class="headerlink" title="标题H3"></a>标题H3</h3><h4 id="标题H4"><a href="#标题H4" class="headerlink" title="标题H4"></a>标题H4</h4><h5 id="标题H5"><a href="#标题H5" class="headerlink" title="标题H5"></a>标题H5</h5><h6 id="标题H5-1"><a href="#标题H5-1" class="headerlink" title="标题H5"></a>标题H5</h6><h3 id="字符效果和横线等"><a href="#字符效果和横线等" class="headerlink" title="字符效果和横线等"></a>字符效果和横线等</h3><hr>
+<p><del>删除线</del> <s>删除线（开启识别HTML标签时）</s></p>
+<p><em>斜体字</em>      <em>斜体字</em></p>
+<p><strong>粗体</strong>  <strong>粗体</strong></p>
+<p><strong><em>粗斜体</em></strong> <strong><em>粗斜体</em></strong></p>
+<p>上标：X<sub>2</sub>，下标：O<sup>2</sup></p>
+<p><strong>缩写(同HTML的abbr标签)</strong></p>
+<blockquote>
+<p>即更长的单词或短语的缩写形式，前提是开启识别HTML标签时，已默认开启</p>
+</blockquote>
+<p>The <abbr title="Hyper Text Markup Language">HTML</abbr> specification is maintained by the <abbr title="World Wide Web Consortium">W3C</abbr>.</p>
+<h3 id="引用-Blockquotes"><a href="#引用-Blockquotes" class="headerlink" title="引用 Blockquotes"></a>引用 Blockquotes</h3><blockquote>
+<p>引用文本 Blockquotes</p>
+</blockquote>
+<p>引用的行内混合 Blockquotes</p>
+<blockquote>
+<p>引用：如果想要插入空白换行<code>即&lt;br /&gt;标签</code>，在插入处先键入两个以上的空格然后回车即可，<a href="https://www.mdeditor.com/" target="_blank" rel="noopener">普通链接</a>。</p>
+</blockquote>
+<h3 id="锚点与链接-Links"><a href="#锚点与链接-Links" class="headerlink" title="锚点与链接 Links"></a>锚点与链接 Links</h3><p><a href="https://www.mdeditor.com/" target="_blank" rel="noopener">普通链接</a><br><a href="https://www.mdeditor.com/" title="普通链接带标题" target="_blank" rel="noopener">普通链接带标题</a><br>直接链接：<a href="https://www.mdeditor.com" target="_blank" rel="noopener">https://www.mdeditor.com</a><br>[锚点链接][anchor-id]<br>[anchor-id]: <a href="https://www.mdeditor.com/" target="_blank" rel="noopener">https://www.mdeditor.com/</a><br><a href="mailto:test.test@gmail.com" target="_blank" rel="noopener">mailto:test.test@gmail.com</a><br>GFM a-tail link @pandao<br>邮箱地址自动链接 <a href="mailto:test.test@gmail.com" target="_blank" rel="noopener">test.test@gmail.com</a>  <a href="mailto:www@vip.qq.com" target="_blank" rel="noopener">www@vip.qq.com</a></p>
+<blockquote>
+<p>@pandao</p>
+</blockquote>
+<h3 id="多语言代码高亮-Codes"><a href="#多语言代码高亮-Codes" class="headerlink" title="多语言代码高亮 Codes"></a>多语言代码高亮 Codes</h3><h4 id="行内代码-Inline-code"><a href="#行内代码-Inline-code" class="headerlink" title="行内代码 Inline code"></a>行内代码 Inline code</h4><p>执行命令：<code>npm install marked</code></p>
+<h4 id="缩进风格"><a href="#缩进风格" class="headerlink" title="缩进风格"></a>缩进风格</h4><p>即缩进四个空格，也做为实现类似 <code>&lt;pre&gt;</code> 预格式化文本 ( Preformatted Text ) 的功能。</p>
+<pre><code>&lt;?php
+    echo &quot;Hello world!&quot;;
+?&gt;</code></pre><p>预格式化文本：</p>
+<pre><code>| First Header  | Second Header |
+| ------------- | ------------- |
+| Content Cell  | Content Cell  |
+| Content Cell  | Content Cell  |</code></pre><h4 id="JS代码"><a href="#JS代码" class="headerlink" title="JS代码"></a>JS代码</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">"Hello world!"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="HTML-代码-HTML-codes"><a href="#HTML-代码-HTML-codes" class="headerlink" title="HTML 代码 HTML codes"></a>HTML 代码 HTML codes</h4><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">mate</span> <span class="attr">charest</span>=<span class="string">"utf-8"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"keywords"</span> <span class="attr">content</span>=<span class="string">"Editor.md, Markdown, Editor"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">title</span>&gt;</span>Hello world!<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span></span><br><span class="line">            body&#123;font-size:14px;color:#444;font-family: "Microsoft Yahei", Tahoma, "Hiragino Sans GB", Arial;background:#fff;&#125;</span><br><span class="line">            ul&#123;list-style: none;&#125;</span><br><span class="line">            img&#123;border:none;vertical-align: middle;&#125;</span><br><span class="line">        <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h1</span> <span class="attr">class</span>=<span class="string">"text-xxl"</span>&gt;</span>Hello world!<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"text-green"</span>&gt;</span>Plain text<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="图片-Images"><a href="#图片-Images" class="headerlink" title="图片 Images"></a>图片 Images</h3><p>图片加链接 (Image + Link)：</p>
+<p><a href="https://www.mdeditor.com/images/logos/markdown.png" title="markdown" target="_blank" rel="noopener"><img src="https://www.mdeditor.com/images/logos/markdown.png" alt></a></p>
+<blockquote>
+<p>Follow your heart.</p>
+</blockquote>
+<hr>
+<h3 id="列表-Lists"><a href="#列表-Lists" class="headerlink" title="列表 Lists"></a>列表 Lists</h3><h4 id="无序列表（减号）Unordered-Lists"><a href="#无序列表（减号）Unordered-Lists" class="headerlink" title="无序列表（减号）Unordered Lists (-)"></a>无序列表（减号）Unordered Lists (-)</h4><ul>
+<li>列表一</li>
+<li>列表二</li>
+<li>列表三</li>
+</ul>
+<h4 id="无序列表（星号）Unordered-Lists"><a href="#无序列表（星号）Unordered-Lists" class="headerlink" title="无序列表（星号）Unordered Lists (*)"></a>无序列表（星号）Unordered Lists (*)</h4><ul>
+<li>列表一</li>
+<li>列表二</li>
+<li>列表三</li>
+</ul>
+<h4 id="无序列表（加号和嵌套）Unordered-Lists"><a href="#无序列表（加号和嵌套）Unordered-Lists" class="headerlink" title="无序列表（加号和嵌套）Unordered Lists (+)"></a>无序列表（加号和嵌套）Unordered Lists (+)</h4><ul>
+<li>列表一</li>
+<li>列表二<ul>
+<li>列表二-1</li>
+<li>列表二-2</li>
+<li>列表二-3</li>
+</ul>
+</li>
+<li>列表三<ul>
+<li>列表一</li>
+<li>列表二</li>
+<li>列表三</li>
+</ul>
+</li>
+</ul>
+<h4 id="有序列表-Ordered-Lists"><a href="#有序列表-Ordered-Lists" class="headerlink" title="有序列表 Ordered Lists (-)"></a>有序列表 Ordered Lists (-)</h4><ol>
+<li>第一行</li>
+<li>第二行</li>
+<li>第三行</li>
+</ol>
+<h4 id="GFM-task-list"><a href="#GFM-task-list" class="headerlink" title="GFM task list"></a>GFM task list</h4><ul>
+<li><input checked disabled type="checkbox"> GFM task list 1</li>
+<li><input checked disabled type="checkbox"> GFM task list 2</li>
+<li><input disabled type="checkbox"> GFM task list 3<ul>
+<li><input disabled type="checkbox"> GFM task list 3-1</li>
+<li><input disabled type="checkbox"> GFM task list 3-2</li>
+<li><input disabled type="checkbox"> GFM task list 3-3</li>
+</ul>
+</li>
+<li><input disabled type="checkbox"> GFM task list 4<ul>
+<li><input disabled type="checkbox"> GFM task list 4-1</li>
+<li><input disabled type="checkbox"> GFM task list 4-2</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="绘制表格-Tables"><a href="#绘制表格-Tables" class="headerlink" title="绘制表格 Tables"></a>绘制表格 Tables</h3><table>
+<thead>
+<tr>
+<th>项目</th>
+<th align="right">价格</th>
+<th align="center">数量</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>计算机</td>
+<td align="right">$1600</td>
+<td align="center">5</td>
+</tr>
+<tr>
+<td>手机</td>
+<td align="right">$12</td>
+<td align="center">12</td>
+</tr>
+<tr>
+<td>管线</td>
+<td align="right">$1</td>
+<td align="center">234</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>First Header</th>
+<th>Second Header</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Content Cell</td>
+<td>Content Cell</td>
+</tr>
+<tr>
+<td>Content Cell</td>
+<td>Content Cell</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>First Header</th>
+<th>Second Header</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Content Cell</td>
+<td>Content Cell</td>
+</tr>
+<tr>
+<td>Content Cell</td>
+<td>Content Cell</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>Function name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>help()</code></td>
+<td>Display the help window.</td>
+</tr>
+<tr>
+<td><code>destroy()</code></td>
+<td><strong>Destroy your computer!</strong></td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th align="left">Left-Aligned</th>
+<th align="center">Center Aligned</th>
+<th align="right">Right Aligned</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">col 3 is</td>
+<td align="center">some wordy text</td>
+<td align="right">$1600</td>
+</tr>
+<tr>
+<td align="left">col 2 is</td>
+<td align="center">centered</td>
+<td align="right">$12</td>
+</tr>
+<tr>
+<td align="left">zebra stripes</td>
+<td align="center">are neat</td>
+<td align="right">$1</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th align="right">Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Computer</td>
+<td align="right">$1600</td>
+</tr>
+<tr>
+<td>Phone</td>
+<td align="right">$12</td>
+</tr>
+<tr>
+<td>Pipe</td>
+<td align="right">$1</td>
+</tr>
+</tbody></table>
+<hr>
+<h4 id="特殊符号-HTML-Entities-Codes"><a href="#特殊符号-HTML-Entities-Codes" class="headerlink" title="特殊符号 HTML Entities Codes"></a>特殊符号 HTML Entities Codes</h4><p>&copy; &amp;  &uml; &trade; &iexcl; &pound;<br>&amp; &lt; &gt; &yen; &euro; &reg; &plusmn; &para; &sect; &brvbar; &macr; &laquo; &middot;</p>
+<p>X&sup2; Y&sup3; &frac34; &frac14;  &times;  &divide;   &raquo;</p>
+<p>18&ordm;C  &quot;  &apos;</p>
+<p>[========]</p>
+<h3 id="Emoji表情-smiley"><a href="#Emoji表情-smiley" class="headerlink" title="Emoji表情 :smiley:"></a>Emoji表情 :smiley:</h3><blockquote>
+<p>Blockquotes :star:</p>
+</blockquote>
+<h4 id="GFM-task-lists-amp-Emoji-amp-fontAwesome-icon-emoji-amp-editormd-logo-emoji-editormd-logo-5x"><a href="#GFM-task-lists-amp-Emoji-amp-fontAwesome-icon-emoji-amp-editormd-logo-emoji-editormd-logo-5x" class="headerlink" title="GFM task lists &amp; Emoji &amp; fontAwesome icon emoji &amp; editormd logo emoji :editormd-logo-5x:"></a>GFM task lists &amp; Emoji &amp; fontAwesome icon emoji &amp; editormd logo emoji :editormd-logo-5x:</h4><ul>
+<li><input checked disabled type="checkbox"> :smiley: @mentions, :smiley: #refs, <a href>links</a>, <strong>formatting</strong>, and <del>tags</del> supported :editormd-logo:;</li>
+<li><input checked disabled type="checkbox"> list syntax required (any unordered or ordered list supported) :editormd-logo-3x:;</li>
+<li><input checked disabled type="checkbox"> [ ] :smiley: this is a complete item :smiley:;</li>
+<li><input disabled type="checkbox"> []this is an incomplete item <a href="#">test link</a> :fa-star: @pandao;</li>
+<li><input disabled type="checkbox"> [ ]this is an incomplete item :fa-star: :fa-gear:;<ul>
+<li><input disabled type="checkbox"> :smiley: this is an incomplete item <a href="#">test link</a> :fa-star: :fa-gear:;</li>
+<li><input disabled type="checkbox"> :smiley: this is  :fa-star: :fa-gear: an incomplete item <a href="#">test link</a>;</li>
+</ul>
+</li>
+</ul>
+<h4 id="反斜杠-Escape"><a href="#反斜杠-Escape" class="headerlink" title="反斜杠 Escape"></a>反斜杠 Escape</h4><p>*literal asterisks*</p>
+<p>[========]</p>
+<h3 id="科学公式-TeX-KaTeX"><a href="#科学公式-TeX-KaTeX" class="headerlink" title="科学公式 TeX(KaTeX)"></a>科学公式 TeX(KaTeX)</h3><p>$$E=mc^2$$</p>
+<p>行内的公式$$E=mc^2$$行内的公式，行内的$$E=mc^2$$公式。</p>
+<p>$$x &gt; y$$</p>
+<p>$$(\sqrt{3x-1}+(1+x)^2)$$</p>
+<p>$$\sin(\alpha)^{\theta}=\sum_{i=0}^{n}(x^i + \cos(f))$$</p>
+<p>多行公式：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">\displaystyle</span><br><span class="line">\left( \sum\_&#123;k=1&#125;^n a\_k b\_k \right)^2</span><br><span class="line">\leq</span><br><span class="line">\left( \sum\_&#123;k=1&#125;^n a\_k^2 \right)</span><br><span class="line">\left( \sum\_&#123;k=1&#125;^n b\_k^2 \right)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">\displaystyle</span><br><span class="line">    \frac&#123;1&#125;&#123;</span><br><span class="line">        \Bigl(\sqrt&#123;\phi \sqrt&#123;5&#125;&#125;-\phi\Bigr) e^&#123;</span><br><span class="line">        \frac25 \pi&#125;&#125; = 1+\frac&#123;e^&#123;-2\pi&#125;&#125; &#123;1+\frac&#123;e^&#123;-4\pi&#125;&#125; &#123;</span><br><span class="line">        1+\frac&#123;e^&#123;-6\pi&#125;&#125;</span><br><span class="line">        &#123;1+\frac&#123;e^&#123;-8\pi&#125;&#125;</span><br><span class="line">         &#123;1+\cdots&#125; &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">f(x) = \int_&#123;-\infty&#125;^\infty</span><br><span class="line">    \hat f(\xi)\,e^&#123;2 \pi i \xi x&#125;</span><br><span class="line">    \,d\xi</span><br></pre></td></tr></table></figure>
+
+<h3 id="分页符-Page-break"><a href="#分页符-Page-break" class="headerlink" title="分页符 Page break"></a>分页符 Page break</h3><blockquote>
+<p>Print Test: Ctrl + P</p>
+</blockquote>
+<p>[========]</p>
+<h3 id="绘制流程图-Flowchart"><a href="#绘制流程图-Flowchart" class="headerlink" title="绘制流程图 Flowchart"></a>绘制流程图 Flowchart</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">st=&gt;start: 用户登陆</span><br><span class="line">op=&gt;operation: 登陆操作</span><br><span class="line">cond=&gt;condition: 登陆成功 Yes or No?</span><br><span class="line">e=&gt;end: 进入后台</span><br><span class="line"></span><br><span class="line">st-&gt;op-&gt;cond</span><br><span class="line">cond(yes)-&gt;e</span><br><span class="line">cond(no)-&gt;op</span><br></pre></td></tr></table></figure>
+
+<p>[========]</p>
+<h3 id="绘制序列图-Sequence-Diagram"><a href="#绘制序列图-Sequence-Diagram" class="headerlink" title="绘制序列图 Sequence Diagram"></a>绘制序列图 Sequence Diagram</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Andrew-&gt;China: Says Hello</span><br><span class="line">Note right of China: China thinks\nabout it</span><br><span class="line">China--&gt;Andrew: How are you?</span><br><span class="line">Andrew-&gt;&gt;China: I am good thanks!</span><br></pre></td></tr></table></figure>
+
+<h3 id="End"><a href="#End" class="headerlink" title="End"></a>End</h3>]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>引言</title>
+    <url>/2019/07/29/%E5%BC%95%E8%A8%80/</url>
+    <content><![CDATA[<h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><blockquote>
+<p>有快两年没碰博客了，难免有些生疏。</p>
+</blockquote>
+<h2 id="我博客网址：https-infernoyy-github-io"><a href="#我博客网址：https-infernoyy-github-io" class="headerlink" title="我博客网址：https://infernoyy.github.io/"></a><strong>我博客网址：<a href="https://infernoyy.github.io/" target="_blank" rel="noopener">https://infernoyy.github.io/</a></strong></h2><p>当年玩博客，真的是为了纯属好玩，写两篇随笔感慨生活罢了。而今时不同往日，博客有三重点。</p>
+<ol>
+<li>技术可好过与当年，记性真不如当年，需要有一工具助我。</li>
+<li>博客为长久之计，不止细水长流涓涓甘泉于我，各路技术与人分享也是为一大好处。</li>
+<li>人无远虑必有近忧，有此博客，也算是能留有另一条出路了。</li>
+</ol>
+<hr>
+<blockquote>
+<p>话说至此，隔三五日博客会写一篇（当然说不定我就鸽了hiahiahia）</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+  </entry>
+</search>
