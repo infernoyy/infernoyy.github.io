@@ -1,41 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>字符串的扩展</title>
-    <url>/2020/02/20/%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%89%A9%E5%B1%95/</url>
-    <content><![CDATA[<h1 id="字符串的扩展"><a href="#字符串的扩展" class="headerlink" title="字符串的扩展"></a>字符串的扩展</h1><h2 id="字符的-Unicode-表示法"><a href="#字符的-Unicode-表示法" class="headerlink" title="字符的 Unicode 表示法"></a>字符的 Unicode 表示法</h2><p>加强对Unicode支持</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//码点在\u0000~\uFFFF之间的字符</span></span><br><span class="line"><span class="string">"\u0061"</span> <span class="comment">//a</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//超过0xFFFF的数值,加上&#123;&#125;能正确解读该字符</span></span><br><span class="line"><span class="string">"\u&#123;20BB7&#125;"</span> <span class="comment">// "𠮷"</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="字符串的遍历器接口"><a href="#字符串的遍历器接口" class="headerlink" title="字符串的遍历器接口"></a>字符串的遍历器接口</h2><p>for…of循环遍历<br>可以识别大于0xFFFF的码点（相较于传统for循环）</p>
-<h2 id="直接输入-U-2028-和-U-2029"><a href="#直接输入-U-2028-和-U-2029" class="headerlink" title="直接输入 U+2028 和 U+2029"></a>直接输入 U+2028 和 U+2029</h2><p>JavaScript 规定有5个字符，不能在字符串里面直接使用，只能使用转义形式。</p>
-<ul>
-<li>U+005C：反斜杠（reverse solidus)</li>
-<li>U+000D：回车（carriage return）</li>
-<li>U+2028：行分隔符（line separator）</li>
-<li>U+2029：段分隔符（paragraph separator）</li>
-<li>U+000A：换行符（line feed）</li>
-</ul>
-<p>在json中JSON.parse解析U+2028（行分隔符）和 U+2029（段分隔符）报错</p>
-<p>所以，ES2019 允许 JavaScript 字符串直接输入 U+2028（行分隔符）和 U+2029（段分隔符）</p>
-<h2 id="JSON-stringify-的改造"><a href="#JSON-stringify-的改造" class="headerlink" title="JSON.stringify() 的改造"></a>JSON.stringify() 的改造</h2><blockquote>
-<p>JSON.stringify()的问题在于，它可能返回0xD800到0xDFFF之间的单个码点。</p>
-</blockquote>
-<h2 id="模板字符串"><a href="#模板字符串" class="headerlink" title="模板字符串"></a>模板字符串</h2><p>`反引号（tab键位上方那个）</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//多行字符串</span></span><br><span class="line">$(<span class="string">'#result'</span>).append(<span class="string">`</span></span><br><span class="line"><span class="string">  There are &lt;b&gt;<span class="subst">$&#123;basket.count&#125;</span>&lt;/b&gt; items</span></span><br><span class="line"><span class="string">   in your basket, &lt;em&gt;<span class="subst">$&#123;basket.onSale&#125;</span>&lt;/em&gt;</span></span><br><span class="line"><span class="string">  are on sale!</span></span><br><span class="line"><span class="string">`</span>);</span><br><span class="line"><span class="comment">// 字符串中嵌入变量</span></span><br><span class="line"><span class="keyword">let</span> name = <span class="string">"Bob"</span>, time = <span class="string">"today"</span>;</span><br><span class="line"><span class="string">`Hello <span class="subst">$&#123;name&#125;</span>, how are you <span class="subst">$&#123;time&#125;</span>?`</span></span><br></pre></td></tr></table></figure>
-
-<p>空格和缩进会被保留，另用trim()方法消除</p>
-<p>模板中可以运算，调用函数，嵌套模板</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//运算</span></span><br><span class="line"><span class="keyword">let</span> x = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">let</span> y = <span class="number">2</span>;</span><br><span class="line"><span class="string">`<span class="subst">$&#123;x&#125;</span> + <span class="subst">$&#123;y&#125;</span> = <span class="subst">$&#123;x + y&#125;</span>`</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//调用函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">"Hello World"</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="string">`foo <span class="subst">$&#123;fn()&#125;</span> bar`</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="实例：模板编译"><a href="#实例：模板编译" class="headerlink" title="实例：模板编译"></a>实例：模板编译</h2><h2 id="标签模板"><a href="#标签模板" class="headerlink" title="标签模板"></a>标签模板</h2><p>见<a href="https://es6.ruanyifeng.com/#docs/string#标签模板" target="_blank" rel="noopener">https://es6.ruanyifeng.com/#docs/string#标签模板</a></p>
-<h2 id="模板字符串的限制"><a href="#模板字符串的限制" class="headerlink" title="模板字符串的限制"></a>模板字符串的限制</h2>]]></content>
-      <categories>
-        <category>JS</category>
-        <category>ECMAScript 6</category>
-        <category>第4章 字符串的扩展</category>
-      </categories>
-  </entry>
-  <entry>
     <title>常用通讯协议</title>
     <url>/2020/02/20/%E5%B8%B8%E7%94%A8%E9%80%9A%E8%AE%AF%E5%8D%8F%E8%AE%AE/</url>
     <content><![CDATA[<h1 id="常用通讯协议"><a href="#常用通讯协议" class="headerlink" title="常用通讯协议"></a>常用通讯协议</h1><h2 id="HTTP协议"><a href="#HTTP协议" class="headerlink" title="HTTP协议"></a>HTTP协议</h2><p>超文本传输协议（英文：HyperText Transfer Protocol，缩写：HTTP）是一种用于分布式、协作式和超媒体信息系统的应用层协议。HTTP是万维网的数据通信的基础。</p>
@@ -116,7 +81,7 @@
   </entry>
   <entry>
     <title>Promise</title>
-    <url>/2020/02/13/Promise/</url>
+    <url>/2020/01/16/Promise/</url>
     <content><![CDATA[<h2 id="Promise-的含义"><a href="#Promise-的含义" class="headerlink" title="Promise 的含义"></a>Promise 的含义</h2><p>Promise对象有以下两个特点。</p>
 <p>（1）<strong><em>对象的状态不受外界影响</em></strong>。Promise对象代表一个异步操作，有三种状态：<strong><em>pending（进行中）、fulfilled（已成功）和rejected（已失败）</em></strong>。只有异步操作的结果，可以决定当前是哪一种状态，任何其他操作都无法改变这个状态。这也是Promise这个名字的由来，它的英语意思就是“承诺”，表示其他手段无法改变。</p>
 <p>（2）<strong><em>一旦状态改变，就不会再变，任何时候都可以得到这个结果</em></strong>。Promise对象的状态改变，只有两种可能：<strong><em>从pending变为fulfilled</em></strong>和<strong><em>从pending变为rejected</em></strong>。只要这两种情况发生，状态就凝固了，不会再变了，会一直保持这个结果，这时就称为 resolved（已定型）。如果改变已经发生了，你再对Promise对象添加回调函数，也会立即得到这个结果。这与事件（Event）完全不同，事件的特点是，如果你错过了它，再去监听，是得不到结果的。</p>
@@ -197,12 +162,12 @@
       <categories>
         <category>JS</category>
         <category>ECMAScript 6</category>
-        <category>第8章 函数的扩展</category>
+        <category>第08章 函数的扩展</category>
       </categories>
   </entry>
   <entry>
     <title>字符串的新增方法</title>
-    <url>/2020/01/08/%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%96%B0%E5%A2%9E%E6%96%B9%E6%B3%95/</url>
+    <url>/2020/01/05/%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%96%B0%E5%A2%9E%E6%96%B9%E6%B3%95/</url>
     <content><![CDATA[<h1 id="字符串的新增方法"><a href="#字符串的新增方法" class="headerlink" title="字符串的新增方法"></a>字符串的新增方法</h1><h2 id="String-fromCodePoint"><a href="#String-fromCodePoint" class="headerlink" title="String.fromCodePoint()"></a>String.fromCodePoint()</h2><p>ES6 提供了String.fromCodePoint()方法，可以识别大于0xFFFF的字符，弥补了String.fromCharCode()方法的不足。在作用上，正好与下面的codePointAt()方法相反。</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">String</span>.fromCharCode(<span class="number">0x20BB7</span>) <span class="comment">//溢出，返回码点U+0BB7对应的字符</span></span><br><span class="line"><span class="comment">// "ஷ"</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">String</span>.fromCodePoint(<span class="number">0x20BB7</span>)</span><br><span class="line"><span class="comment">// "𠮷"</span></span><br></pre></td></tr></table></figure>
 
@@ -271,7 +236,42 @@
       <categories>
         <category>JS</category>
         <category>ECMAScript 6</category>
-        <category>第5章 字符串的新增方法</category>
+        <category>第05章 字符串的新增方法</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>字符串的扩展</title>
+    <url>/2020/01/04/%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%89%A9%E5%B1%95/</url>
+    <content><![CDATA[<h1 id="字符串的扩展"><a href="#字符串的扩展" class="headerlink" title="字符串的扩展"></a>字符串的扩展</h1><h2 id="字符的-Unicode-表示法"><a href="#字符的-Unicode-表示法" class="headerlink" title="字符的 Unicode 表示法"></a>字符的 Unicode 表示法</h2><p>加强对Unicode支持</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//码点在\u0000~\uFFFF之间的字符</span></span><br><span class="line"><span class="string">"\u0061"</span> <span class="comment">//a</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//超过0xFFFF的数值,加上&#123;&#125;能正确解读该字符</span></span><br><span class="line"><span class="string">"\u&#123;20BB7&#125;"</span> <span class="comment">// "𠮷"</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="字符串的遍历器接口"><a href="#字符串的遍历器接口" class="headerlink" title="字符串的遍历器接口"></a>字符串的遍历器接口</h2><p>for…of循环遍历<br>可以识别大于0xFFFF的码点（相较于传统for循环）</p>
+<h2 id="直接输入-U-2028-和-U-2029"><a href="#直接输入-U-2028-和-U-2029" class="headerlink" title="直接输入 U+2028 和 U+2029"></a>直接输入 U+2028 和 U+2029</h2><p>JavaScript 规定有5个字符，不能在字符串里面直接使用，只能使用转义形式。</p>
+<ul>
+<li>U+005C：反斜杠（reverse solidus)</li>
+<li>U+000D：回车（carriage return）</li>
+<li>U+2028：行分隔符（line separator）</li>
+<li>U+2029：段分隔符（paragraph separator）</li>
+<li>U+000A：换行符（line feed）</li>
+</ul>
+<p>在json中JSON.parse解析U+2028（行分隔符）和 U+2029（段分隔符）报错</p>
+<p>所以，ES2019 允许 JavaScript 字符串直接输入 U+2028（行分隔符）和 U+2029（段分隔符）</p>
+<h2 id="JSON-stringify-的改造"><a href="#JSON-stringify-的改造" class="headerlink" title="JSON.stringify() 的改造"></a>JSON.stringify() 的改造</h2><blockquote>
+<p>JSON.stringify()的问题在于，它可能返回0xD800到0xDFFF之间的单个码点。</p>
+</blockquote>
+<h2 id="模板字符串"><a href="#模板字符串" class="headerlink" title="模板字符串"></a>模板字符串</h2><p>`反引号（tab键位上方那个）</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//多行字符串</span></span><br><span class="line">$(<span class="string">'#result'</span>).append(<span class="string">`</span></span><br><span class="line"><span class="string">  There are &lt;b&gt;<span class="subst">$&#123;basket.count&#125;</span>&lt;/b&gt; items</span></span><br><span class="line"><span class="string">   in your basket, &lt;em&gt;<span class="subst">$&#123;basket.onSale&#125;</span>&lt;/em&gt;</span></span><br><span class="line"><span class="string">  are on sale!</span></span><br><span class="line"><span class="string">`</span>);</span><br><span class="line"><span class="comment">// 字符串中嵌入变量</span></span><br><span class="line"><span class="keyword">let</span> name = <span class="string">"Bob"</span>, time = <span class="string">"today"</span>;</span><br><span class="line"><span class="string">`Hello <span class="subst">$&#123;name&#125;</span>, how are you <span class="subst">$&#123;time&#125;</span>?`</span></span><br></pre></td></tr></table></figure>
+
+<p>空格和缩进会被保留，另用trim()方法消除</p>
+<p>模板中可以运算，调用函数，嵌套模板</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//运算</span></span><br><span class="line"><span class="keyword">let</span> x = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">let</span> y = <span class="number">2</span>;</span><br><span class="line"><span class="string">`<span class="subst">$&#123;x&#125;</span> + <span class="subst">$&#123;y&#125;</span> = <span class="subst">$&#123;x + y&#125;</span>`</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//调用函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">"Hello World"</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="string">`foo <span class="subst">$&#123;fn()&#125;</span> bar`</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="实例：模板编译"><a href="#实例：模板编译" class="headerlink" title="实例：模板编译"></a>实例：模板编译</h2><h2 id="标签模板"><a href="#标签模板" class="headerlink" title="标签模板"></a>标签模板</h2><p>见<a href="https://es6.ruanyifeng.com/#docs/string#标签模板" target="_blank" rel="noopener">https://es6.ruanyifeng.com/#docs/string#标签模板</a></p>
+<h2 id="模板字符串的限制"><a href="#模板字符串的限制" class="headerlink" title="模板字符串的限制"></a>模板字符串的限制</h2>]]></content>
+      <categories>
+        <category>JS</category>
+        <category>ECMAScript 6</category>
+        <category>第04章 字符串的扩展</category>
       </categories>
   </entry>
   <entry>
@@ -530,6 +530,26 @@ namespace WebApi
       </categories>
   </entry>
   <entry>
+    <title>Docker简介</title>
+    <url>/2019/11/02/docker%E7%AE%80%E4%BB%8B/</url>
+    <content><![CDATA[<p>Docker的思想来自于集装箱，在一艘大船上，可以把货物规整的摆放起来。并且各种各样的货物被集装箱标准化了，集装箱和集装箱之间不会互相影响。现在都流行云计算了，云计算就好比大货轮。docker就是集装箱。</p>
+<h1 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h1><h2 id="传统开发"><a href="#传统开发" class="headerlink" title="传统开发"></a>传统开发</h2><p>将多环境多语言兼容</p>
+<p><img src="/images/IIS/Docker%E7%AE%80%E4%BB%8B_00.png" alt="Docker简介"><br><img src="/images/IIS/Docker%E7%AE%80%E4%BB%8B_01.png" alt="Docker简介"><br><img src="/images/IIS/Docker%E7%AE%80%E4%BB%8B_1.png" alt="Docker简介"></p>
+<h1 id="docker的组织结构"><a href="#docker的组织结构" class="headerlink" title="docker的组织结构"></a>docker的组织结构</h1><p><img src="/images/IIS/Docker%E7%AE%80%E4%BB%8B_2.png" alt="Docker简介"></p>
+<h2 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h2><p>持续集成、版本控制、可移植性、隔离性和安全性</p>
+<ul>
+<li>持续部署与测试<br>Docker在开发与运维的世界中具有极大的吸引力，因为它能保持跨环境的一致性。在开发与发布的生命周期中，不同的环境具有细微的不同，这些差异可能是由于不同安装包的版本和依赖关系引起的。然而，Docker可以通过确保从开发到产品发布整个过程环境的一致性来解决这个问题Docker容器通过相关配置，保持容器内部所有的配置和依赖关系始终不变。最终，你可以在开发到产品发布的整个过程中使用相同的容器来确保没有任何差异或者人工干预。<br>使用Docker，你还可以确保开发者不需要配置完全相同的产品环境，他们可以在他们自己的系统上通过VirtualBox建立虚拟机来运行Docker容器。Docker的魅力在于它同样可以让你在亚马逊EC2实例上运行相同的容器。如果你需要在一个产品发布周期中完成一次升级，你可以很容易地将需要变更的东西放到Docker容器中，测试它们，并且使你已经存在的容器执行相同的变更。这种灵活性就是使用Docker的一个主要好处。和标准部署与集成过程一样，Docker可以让你构建、测试和发布镜像，这个镜像可以跨多个服务器进行部署。哪怕安装一个新的安全补丁，整个过程也是一样的。你可以安装补丁，然后测试它，并且将这个补丁发布到产品中。</li>
+<li>多云平台<br>Docker最大的好处之一就是可移植性。在过去的几年里，所有主流的云计算提供商，包括亚马逊AWS和谷歌的GCP，都将Docker融入到他们的平台并增加了各自的支持。Docker容器能运行在亚马逊的EC2实例、谷歌的GCP实例、Rackspace服务器或者VirtualBox这些提供主机操作系统的平台上。举例来说，如果运行在亚马逊EC2实例上的Docker容器能够很容易地移植到其他几个平台上，比如说VirtualBox，并且达到类似的一致性和功能性，那这将允许你从基础设施层中抽象出来。除了AWS和GCP，Docker在其他不同的IaaS提供商也运行的非常好，例如微软的Azure、OpenStack和可以被具有不同配置的管理者所使用的Chef、Puppet、Ansible等。</li>
+<li>环境标准化和版本控制<br>通过上面的讨论，Docker容器可以在不同的开发与产品发布生命周期中确保一致性，进而标准化你的环境。除此之外，Docker容器还可以像git仓库一样，可以让你提交变更到Docker镜像中并通过不同的版本来管理它们。设想如果你因为完成了一个组件的升级而导致你整个环境都损坏了，Docker可以让你轻松地回滚到这个镜像的前一个版本。这整个过程可以在几分钟内完成，如果和虚拟机的备份或者镜像创建流程对比，那Docker算相当快的，它可以让你快速地进行复制和实现冗余。此外，启动Docker就和运行一个进程一样快。</li>
+<li>隔离性<br>Docker可以确保你的应用程序与资源是分隔开的。几个月前，Gartner发表了一篇报告，这份报告说明了运行Docker 容器进行资源隔离的效果和虚拟机（VM）管理程序一样的好，但是管理与控制方面还需要进行完善。<br>我们考虑这样一个场景，你在你的虚拟机中运行了很多应用程序，这些应用程序包括团队协作软件（例如Confluence）、问题追踪软件（例如JIRA）、集中身份管理系统（例如Crowd）等等。由于这些软件运行在不同的端口上，所以你必须使用Apache或者Nginx来做反向代理。到目前为止，一切都很正常，但是随着你的环境向前推进，你需要在你现有的环境中配置一个内容管理系统（例如Alfresco）。这时候有个问题发生了，这个软件需要一个不同版本的Apache Tomcat，为了满足这个需求，你只能将你现有的软件迁移到另一个版本的Tomcat上，或者找到适合你现有Tomcat的内容管理系统（Alfresco）版本。<br>对于上述场景，使用Docker就不用做这些事情了。Docker能够确保每个容器都拥有自己的资源，并且和其他容器是隔离的。你可以用不同的容器来运行使用不同堆栈的应用程序。除此之外，如果你想在服务器上直接删除一些应用程序是比较困难的，因为这样可能引发依赖关系冲突。而Docker可以帮你确保应用程序被完全清除，因为不同的应用程序运行在不同的容器上，如果你不在需要一款应用程序，那你可以简单地通过删除容器来删除这个应用程序，并且在你的宿主机操作系统上不会留下任何的临时文件或者配置文件。<br>除了上述好处，Docker还能确保每个应用程序只使用分配给它的资源（包括CPU、内存和磁盘空间）。一个特殊的软件将不会使用你全部的可用资源，要不然这将导致性能降低，甚至让其他应用程序完全停止工作。</li>
+<li>安全性<br>如上所述，Gartner也承认Docker正在快速地发展。从安全角度来看，Docker确保运行在容器中的应用程序和其他容器中的应用程序是完全分隔与隔离的，在通信流量和管理上赋予你完全的控制权。Docker容器不能窥视运行在其他容器中的进程。从体系结构角度来看，每个容器只使用着自己的资源（从进程到网络堆栈）。<br>作为紧固安全的一种手段，Docker将宿主机操作系统上的敏感挂载点（例如/proc和/sys）作为只读挂载点，并且使用一种写时复制系统来确保容器不能读取其他容器的数据。Docker也限制了宿主机操作系统上的一些系统调用，并且和SELinux与AppArmor一起运行的很好。此外，在Docker Hub上可以使用的Docker镜像都通过数字签名来确保其可靠性。由于Docker容器是隔离的，并且资源是受限制的，所以即使你其中一个应用程序被黑，也不会影响运行在其它Docker容器上的应用程序。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+  </entry>
+  <entry>
     <title>IIS 5.0和6.0的ASP.NET应用程序生命周期概述</title>
     <url>/2019/11/02/IIS/</url>
     <content><![CDATA[<blockquote>
@@ -626,26 +646,6 @@ namespace WebApi
 <blockquote>
 <p> 1.对请求进行验证，将检查浏览器发送的信息，并确定其是否包含潜在恶意标记。 有关更多信息，请参见ValidateRequest 和脚本侵入概述。<br> 2.如果已在 Web.config 文件的 UrlMappingsSection 节中配置了任何 URL，则执行 URL 映射。<br> 3.引发 BeginRequest 事件。在 ASP.NET 响应请求时作为 HTTP 执行管线链中的第一个事件发生。BeginRequest 事件发出信号表示创建任何给定的新请求。 此事件始终被引发，并且始终是请求处理期间发生的第一个事件。<br> 4.引发 AuthenticateRequest 事件。当安全模块已建立用户标识时发生。AuthenticateRequest 事件发出信号表示配置的身份验证机制已对当前请求进行了身份验证。 订阅 AuthenticateRequest 事件可确保在处理附加模块或事件处理程序之前对请求进行身份验证。<br> 5.引发 PostAuthenticateRequest 事件。当安全模块已建立用户标识时发生。PostAuthenticateRequest 事件在 AuthenticateRequest 事件发生之后引发。 预订 PostAuthenticateRequest 事件的功能可以访问由PostAuthenticateRequest 处理的任何数据。<br> 6.引发 AuthorizeRequest 事件。当安全模块已验证用户授权时发生。AuthorizeRequest 事件发出信号表示 ASP.NET 已对当前请求进行了授权。 订阅 AuthorizeRequest 事件可确保在处理附加的模块或事件处理程序之前对请求进行身份验证和授权。<br> 7.引发 PostAuthorizeRequest 事件。在当前请求的用户已获授权时发生。PostAuthorizeRequest 事件发出信号表示 ASP.NET 已对当前请求进行了授权。 订阅 PostAuthorizeRequest 事件可确保在处理附加的模块或处理程序之前对请求进行身份验证和授权。<br> 8.引发 ResolveRequestCache 事件。在 ASP.NET 完成授权事件以使缓存模块从缓存中为请求提供服务后发生，从而绕过事件处理程序（例如某个页或 XML Web services）的执行。<br> 9.引发 PostResolveRequestCache 事件。在 ASP.NET 跳过当前事件处理程序的执行并允许缓存模块满足来自缓存的请求时发生。<br> 10.根据所请求资源的文件扩展名（在应用程序的配置文件中映射），选择实现 IHttpHandler 的类，对请求进行处理。如果该请求针对从 Page 类派生的对象（页），并且需要对该页进行编译，则 ASP.NET 会在创建该页的实例之前对其进行编译。<br> 11.引发 PostMapRequestHandler 事件。在 ASP.NET 已将当前请求映射到相应的事件处理程序时发生。<br> 12.引发 AcquireRequestState 事件。当 ASP.NET 获取与当前请求关联的当前状态（如会话状态）时发生。AcquireRequestState 事件在创建了事件处理程序之后引发。<br> 13.引发 PostAcquireRequestState 事件。在已获得与当前请求关联的请求状态（例如会话状态）时发生。<br> PostAcquireRequestState 事件在 AcquireRequestState 事件发生之后引发。 预订 AcquireRequestState 事件的功能可以访问由PostAcquireRequestState 处理的任何数据。<br> 14.引发 PreRequestHandlerExecute 事件。恰好在 ASP.NET 开始执行事件处理程序（例如，某页或某个 XML Web services）前发生。<br> 15.为该请求调用合适的 IHttpHandler 类的 ProcessRequest 方法（或异步版IHttpAsyncHandler.BeginProcessRequest）。 例如，如果该请求针对某页，则当前的页实例将处理该请求。<br> 16.引发 PostRequestHandlerExecute 事件。在 ASP.NET 已将当前请求映射到相应的事件处理程序时发生。<br> 17.引发 ReleaseRequestState 事件。在 ASP.NET 已将当前请求映射到相应的事件处理程序时发生。<br> 18.引发 PostReleaseRequestState 事件。在 ASP.NET 已完成所有请求事件处理程序的执行并且请求状态数据已存储时发生。<br> 19.如果定义了 Filter 属性，则执行响应筛选。<br> 20.引发 UpdateRequestCache 事件。当 ASP.NET 执行完事件处理程序以使缓存模块存储将用于从缓存为后续请求提供服务的响应时发生。<br> 21.引发 PostUpdateRequestCache 事件。在 ASP.NET 完成缓存模块的更新并存储了用于从缓存中为后续请求提供服务的响应后，发生此事件。<br> 22.引发 EndRequest 事件。在 ASP.NET 响应请求时作为 HTTP 执行管线链中的最后一个事件发生。<br> 23.引发 PreSendRequestHeaders 事件。恰好在 ASP.NET 向客户端发送 HTTP 标头之前发生。<br> 24.引发 PreSendRequestContent 事件。</p>
 </blockquote>
-]]></content>
-      <categories>
-        <category>其他</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>Docker简介</title>
-    <url>/2019/11/02/docker%E7%AE%80%E4%BB%8B/</url>
-    <content><![CDATA[<p>Docker的思想来自于集装箱，在一艘大船上，可以把货物规整的摆放起来。并且各种各样的货物被集装箱标准化了，集装箱和集装箱之间不会互相影响。现在都流行云计算了，云计算就好比大货轮。docker就是集装箱。</p>
-<h1 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h1><h2 id="传统开发"><a href="#传统开发" class="headerlink" title="传统开发"></a>传统开发</h2><p>将多环境多语言兼容</p>
-<p><img src="/images/IIS/Docker%E7%AE%80%E4%BB%8B_00.png" alt="Docker简介"><br><img src="/images/IIS/Docker%E7%AE%80%E4%BB%8B_01.png" alt="Docker简介"><br><img src="/images/IIS/Docker%E7%AE%80%E4%BB%8B_1.png" alt="Docker简介"></p>
-<h1 id="docker的组织结构"><a href="#docker的组织结构" class="headerlink" title="docker的组织结构"></a>docker的组织结构</h1><p><img src="/images/IIS/Docker%E7%AE%80%E4%BB%8B_2.png" alt="Docker简介"></p>
-<h2 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h2><p>持续集成、版本控制、可移植性、隔离性和安全性</p>
-<ul>
-<li>持续部署与测试<br>Docker在开发与运维的世界中具有极大的吸引力，因为它能保持跨环境的一致性。在开发与发布的生命周期中，不同的环境具有细微的不同，这些差异可能是由于不同安装包的版本和依赖关系引起的。然而，Docker可以通过确保从开发到产品发布整个过程环境的一致性来解决这个问题Docker容器通过相关配置，保持容器内部所有的配置和依赖关系始终不变。最终，你可以在开发到产品发布的整个过程中使用相同的容器来确保没有任何差异或者人工干预。<br>使用Docker，你还可以确保开发者不需要配置完全相同的产品环境，他们可以在他们自己的系统上通过VirtualBox建立虚拟机来运行Docker容器。Docker的魅力在于它同样可以让你在亚马逊EC2实例上运行相同的容器。如果你需要在一个产品发布周期中完成一次升级，你可以很容易地将需要变更的东西放到Docker容器中，测试它们，并且使你已经存在的容器执行相同的变更。这种灵活性就是使用Docker的一个主要好处。和标准部署与集成过程一样，Docker可以让你构建、测试和发布镜像，这个镜像可以跨多个服务器进行部署。哪怕安装一个新的安全补丁，整个过程也是一样的。你可以安装补丁，然后测试它，并且将这个补丁发布到产品中。</li>
-<li>多云平台<br>Docker最大的好处之一就是可移植性。在过去的几年里，所有主流的云计算提供商，包括亚马逊AWS和谷歌的GCP，都将Docker融入到他们的平台并增加了各自的支持。Docker容器能运行在亚马逊的EC2实例、谷歌的GCP实例、Rackspace服务器或者VirtualBox这些提供主机操作系统的平台上。举例来说，如果运行在亚马逊EC2实例上的Docker容器能够很容易地移植到其他几个平台上，比如说VirtualBox，并且达到类似的一致性和功能性，那这将允许你从基础设施层中抽象出来。除了AWS和GCP，Docker在其他不同的IaaS提供商也运行的非常好，例如微软的Azure、OpenStack和可以被具有不同配置的管理者所使用的Chef、Puppet、Ansible等。</li>
-<li>环境标准化和版本控制<br>通过上面的讨论，Docker容器可以在不同的开发与产品发布生命周期中确保一致性，进而标准化你的环境。除此之外，Docker容器还可以像git仓库一样，可以让你提交变更到Docker镜像中并通过不同的版本来管理它们。设想如果你因为完成了一个组件的升级而导致你整个环境都损坏了，Docker可以让你轻松地回滚到这个镜像的前一个版本。这整个过程可以在几分钟内完成，如果和虚拟机的备份或者镜像创建流程对比，那Docker算相当快的，它可以让你快速地进行复制和实现冗余。此外，启动Docker就和运行一个进程一样快。</li>
-<li>隔离性<br>Docker可以确保你的应用程序与资源是分隔开的。几个月前，Gartner发表了一篇报告，这份报告说明了运行Docker 容器进行资源隔离的效果和虚拟机（VM）管理程序一样的好，但是管理与控制方面还需要进行完善。<br>我们考虑这样一个场景，你在你的虚拟机中运行了很多应用程序，这些应用程序包括团队协作软件（例如Confluence）、问题追踪软件（例如JIRA）、集中身份管理系统（例如Crowd）等等。由于这些软件运行在不同的端口上，所以你必须使用Apache或者Nginx来做反向代理。到目前为止，一切都很正常，但是随着你的环境向前推进，你需要在你现有的环境中配置一个内容管理系统（例如Alfresco）。这时候有个问题发生了，这个软件需要一个不同版本的Apache Tomcat，为了满足这个需求，你只能将你现有的软件迁移到另一个版本的Tomcat上，或者找到适合你现有Tomcat的内容管理系统（Alfresco）版本。<br>对于上述场景，使用Docker就不用做这些事情了。Docker能够确保每个容器都拥有自己的资源，并且和其他容器是隔离的。你可以用不同的容器来运行使用不同堆栈的应用程序。除此之外，如果你想在服务器上直接删除一些应用程序是比较困难的，因为这样可能引发依赖关系冲突。而Docker可以帮你确保应用程序被完全清除，因为不同的应用程序运行在不同的容器上，如果你不在需要一款应用程序，那你可以简单地通过删除容器来删除这个应用程序，并且在你的宿主机操作系统上不会留下任何的临时文件或者配置文件。<br>除了上述好处，Docker还能确保每个应用程序只使用分配给它的资源（包括CPU、内存和磁盘空间）。一个特殊的软件将不会使用你全部的可用资源，要不然这将导致性能降低，甚至让其他应用程序完全停止工作。</li>
-<li>安全性<br>如上所述，Gartner也承认Docker正在快速地发展。从安全角度来看，Docker确保运行在容器中的应用程序和其他容器中的应用程序是完全分隔与隔离的，在通信流量和管理上赋予你完全的控制权。Docker容器不能窥视运行在其他容器中的进程。从体系结构角度来看，每个容器只使用着自己的资源（从进程到网络堆栈）。<br>作为紧固安全的一种手段，Docker将宿主机操作系统上的敏感挂载点（例如/proc和/sys）作为只读挂载点，并且使用一种写时复制系统来确保容器不能读取其他容器的数据。Docker也限制了宿主机操作系统上的一些系统调用，并且和SELinux与AppArmor一起运行的很好。此外，在Docker Hub上可以使用的Docker镜像都通过数字签名来确保其可靠性。由于Docker容器是隔离的，并且资源是受限制的，所以即使你其中一个应用程序被黑，也不会影响运行在其它Docker容器上的应用程序。</li>
-</ul>
 ]]></content>
       <categories>
         <category>其他</category>
