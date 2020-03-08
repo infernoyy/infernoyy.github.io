@@ -1,8 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>接口</title>
+    <url>/2020/02/23/Typescript/%E5%8F%98%E9%87%8F%E5%A3%B0%E6%98%8E/</url>
+    <content><![CDATA[<h1 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h1><h2 id="接口初探"><a href="#接口初探" class="headerlink" title="接口初探"></a>接口初探</h2><p>使用接口来描述：必须包含一个label属性且类型为string</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">interface</span> LabelledValue &#123;</span><br><span class="line">  label: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">printLabel</span>(<span class="params">labelledObj: LabelledValue</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(labelledObj.label);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> myObj = &#123;size: <span class="number">10</span>, label: <span class="string">"Size 10 Object"</span>&#125;;</span><br><span class="line">printLabel(myObj);</span><br></pre></td></tr></table></figure>
+
+<h2 id="可选属性"><a href="#可选属性" class="headerlink" title="可选属性"></a>可选属性</h2><figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">interface</span> SquareConfig &#123;</span><br><span class="line">  color?: <span class="built_in">string</span>;</span><br><span class="line">  width?: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="只读属性"><a href="#只读属性" class="headerlink" title="只读属性"></a>只读属性</h2><p>在属性名前用readonly来指定只读属性:</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">interface</span> Point &#123;</span><br><span class="line">    readonly x: <span class="built_in">number</span>;</span><br><span class="line">    readonly y: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>javascript</category>
+        <category>Typescript</category>
+        <category>第03章 接口</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>基础类型</title>
+    <url>/2020/02/23/Typescript/%E5%9F%BA%E7%A1%80%E7%B1%BB%E5%9E%8B/</url>
+    <content><![CDATA[<h1 id="快速上手"><a href="#快速上手" class="headerlink" title="快速上手"></a>快速上手</h1><p>nodejs安装</p>
+<p><code>npm install -g typescript</code></p>
+<p>第一个ts文件 greeter.ts</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">greeter</span>(<span class="params">person</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"Hello, "</span> + person;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> user = <span class="string">"Jane User"</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">document</span>.body.innerHTML = greeter(user);</span><br></pre></td></tr></table></figure>
+
+<p>运行 <code>tsc greeter.ts</code></p>
+<h2 id="类型注解"><a href="#类型注解" class="headerlink" title="类型注解"></a>类型注解</h2><p>对于greeter函数预接收一个字符串参数，非字符串则报错   </p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">greeter</span>(<span class="params">person: <span class="built_in">string</span></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"Hello, "</span> + person;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> user = <span class="string">"Jane User"</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">document</span>.body.innerHTML = greeter(user);</span><br></pre></td></tr></table></figure>
+
+<h2 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">interface Person &#123;</span><br><span class="line">    firstName: string;</span><br><span class="line">    lastName: string;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function greeter(person: Person) &#123;</span><br><span class="line">    return &quot;Hello, &quot; + person.firstName + &quot; &quot; + person.lastName;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let user = &#123; firstName: &quot;Jane&quot;, lastName: &quot;User&quot; &#125;;</span><br><span class="line"></span><br><span class="line">document.body.innerHTML = greeter(user);</span><br></pre></td></tr></table></figure>
+
+<h2 id="类"><a href="#类" class="headerlink" title="类"></a>类</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">class Student &#123;</span><br><span class="line">    fullName: string;</span><br><span class="line">    constructor(public firstName: string, public middleInitial: string, public lastName: string) &#123;</span><br><span class="line">        this.fullName = firstName + &quot; &quot; + middleInitial + &quot; &quot; + lastName;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">interface Person &#123;</span><br><span class="line">    firstName: string;</span><br><span class="line">    lastName: string;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function greeter(person : Person) &#123;</span><br><span class="line">    return &quot;Hello, &quot; + person.firstName + &quot; &quot; + person.lastName;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let user = new Student(&quot;Jane&quot;, &quot;M.&quot;, &quot;User&quot;);</span><br><span class="line"></span><br><span class="line">document.body.innerHTML = greeter(user);</span><br></pre></td></tr></table></figure>
+
+<h1 id="基础类型"><a href="#基础类型" class="headerlink" title="基础类型"></a>基础类型</h1><p>boolean、number、string、array、Tuple元组、enum枚举、any任意值、void空值、null、undefined、</p>
+<h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><p>第一种，可以在元素类型后面接上[]，表示由此类型元素组成的一个数组：</p>
+<p><code>let list: number[] = [1, 2, 3];</code></p>
+<p>第二种方式是使用数组泛型，Array&lt;元素类型&gt;：</p>
+<p><code>let list: Array&lt;number&gt; = [1, 2, 3];</code></p>
+<h2 id="元组"><a href="#元组" class="headerlink" title="元组"></a>元组</h2><p><code>let x: [string, number];</code></p>
+<p>当访问一个越界的元素，会使用联合类型替代。</p>
+<blockquote>
+<p>联合类型见以后章节</p>
+</blockquote>
+<h2 id="空值"><a href="#空值" class="headerlink" title="空值"></a>空值</h2><p>void你只能为它赋予undefined和null：</p>
+<h2 id="never"><a href="#never" class="headerlink" title="never"></a>never</h2><p>用于抛出异常。<br>never类型是任何类型的子类型，也可以赋值给任何类型；然而，没有类型是never的子类型或可以赋值给never类型（除了never本身之外）。 即使any也不可以赋值给never。</p>
+<h2 id="类型断言"><a href="#类型断言" class="headerlink" title="类型断言"></a>类型断言</h2><p>类型断言有两种形式。 </p>
+<p>其一是“尖括号”语法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">let someValue: any = &quot;this is a string&quot;;</span><br><span class="line">let strLength: number = (&lt;string&gt;someValue).length;</span><br></pre></td></tr></table></figure>
+
+<p>另一个为as语法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">let someValue: any = &quot;this is a string&quot;;</span><br><span class="line">let strLength: number = (someValue as string).length;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>javascript</category>
+        <category>Typescript</category>
+        <category>第01章 基础类型</category>
+      </categories>
+  </entry>
+  <entry>
     <title>常用通讯协议</title>
-    <url>/2020/02/20/%E5%B8%B8%E7%94%A8%E9%80%9A%E8%AE%AF%E5%8D%8F%E8%AE%AE/</url>
+    <url>/2020/02/20/%E5%85%B6%E4%BB%96/%E5%B8%B8%E7%94%A8%E9%80%9A%E8%AE%AF%E5%8D%8F%E8%AE%AE/</url>
     <content><![CDATA[<h1 id="常用通讯协议"><a href="#常用通讯协议" class="headerlink" title="常用通讯协议"></a>常用通讯协议</h1><h2 id="HTTP协议"><a href="#HTTP协议" class="headerlink" title="HTTP协议"></a>HTTP协议</h2><p>超文本传输协议（英文：HyperText Transfer Protocol，缩写：HTTP）是一种用于分布式、协作式和超媒体信息系统的应用层协议。HTTP是万维网的数据通信的基础。</p>
 <h3 id="HTTP协议概述"><a href="#HTTP协议概述" class="headerlink" title="HTTP协议概述"></a>HTTP协议概述</h3><p>HTTP是一个客户端终端（用户）和服务器端（网站）请求和应答的标准（TCP）。通过使用网页浏览器、网络爬虫或者其它的工具，客户端发起一个HTTP请求到服务器上指定端口（默认端口为80）。我们称这个客户端为用户代理程序（user agent）。应答的服务器上存储着一些资源，比如HTML文件和图像。我们称这个应答服务器为源服务器（origin server）。在用户代理和源服务器中间可能存在多个“中间层”，比如代理服务器、网关或者隧道（tunnel）。</p>
 <p>尽管TCP/IP协议是互联网上最流行的应用，HTTP协议中，并没有规定必须使用它或它支持的层。事实上，HTTP可以在任何互联网协议上，或其他网络上实现。HTTP假定其下层协议提供可靠的传输。因此，任何能够提供这种保证的协议都可以被其使用。因此也就是其在TCP/IP协议族使用TCP作为其传输层。</p>
@@ -102,14 +158,42 @@
 <h2 id="Promise-resolve"><a href="#Promise-resolve" class="headerlink" title="Promise.resolve()"></a>Promise.resolve()</h2><h2 id="Promise-reject"><a href="#Promise-reject" class="headerlink" title="Promise.reject()"></a>Promise.reject()</h2><p>返回一个新的 Promise 实例，该实例的状态为rejected。</p>
 <h2 id="Promise-try"><a href="#Promise-try" class="headerlink" title="Promise.try()"></a>Promise.try()</h2>]]></content>
       <categories>
-        <category>JS</category>
+        <category>javascript</category>
+        <category>ECMAScript 6</category>
+        <category>第16章 Promise</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Promise</title>
+    <url>/2020/01/16/ES6/Promise/</url>
+    <content><![CDATA[<h2 id="Promise-的含义"><a href="#Promise-的含义" class="headerlink" title="Promise 的含义"></a>Promise 的含义</h2><p>Promise对象有以下两个特点。</p>
+<p>（1）<strong><em>对象的状态不受外界影响</em></strong>。Promise对象代表一个异步操作，有三种状态：<strong><em>pending（进行中）、fulfilled（已成功）和rejected（已失败）</em></strong>。只有异步操作的结果，可以决定当前是哪一种状态，任何其他操作都无法改变这个状态。这也是Promise这个名字的由来，它的英语意思就是“承诺”，表示其他手段无法改变。</p>
+<p>（2）<strong><em>一旦状态改变，就不会再变，任何时候都可以得到这个结果</em></strong>。Promise对象的状态改变，只有两种可能：<strong><em>从pending变为fulfilled</em></strong>和<strong><em>从pending变为rejected</em></strong>。只要这两种情况发生，状态就凝固了，不会再变了，会一直保持这个结果，这时就称为 resolved（已定型）。如果改变已经发生了，你再对Promise对象添加回调函数，也会立即得到这个结果。这与事件（Event）完全不同，事件的特点是，如果你错过了它，再去监听，是得不到结果的。</p>
+<p>Promise也有一些缺点。首先，<strong><em>无法取消Promise</em></strong>，一旦新建它就会立即执行，无法中途取消。其次，如果不设置回调函数，<strong><em>Promise内部抛出的错误，不会反应到外部</em></strong>。第三，当处于pending状态时，<strong><em>无法得知目前进展到哪一个阶段</em></strong>（刚刚开始还是即将完成）。</p>
+<h2 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// ... some code</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (<span class="comment">/* 异步操作成功 */</span>)&#123;</span><br><span class="line">    resolve(value);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    reject(error);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="Promise-prototype-then"><a href="#Promise-prototype-then" class="headerlink" title="Promise.prototype.then()"></a>Promise.prototype.then()</h2><p>采用链式的then，可以指定一组按照次序调用的回调函数。这时，前一个回调函数，有可能返回的还是一个Promise对象（即有异步操作），这时后一个回调函数，就会等待该Promise对象的状态发生变化，才会被调用。</p>
+<h2 id="Promise-prototype-catch"><a href="#Promise-prototype-catch" class="headerlink" title="Promise.prototype.catch()"></a>Promise.prototype.catch()</h2><p>用于指定发生错误时的回调函数</p>
+<h2 id="Promise-prototype-finally"><a href="#Promise-prototype-finally" class="headerlink" title="Promise.prototype.finally()"></a>Promise.prototype.finally()</h2><p>用于指定不管 Promise 对象最后状态如何，都会执行的操作。</p>
+<h2 id="Promise-all"><a href="#Promise-all" class="headerlink" title="Promise.all()"></a>Promise.all()</h2><p>用于将多个 Promise 实例，包装成一个新的 Promise 实例。</p>
+<p>p的状态由p1、p2、p3决定，分成两种情况。</p>
+<p>（1）只有p1、p2、p3的状态都变成fulfilled，p的状态才会变成fulfilled，此时p1、p2、p3的返回值组成一个数组，传递给p的回调函数。</p>
+<p>（2）只要p1、p2、p3之中有一个被rejected，p的状态就变成rejected，此时第一个被reject的实例的返回值，会传递给p的回调函数。</p>
+<h2 id="Promise-race"><a href="#Promise-race" class="headerlink" title="Promise.race()"></a>Promise.race()</h2><p>之中有一个实例率先改变状态，p的状态就跟着改变</p>
+<h2 id="Promise-allSettled"><a href="#Promise-allSettled" class="headerlink" title="Promise.allSettled()"></a>Promise.allSettled()</h2><p>只有等到所有这些参数实例都返回结果，不管是fulfilled还是rejected，包装实例才会结束。</p>
+<h2 id="Promise-any"><a href="#Promise-any" class="headerlink" title="Promise.any()"></a>Promise.any()</h2><p>只要参数实例有一个变成fulfilled状态，包装实例就会变成fulfilled状态；如果所有参数实例都变成rejected状态，包装实例就会变成rejected状态。</p>
+<p>Promise.any()跟Promise.race()方法很像，只有一点不同，就是不会因为某个 Promise 变成rejected状态而结束。</p>
+<h2 id="Promise-resolve"><a href="#Promise-resolve" class="headerlink" title="Promise.resolve()"></a>Promise.resolve()</h2><h2 id="Promise-reject"><a href="#Promise-reject" class="headerlink" title="Promise.reject()"></a>Promise.reject()</h2><p>返回一个新的 Promise 实例，该实例的状态为rejected。</p>
+<h2 id="Promise-try"><a href="#Promise-try" class="headerlink" title="Promise.try()"></a>Promise.try()</h2>]]></content>
+      <categories>
+        <category>javascript</category>
         <category>ECMAScript 6</category>
         <category>第16章 Promise</category>
       </categories>
   </entry>
   <entry>
     <title>函数的扩展</title>
-    <url>/2020/01/08/%E5%87%BD%E6%95%B0%E7%9A%84%E6%89%A9%E5%B1%95/</url>
+    <url>/2020/01/08/ES6/%E5%87%BD%E6%95%B0%E7%9A%84%E6%89%A9%E5%B1%95/</url>
     <content><![CDATA[<h1 id="函数的扩展"><a href="#函数的扩展" class="headerlink" title="函数的扩展"></a>函数的扩展</h1><h2 id="函数参数的默认值"><a href="#函数参数的默认值" class="headerlink" title="函数参数的默认值"></a>函数参数的默认值</h2><h3 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h3><p>ES6 之前，不能直接为函数的参数指定默认值，只能采用变通的方法。</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">log</span>(<span class="params">x, y</span>) </span>&#123;</span><br><span class="line">  y = y || <span class="string">'World'</span>;</span><br><span class="line">  <span class="built_in">console</span>.log(x, y);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">log(<span class="string">'Hello'</span>) <span class="comment">// Hello World</span></span><br><span class="line">log(<span class="string">'Hello'</span>, <span class="string">'China'</span>) <span class="comment">// Hello China</span></span><br><span class="line">log(<span class="string">'Hello'</span>, <span class="string">''</span>) <span class="comment">// Hello World</span></span><br></pre></td></tr></table></figure>
 
@@ -160,14 +244,14 @@
 <h2 id="catch-命令的参数省略"><a href="#catch-命令的参数省略" class="headerlink" title="catch 命令的参数省略"></a>catch 命令的参数省略</h2><p>ES2019 做出了改变，允许catch语句省略参数</p>
 ]]></content>
       <categories>
-        <category>JS</category>
+        <category>javascript</category>
         <category>ECMAScript 6</category>
         <category>第08章 函数的扩展</category>
       </categories>
   </entry>
   <entry>
     <title>数值的扩展</title>
-    <url>/2020/01/07/%E6%95%B0%E5%80%BC%E7%9A%84%E6%89%A9%E5%B1%95/</url>
+    <url>/2020/01/07/ES6/%E6%95%B0%E5%80%BC%E7%9A%84%E6%89%A9%E5%B1%95/</url>
     <content><![CDATA[<h1 id="数值的扩展"><a href="#数值的扩展" class="headerlink" title="数值的扩展"></a>数值的扩展</h1><h2 id="数值的扩展-1"><a href="#数值的扩展-1" class="headerlink" title="数值的扩展"></a>数值的扩展</h2><p>ES6 提供了二进制和八进制数值的新的写法，分别用前缀0b（或0B）和0o（或0O）表示。</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="number">0b111110111</span> === <span class="number">503</span> <span class="comment">// true</span></span><br><span class="line"><span class="number">0o767</span> === <span class="number">503</span> <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
 
@@ -210,14 +294,14 @@
 <h2 id="指数运算符-1"><a href="#指数运算符-1" class="headerlink" title="指数运算符"></a>指数运算符</h2><p>BigInt 只用来表示整数，没有位数的限制，任何位数的整数都可以精确表示。<br>为了与 Number 类型区别，BigInt 类型的数据必须添加后缀n</p>
 ]]></content>
       <categories>
-        <category>JS</category>
+        <category>javascript</category>
         <category>ECMAScript 6</category>
         <category>第07章 数值的扩展</category>
       </categories>
   </entry>
   <entry>
     <title>字符串的新增方法</title>
-    <url>/2020/01/05/%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%96%B0%E5%A2%9E%E6%96%B9%E6%B3%95/</url>
+    <url>/2020/01/05/ES6/%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%96%B0%E5%A2%9E%E6%96%B9%E6%B3%95/</url>
     <content><![CDATA[<h1 id="字符串的新增方法"><a href="#字符串的新增方法" class="headerlink" title="字符串的新增方法"></a>字符串的新增方法</h1><h2 id="String-fromCodePoint"><a href="#String-fromCodePoint" class="headerlink" title="String.fromCodePoint()"></a>String.fromCodePoint()</h2><p>ES6 提供了String.fromCodePoint()方法，可以识别大于0xFFFF的字符，弥补了String.fromCharCode()方法的不足。在作用上，正好与下面的codePointAt()方法相反。</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">String</span>.fromCharCode(<span class="number">0x20BB7</span>) <span class="comment">//溢出，返回码点U+0BB7对应的字符</span></span><br><span class="line"><span class="comment">// "ஷ"</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">String</span>.fromCodePoint(<span class="number">0x20BB7</span>)</span><br><span class="line"><span class="comment">// "𠮷"</span></span><br></pre></td></tr></table></figure>
 
@@ -284,14 +368,14 @@
 <h2 id="实例方法：matchAll"><a href="#实例方法：matchAll" class="headerlink" title="实例方法：matchAll()"></a>实例方法：matchAll()</h2><p>略，见正则</p>
 ]]></content>
       <categories>
-        <category>JS</category>
+        <category>javascript</category>
         <category>ECMAScript 6</category>
         <category>第05章 字符串的新增方法</category>
       </categories>
   </entry>
   <entry>
     <title>字符串的扩展</title>
-    <url>/2020/01/04/%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%89%A9%E5%B1%95/</url>
+    <url>/2020/01/04/ES6/%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%89%A9%E5%B1%95/</url>
     <content><![CDATA[<h1 id="字符串的扩展"><a href="#字符串的扩展" class="headerlink" title="字符串的扩展"></a>字符串的扩展</h1><h2 id="字符的-Unicode-表示法"><a href="#字符的-Unicode-表示法" class="headerlink" title="字符的 Unicode 表示法"></a>字符的 Unicode 表示法</h2><p>加强对Unicode支持</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//码点在\u0000~\uFFFF之间的字符</span></span><br><span class="line"><span class="string">"\u0061"</span> <span class="comment">//a</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//超过0xFFFF的数值,加上&#123;&#125;能正确解读该字符</span></span><br><span class="line"><span class="string">"\u&#123;20BB7&#125;"</span> <span class="comment">// "𠮷"</span></span><br></pre></td></tr></table></figure>
 
@@ -319,14 +403,14 @@
 <h2 id="实例：模板编译"><a href="#实例：模板编译" class="headerlink" title="实例：模板编译"></a>实例：模板编译</h2><h2 id="标签模板"><a href="#标签模板" class="headerlink" title="标签模板"></a>标签模板</h2><p>见<a href="https://es6.ruanyifeng.com/#docs/string#标签模板" target="_blank" rel="noopener">https://es6.ruanyifeng.com/#docs/string#标签模板</a></p>
 <h2 id="模板字符串的限制"><a href="#模板字符串的限制" class="headerlink" title="模板字符串的限制"></a>模板字符串的限制</h2>]]></content>
       <categories>
-        <category>JS</category>
+        <category>javascript</category>
         <category>ECMAScript 6</category>
         <category>第04章 字符串的扩展</category>
       </categories>
   </entry>
   <entry>
     <title>Set和Map数据结构</title>
-    <url>/2019/12/31/Set%20%E5%92%8C%20Map%20%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</url>
+    <url>/2019/12/31/ES6/Set%20%E5%92%8C%20Map%20%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</url>
     <content><![CDATA[<h1 id="Set-和-Map-数据结构"><a href="#Set-和-Map-数据结构" class="headerlink" title="Set 和 Map 数据结构"></a>Set 和 Map 数据结构</h1><h2 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h2><h3 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//数组转化为Set</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">set</span> = new Set(array);</span><br></pre></td></tr></table></figure>
 
 <h3 id="Set-实例的属性和方法"><a href="#Set-实例的属性和方法" class="headerlink" title="Set 实例的属性和方法"></a>Set 实例的属性和方法</h3><p>Set 结构的实例有以下属性。</p>
@@ -424,14 +508,14 @@
 
 ]]></content>
       <categories>
-        <category>JS</category>
+        <category>javascript</category>
         <category>ECMAScript 6</category>
         <category>第13章 Set和Map数据结构</category>
       </categories>
   </entry>
   <entry>
     <title>控制反转和依赖注入的理解</title>
-    <url>/2019/12/30/%E6%8E%A7%E5%88%B6%E5%8F%8D%E8%BD%AC%E5%92%8C%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5/</url>
+    <url>/2019/12/30/%E5%85%B6%E4%BB%96/%E6%8E%A7%E5%88%B6%E5%8F%8D%E8%BD%AC%E5%92%8C%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5/</url>
     <content><![CDATA[<h1 id="控制反转和依赖注入的理解-通俗易懂"><a href="#控制反转和依赖注入的理解-通俗易懂" class="headerlink" title="控制反转和依赖注入的理解(通俗易懂)"></a>控制反转和依赖注入的理解(通俗易懂)</h1><h2 id="依赖注入例子"><a href="#依赖注入例子" class="headerlink" title="依赖注入例子"></a>依赖注入例子</h2><p>先来讲一讲，一个简单的依赖注入例子。</p>
 <ul>
 <li>依赖 如果在 Class A 中，有 Class B 的实例，则称 Class A 对 Class B 有一个依赖。例如下面类 Human 中用到一个 Father 对象，我们就说类 Human 对类 Father 有一个依赖。</li>
@@ -496,7 +580,7 @@
   </entry>
   <entry>
     <title>盘古分词</title>
-    <url>/2019/12/16/%E7%9B%98%E5%8F%A4%E5%88%86%E8%AF%8D/</url>
+    <url>/2019/12/16/%E5%85%B6%E4%BB%96/%E7%9B%98%E5%8F%A4%E5%88%86%E8%AF%8D/</url>
     <content><![CDATA[<h1 id="盘古分词Lucene-net"><a href="#盘古分词Lucene-net" class="headerlink" title="盘古分词Lucene.net"></a>盘古分词Lucene.net</h1><h2 id="官网"><a href="#官网" class="headerlink" title="官网"></a>官网</h2><p><a href="http://lucenenet.apache.org/index.html" target="_blank" rel="noopener">http://lucenenet.apache.org/index.html</a></p>
 <p><a href="https://archive.codeplex.com/?p=pangusegment" target="_blank" rel="noopener">https://archive.codeplex.com/?p=pangusegment</a> <strong>项目描述</strong></p>
 <p>开发人员可以基于Lucene.net实现全文检索的功能</p>
@@ -509,7 +593,7 @@
   </entry>
   <entry>
     <title>github代码管理</title>
-    <url>/2019/12/16/github%E4%BB%A3%E7%A0%81%E7%AE%A1%E7%90%86/</url>
+    <url>/2019/12/16/%E5%85%B6%E4%BB%96/github%E4%BB%A3%E7%A0%81%E7%AE%A1%E7%90%86/</url>
     <content><![CDATA[<h1 id="github代码管理"><a href="#github代码管理" class="headerlink" title="github代码管理"></a>github代码管理</h1><h2 id="代码管理步骤"><a href="#代码管理步骤" class="headerlink" title="代码管理步骤"></a>代码管理步骤</h2><p>1、代码仓库优先建立好，git提前安装<br>2、新建文件夹，右击Git Bash Here<br>3、克隆远端仓库</p>
 <blockquote>
 <p>git clone <a href="https://github.com/infernoyy/BlogCode.git" target="_blank" rel="noopener">https://github.com/infernoyy/BlogCode.git</a></p>
@@ -530,7 +614,7 @@
   </entry>
   <entry>
     <title>跨域(同源策略)</title>
-    <url>/2019/11/05/%E8%B7%A8%E5%9F%9F/</url>
+    <url>/2019/11/05/%E5%85%B6%E4%BB%96/%E8%B7%A8%E5%9F%9F/</url>
     <content><![CDATA[<p>跨域的问题来源于“同源策略”。</p>
 <h1 id="什么是同源策略？"><a href="#什么是同源策略？" class="headerlink" title="什么是同源策略？"></a>什么是同源策略？</h1><blockquote>
 <p>参考 <a href="https://baike.baidu.com/item/同源策略/3927875?fr=aladdin" target="_blank" rel="noopener">百度百科 - 同源策略</a></p>
@@ -580,8 +664,48 @@ namespace WebApi
       </categories>
   </entry>
   <entry>
+    <title>Docker简介</title>
+    <url>/2019/11/02/docker%E7%AE%80%E4%BB%8B/</url>
+    <content><![CDATA[<p>Docker的思想来自于集装箱，在一艘大船上，可以把货物规整的摆放起来。并且各种各样的货物被集装箱标准化了，集装箱和集装箱之间不会互相影响。现在都流行云计算了，云计算就好比大货轮。docker就是集装箱。</p>
+<h1 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h1><h2 id="传统开发"><a href="#传统开发" class="headerlink" title="传统开发"></a>传统开发</h2><p>将多环境多语言兼容</p>
+<p><img src="/images/IIS/Docker%E7%AE%80%E4%BB%8B_00.png" alt="Docker简介"><br><img src="/images/IIS/Docker%E7%AE%80%E4%BB%8B_01.png" alt="Docker简介"><br><img src="/images/IIS/Docker%E7%AE%80%E4%BB%8B_1.png" alt="Docker简介"></p>
+<h1 id="docker的组织结构"><a href="#docker的组织结构" class="headerlink" title="docker的组织结构"></a>docker的组织结构</h1><p><img src="/images/IIS/Docker%E7%AE%80%E4%BB%8B_2.png" alt="Docker简介"></p>
+<h2 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h2><p>持续集成、版本控制、可移植性、隔离性和安全性</p>
+<ul>
+<li>持续部署与测试<br>Docker在开发与运维的世界中具有极大的吸引力，因为它能保持跨环境的一致性。在开发与发布的生命周期中，不同的环境具有细微的不同，这些差异可能是由于不同安装包的版本和依赖关系引起的。然而，Docker可以通过确保从开发到产品发布整个过程环境的一致性来解决这个问题Docker容器通过相关配置，保持容器内部所有的配置和依赖关系始终不变。最终，你可以在开发到产品发布的整个过程中使用相同的容器来确保没有任何差异或者人工干预。<br>使用Docker，你还可以确保开发者不需要配置完全相同的产品环境，他们可以在他们自己的系统上通过VirtualBox建立虚拟机来运行Docker容器。Docker的魅力在于它同样可以让你在亚马逊EC2实例上运行相同的容器。如果你需要在一个产品发布周期中完成一次升级，你可以很容易地将需要变更的东西放到Docker容器中，测试它们，并且使你已经存在的容器执行相同的变更。这种灵活性就是使用Docker的一个主要好处。和标准部署与集成过程一样，Docker可以让你构建、测试和发布镜像，这个镜像可以跨多个服务器进行部署。哪怕安装一个新的安全补丁，整个过程也是一样的。你可以安装补丁，然后测试它，并且将这个补丁发布到产品中。</li>
+<li>多云平台<br>Docker最大的好处之一就是可移植性。在过去的几年里，所有主流的云计算提供商，包括亚马逊AWS和谷歌的GCP，都将Docker融入到他们的平台并增加了各自的支持。Docker容器能运行在亚马逊的EC2实例、谷歌的GCP实例、Rackspace服务器或者VirtualBox这些提供主机操作系统的平台上。举例来说，如果运行在亚马逊EC2实例上的Docker容器能够很容易地移植到其他几个平台上，比如说VirtualBox，并且达到类似的一致性和功能性，那这将允许你从基础设施层中抽象出来。除了AWS和GCP，Docker在其他不同的IaaS提供商也运行的非常好，例如微软的Azure、OpenStack和可以被具有不同配置的管理者所使用的Chef、Puppet、Ansible等。</li>
+<li>环境标准化和版本控制<br>通过上面的讨论，Docker容器可以在不同的开发与产品发布生命周期中确保一致性，进而标准化你的环境。除此之外，Docker容器还可以像git仓库一样，可以让你提交变更到Docker镜像中并通过不同的版本来管理它们。设想如果你因为完成了一个组件的升级而导致你整个环境都损坏了，Docker可以让你轻松地回滚到这个镜像的前一个版本。这整个过程可以在几分钟内完成，如果和虚拟机的备份或者镜像创建流程对比，那Docker算相当快的，它可以让你快速地进行复制和实现冗余。此外，启动Docker就和运行一个进程一样快。</li>
+<li>隔离性<br>Docker可以确保你的应用程序与资源是分隔开的。几个月前，Gartner发表了一篇报告，这份报告说明了运行Docker 容器进行资源隔离的效果和虚拟机（VM）管理程序一样的好，但是管理与控制方面还需要进行完善。<br>我们考虑这样一个场景，你在你的虚拟机中运行了很多应用程序，这些应用程序包括团队协作软件（例如Confluence）、问题追踪软件（例如JIRA）、集中身份管理系统（例如Crowd）等等。由于这些软件运行在不同的端口上，所以你必须使用Apache或者Nginx来做反向代理。到目前为止，一切都很正常，但是随着你的环境向前推进，你需要在你现有的环境中配置一个内容管理系统（例如Alfresco）。这时候有个问题发生了，这个软件需要一个不同版本的Apache Tomcat，为了满足这个需求，你只能将你现有的软件迁移到另一个版本的Tomcat上，或者找到适合你现有Tomcat的内容管理系统（Alfresco）版本。<br>对于上述场景，使用Docker就不用做这些事情了。Docker能够确保每个容器都拥有自己的资源，并且和其他容器是隔离的。你可以用不同的容器来运行使用不同堆栈的应用程序。除此之外，如果你想在服务器上直接删除一些应用程序是比较困难的，因为这样可能引发依赖关系冲突。而Docker可以帮你确保应用程序被完全清除，因为不同的应用程序运行在不同的容器上，如果你不在需要一款应用程序，那你可以简单地通过删除容器来删除这个应用程序，并且在你的宿主机操作系统上不会留下任何的临时文件或者配置文件。<br>除了上述好处，Docker还能确保每个应用程序只使用分配给它的资源（包括CPU、内存和磁盘空间）。一个特殊的软件将不会使用你全部的可用资源，要不然这将导致性能降低，甚至让其他应用程序完全停止工作。</li>
+<li>安全性<br>如上所述，Gartner也承认Docker正在快速地发展。从安全角度来看，Docker确保运行在容器中的应用程序和其他容器中的应用程序是完全分隔与隔离的，在通信流量和管理上赋予你完全的控制权。Docker容器不能窥视运行在其他容器中的进程。从体系结构角度来看，每个容器只使用着自己的资源（从进程到网络堆栈）。<br>作为紧固安全的一种手段，Docker将宿主机操作系统上的敏感挂载点（例如/proc和/sys）作为只读挂载点，并且使用一种写时复制系统来确保容器不能读取其他容器的数据。Docker也限制了宿主机操作系统上的一些系统调用，并且和SELinux与AppArmor一起运行的很好。此外，在Docker Hub上可以使用的Docker镜像都通过数字签名来确保其可靠性。由于Docker容器是隔离的，并且资源是受限制的，所以即使你其中一个应用程序被黑，也不会影响运行在其它Docker容器上的应用程序。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Docker简介</title>
+    <url>/2019/11/02/%E5%85%B6%E4%BB%96/docker%E7%AE%80%E4%BB%8B/</url>
+    <content><![CDATA[<p>Docker的思想来自于集装箱，在一艘大船上，可以把货物规整的摆放起来。并且各种各样的货物被集装箱标准化了，集装箱和集装箱之间不会互相影响。现在都流行云计算了，云计算就好比大货轮。docker就是集装箱。</p>
+<h1 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h1><h2 id="传统开发"><a href="#传统开发" class="headerlink" title="传统开发"></a>传统开发</h2><p>将多环境多语言兼容</p>
+<p><img src="/images/IIS/Docker%E7%AE%80%E4%BB%8B_00.png" alt="Docker简介"><br><img src="/images/IIS/Docker%E7%AE%80%E4%BB%8B_01.png" alt="Docker简介"><br><img src="/images/IIS/Docker%E7%AE%80%E4%BB%8B_1.png" alt="Docker简介"></p>
+<h1 id="docker的组织结构"><a href="#docker的组织结构" class="headerlink" title="docker的组织结构"></a>docker的组织结构</h1><p><img src="/images/IIS/Docker%E7%AE%80%E4%BB%8B_2.png" alt="Docker简介"></p>
+<h2 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h2><p>持续集成、版本控制、可移植性、隔离性和安全性</p>
+<ul>
+<li>持续部署与测试<br>Docker在开发与运维的世界中具有极大的吸引力，因为它能保持跨环境的一致性。在开发与发布的生命周期中，不同的环境具有细微的不同，这些差异可能是由于不同安装包的版本和依赖关系引起的。然而，Docker可以通过确保从开发到产品发布整个过程环境的一致性来解决这个问题Docker容器通过相关配置，保持容器内部所有的配置和依赖关系始终不变。最终，你可以在开发到产品发布的整个过程中使用相同的容器来确保没有任何差异或者人工干预。<br>使用Docker，你还可以确保开发者不需要配置完全相同的产品环境，他们可以在他们自己的系统上通过VirtualBox建立虚拟机来运行Docker容器。Docker的魅力在于它同样可以让你在亚马逊EC2实例上运行相同的容器。如果你需要在一个产品发布周期中完成一次升级，你可以很容易地将需要变更的东西放到Docker容器中，测试它们，并且使你已经存在的容器执行相同的变更。这种灵活性就是使用Docker的一个主要好处。和标准部署与集成过程一样，Docker可以让你构建、测试和发布镜像，这个镜像可以跨多个服务器进行部署。哪怕安装一个新的安全补丁，整个过程也是一样的。你可以安装补丁，然后测试它，并且将这个补丁发布到产品中。</li>
+<li>多云平台<br>Docker最大的好处之一就是可移植性。在过去的几年里，所有主流的云计算提供商，包括亚马逊AWS和谷歌的GCP，都将Docker融入到他们的平台并增加了各自的支持。Docker容器能运行在亚马逊的EC2实例、谷歌的GCP实例、Rackspace服务器或者VirtualBox这些提供主机操作系统的平台上。举例来说，如果运行在亚马逊EC2实例上的Docker容器能够很容易地移植到其他几个平台上，比如说VirtualBox，并且达到类似的一致性和功能性，那这将允许你从基础设施层中抽象出来。除了AWS和GCP，Docker在其他不同的IaaS提供商也运行的非常好，例如微软的Azure、OpenStack和可以被具有不同配置的管理者所使用的Chef、Puppet、Ansible等。</li>
+<li>环境标准化和版本控制<br>通过上面的讨论，Docker容器可以在不同的开发与产品发布生命周期中确保一致性，进而标准化你的环境。除此之外，Docker容器还可以像git仓库一样，可以让你提交变更到Docker镜像中并通过不同的版本来管理它们。设想如果你因为完成了一个组件的升级而导致你整个环境都损坏了，Docker可以让你轻松地回滚到这个镜像的前一个版本。这整个过程可以在几分钟内完成，如果和虚拟机的备份或者镜像创建流程对比，那Docker算相当快的，它可以让你快速地进行复制和实现冗余。此外，启动Docker就和运行一个进程一样快。</li>
+<li>隔离性<br>Docker可以确保你的应用程序与资源是分隔开的。几个月前，Gartner发表了一篇报告，这份报告说明了运行Docker 容器进行资源隔离的效果和虚拟机（VM）管理程序一样的好，但是管理与控制方面还需要进行完善。<br>我们考虑这样一个场景，你在你的虚拟机中运行了很多应用程序，这些应用程序包括团队协作软件（例如Confluence）、问题追踪软件（例如JIRA）、集中身份管理系统（例如Crowd）等等。由于这些软件运行在不同的端口上，所以你必须使用Apache或者Nginx来做反向代理。到目前为止，一切都很正常，但是随着你的环境向前推进，你需要在你现有的环境中配置一个内容管理系统（例如Alfresco）。这时候有个问题发生了，这个软件需要一个不同版本的Apache Tomcat，为了满足这个需求，你只能将你现有的软件迁移到另一个版本的Tomcat上，或者找到适合你现有Tomcat的内容管理系统（Alfresco）版本。<br>对于上述场景，使用Docker就不用做这些事情了。Docker能够确保每个容器都拥有自己的资源，并且和其他容器是隔离的。你可以用不同的容器来运行使用不同堆栈的应用程序。除此之外，如果你想在服务器上直接删除一些应用程序是比较困难的，因为这样可能引发依赖关系冲突。而Docker可以帮你确保应用程序被完全清除，因为不同的应用程序运行在不同的容器上，如果你不在需要一款应用程序，那你可以简单地通过删除容器来删除这个应用程序，并且在你的宿主机操作系统上不会留下任何的临时文件或者配置文件。<br>除了上述好处，Docker还能确保每个应用程序只使用分配给它的资源（包括CPU、内存和磁盘空间）。一个特殊的软件将不会使用你全部的可用资源，要不然这将导致性能降低，甚至让其他应用程序完全停止工作。</li>
+<li>安全性<br>如上所述，Gartner也承认Docker正在快速地发展。从安全角度来看，Docker确保运行在容器中的应用程序和其他容器中的应用程序是完全分隔与隔离的，在通信流量和管理上赋予你完全的控制权。Docker容器不能窥视运行在其他容器中的进程。从体系结构角度来看，每个容器只使用着自己的资源（从进程到网络堆栈）。<br>作为紧固安全的一种手段，Docker将宿主机操作系统上的敏感挂载点（例如/proc和/sys）作为只读挂载点，并且使用一种写时复制系统来确保容器不能读取其他容器的数据。Docker也限制了宿主机操作系统上的一些系统调用，并且和SELinux与AppArmor一起运行的很好。此外，在Docker Hub上可以使用的Docker镜像都通过数字签名来确保其可靠性。由于Docker容器是隔离的，并且资源是受限制的，所以即使你其中一个应用程序被黑，也不会影响运行在其它Docker容器上的应用程序。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+  </entry>
+  <entry>
     <title>IIS 5.0和6.0的ASP.NET应用程序生命周期概述</title>
-    <url>/2019/11/02/IIS/</url>
+    <url>/2019/11/02/%E5%85%B6%E4%BB%96/IIS/</url>
     <content><![CDATA[<blockquote>
 <p>参考 <a href="https://docs.microsoft.com/en-us/previous-versions/aspnet/ms178473(v=vs.100)?redirectedfrom=MSDN" target="_blank" rel="noopener">ASP.NET Application Life Cycle Overview for IIS 5.0 and 6.0</a><br>参考 <a href="https://docs.microsoft.com/en-us/previous-versions/aspnet/bb470252(v=vs.100)?redirectedfrom=MSDN" target="_blank" rel="noopener">ASP.NET Application Life Cycle Overview for IIS 7.0</a><br><a href="https://www.cnblogs.com/anlen/p/3612048.html" target="_blank" rel="noopener">https://www.cnblogs.com/anlen/p/3612048.html</a><br><a href="https://www.cnblogs.com/ruanraun/p/apsnet.html" target="_blank" rel="noopener">https://www.cnblogs.com/ruanraun/p/apsnet.html</a></p>
 </blockquote>
@@ -682,28 +806,8 @@ namespace WebApi
       </categories>
   </entry>
   <entry>
-    <title>Docker简介</title>
-    <url>/2019/11/02/docker%E7%AE%80%E4%BB%8B/</url>
-    <content><![CDATA[<p>Docker的思想来自于集装箱，在一艘大船上，可以把货物规整的摆放起来。并且各种各样的货物被集装箱标准化了，集装箱和集装箱之间不会互相影响。现在都流行云计算了，云计算就好比大货轮。docker就是集装箱。</p>
-<h1 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h1><h2 id="传统开发"><a href="#传统开发" class="headerlink" title="传统开发"></a>传统开发</h2><p>将多环境多语言兼容</p>
-<p><img src="/images/IIS/Docker%E7%AE%80%E4%BB%8B_00.png" alt="Docker简介"><br><img src="/images/IIS/Docker%E7%AE%80%E4%BB%8B_01.png" alt="Docker简介"><br><img src="/images/IIS/Docker%E7%AE%80%E4%BB%8B_1.png" alt="Docker简介"></p>
-<h1 id="docker的组织结构"><a href="#docker的组织结构" class="headerlink" title="docker的组织结构"></a>docker的组织结构</h1><p><img src="/images/IIS/Docker%E7%AE%80%E4%BB%8B_2.png" alt="Docker简介"></p>
-<h2 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h2><p>持续集成、版本控制、可移植性、隔离性和安全性</p>
-<ul>
-<li>持续部署与测试<br>Docker在开发与运维的世界中具有极大的吸引力，因为它能保持跨环境的一致性。在开发与发布的生命周期中，不同的环境具有细微的不同，这些差异可能是由于不同安装包的版本和依赖关系引起的。然而，Docker可以通过确保从开发到产品发布整个过程环境的一致性来解决这个问题Docker容器通过相关配置，保持容器内部所有的配置和依赖关系始终不变。最终，你可以在开发到产品发布的整个过程中使用相同的容器来确保没有任何差异或者人工干预。<br>使用Docker，你还可以确保开发者不需要配置完全相同的产品环境，他们可以在他们自己的系统上通过VirtualBox建立虚拟机来运行Docker容器。Docker的魅力在于它同样可以让你在亚马逊EC2实例上运行相同的容器。如果你需要在一个产品发布周期中完成一次升级，你可以很容易地将需要变更的东西放到Docker容器中，测试它们，并且使你已经存在的容器执行相同的变更。这种灵活性就是使用Docker的一个主要好处。和标准部署与集成过程一样，Docker可以让你构建、测试和发布镜像，这个镜像可以跨多个服务器进行部署。哪怕安装一个新的安全补丁，整个过程也是一样的。你可以安装补丁，然后测试它，并且将这个补丁发布到产品中。</li>
-<li>多云平台<br>Docker最大的好处之一就是可移植性。在过去的几年里，所有主流的云计算提供商，包括亚马逊AWS和谷歌的GCP，都将Docker融入到他们的平台并增加了各自的支持。Docker容器能运行在亚马逊的EC2实例、谷歌的GCP实例、Rackspace服务器或者VirtualBox这些提供主机操作系统的平台上。举例来说，如果运行在亚马逊EC2实例上的Docker容器能够很容易地移植到其他几个平台上，比如说VirtualBox，并且达到类似的一致性和功能性，那这将允许你从基础设施层中抽象出来。除了AWS和GCP，Docker在其他不同的IaaS提供商也运行的非常好，例如微软的Azure、OpenStack和可以被具有不同配置的管理者所使用的Chef、Puppet、Ansible等。</li>
-<li>环境标准化和版本控制<br>通过上面的讨论，Docker容器可以在不同的开发与产品发布生命周期中确保一致性，进而标准化你的环境。除此之外，Docker容器还可以像git仓库一样，可以让你提交变更到Docker镜像中并通过不同的版本来管理它们。设想如果你因为完成了一个组件的升级而导致你整个环境都损坏了，Docker可以让你轻松地回滚到这个镜像的前一个版本。这整个过程可以在几分钟内完成，如果和虚拟机的备份或者镜像创建流程对比，那Docker算相当快的，它可以让你快速地进行复制和实现冗余。此外，启动Docker就和运行一个进程一样快。</li>
-<li>隔离性<br>Docker可以确保你的应用程序与资源是分隔开的。几个月前，Gartner发表了一篇报告，这份报告说明了运行Docker 容器进行资源隔离的效果和虚拟机（VM）管理程序一样的好，但是管理与控制方面还需要进行完善。<br>我们考虑这样一个场景，你在你的虚拟机中运行了很多应用程序，这些应用程序包括团队协作软件（例如Confluence）、问题追踪软件（例如JIRA）、集中身份管理系统（例如Crowd）等等。由于这些软件运行在不同的端口上，所以你必须使用Apache或者Nginx来做反向代理。到目前为止，一切都很正常，但是随着你的环境向前推进，你需要在你现有的环境中配置一个内容管理系统（例如Alfresco）。这时候有个问题发生了，这个软件需要一个不同版本的Apache Tomcat，为了满足这个需求，你只能将你现有的软件迁移到另一个版本的Tomcat上，或者找到适合你现有Tomcat的内容管理系统（Alfresco）版本。<br>对于上述场景，使用Docker就不用做这些事情了。Docker能够确保每个容器都拥有自己的资源，并且和其他容器是隔离的。你可以用不同的容器来运行使用不同堆栈的应用程序。除此之外，如果你想在服务器上直接删除一些应用程序是比较困难的，因为这样可能引发依赖关系冲突。而Docker可以帮你确保应用程序被完全清除，因为不同的应用程序运行在不同的容器上，如果你不在需要一款应用程序，那你可以简单地通过删除容器来删除这个应用程序，并且在你的宿主机操作系统上不会留下任何的临时文件或者配置文件。<br>除了上述好处，Docker还能确保每个应用程序只使用分配给它的资源（包括CPU、内存和磁盘空间）。一个特殊的软件将不会使用你全部的可用资源，要不然这将导致性能降低，甚至让其他应用程序完全停止工作。</li>
-<li>安全性<br>如上所述，Gartner也承认Docker正在快速地发展。从安全角度来看，Docker确保运行在容器中的应用程序和其他容器中的应用程序是完全分隔与隔离的，在通信流量和管理上赋予你完全的控制权。Docker容器不能窥视运行在其他容器中的进程。从体系结构角度来看，每个容器只使用着自己的资源（从进程到网络堆栈）。<br>作为紧固安全的一种手段，Docker将宿主机操作系统上的敏感挂载点（例如/proc和/sys）作为只读挂载点，并且使用一种写时复制系统来确保容器不能读取其他容器的数据。Docker也限制了宿主机操作系统上的一些系统调用，并且和SELinux与AppArmor一起运行的很好。此外，在Docker Hub上可以使用的Docker镜像都通过数字签名来确保其可靠性。由于Docker容器是隔离的，并且资源是受限制的，所以即使你其中一个应用程序被黑，也不会影响运行在其它Docker容器上的应用程序。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>其他</category>
-      </categories>
-  </entry>
-  <entry>
     <title>sunny-ngrok外网映射</title>
-    <url>/2019/10/13/sunny-ngrok%E5%A4%96%E7%BD%91%E6%98%A0%E5%B0%84/</url>
+    <url>/2019/10/13/%E5%85%B6%E4%BB%96/sunny-ngrok%E5%A4%96%E7%BD%91%E6%98%A0%E5%B0%84/</url>
     <content><![CDATA[<p>最近又摸索了一下小程序。</p>
 <p>后台数据从webapi调用，那就要租云服务器，查了价格那个贵那个穷。</p>
 <p>穷则变！想办法呗————外网映射内网，即外网访问本地IIS。</p>
@@ -718,7 +822,7 @@ namespace WebApi
   </entry>
   <entry>
     <title>访问者模式</title>
-    <url>/2019/09/01/%E8%AE%BF%E9%97%AE%E8%80%85%E6%A8%A1%E5%BC%8F/</url>
+    <url>/2019/09/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BF%E9%97%AE%E8%80%85%E6%A8%A1%E5%BC%8F/</url>
     <content><![CDATA[<h1 id="访问者模式"><a href="#访问者模式" class="headerlink" title="访问者模式"></a>访问者模式</h1><h2 id="访问者模式概述"><a href="#访问者模式概述" class="headerlink" title="访问者模式概述"></a>访问者模式概述</h2><p><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BF%E9%97%AE%E8%80%85%E6%A8%A1%E5%BC%8F_1.png" alt="访问者模式"></p>
 <ul>
 <li><p>分析</p>
@@ -778,12 +882,12 @@ namespace WebApi
 ]]></content>
       <categories>
         <category>设计模式</category>
-        <category>第26章 备忘录模式</category>
+        <category>第26章 访问者模式</category>
       </categories>
   </entry>
   <entry>
     <title>模板方式模式</title>
-    <url>/2019/09/01/%E6%A8%A1%E6%9D%BF%E6%96%B9%E5%BC%8F%E6%A8%A1%E5%BC%8F/</url>
+    <url>/2019/09/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%A8%A1%E6%9D%BF%E6%96%B9%E5%BC%8F%E6%A8%A1%E5%BC%8F/</url>
     <content><![CDATA[<h1 id="模板方法模式"><a href="#模板方法模式" class="headerlink" title="模板方法模式"></a>模板方法模式</h1><h2 id="模板方法模式概述"><a href="#模板方法模式概述" class="headerlink" title="模板方法模式概述"></a>模板方法模式概述</h2><p><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F_1.png" alt="模板方法模式"></p>
 <ul>
 <li><p>分析</p>
@@ -837,7 +941,7 @@ namespace WebApi
   </entry>
   <entry>
     <title>策略模式</title>
-    <url>/2019/09/01/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/</url>
+    <url>/2019/09/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/</url>
     <content><![CDATA[<h1 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h1><h2 id="策略模式概述"><a href="#策略模式概述" class="headerlink" title="策略模式概述"></a>策略模式概述</h2><p><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F_1.png" alt="策略模式"></p>
 <ul>
 <li>分析<ul>
@@ -889,7 +993,7 @@ namespace WebApi
   </entry>
   <entry>
     <title>状态模式</title>
-    <url>/2019/09/01/%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F/</url>
+    <url>/2019/09/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F/</url>
     <content><![CDATA[<h1 id="状态模式"><a href="#状态模式" class="headerlink" title="状态模式"></a>状态模式</h1><p>解决系统中复杂对象的状态转换以及不同状态下行为的封装问题。<br><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F_1.png" alt="状态模式"></p>
 <h2 id="状态模式-1"><a href="#状态模式-1" class="headerlink" title="状态模式"></a>状态模式</h2><ul>
 <li>分析<ul>
@@ -954,7 +1058,7 @@ namespace WebApi
   </entry>
   <entry>
     <title>观察者模式</title>
-    <url>/2019/09/01/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/</url>
+    <url>/2019/09/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/</url>
     <content><![CDATA[<h1 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a>观察者模式</h1><p><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F_1.png" alt="观察者模式"></p>
 <h2 id="观察者模式概述"><a href="#观察者模式概述" class="headerlink" title="观察者模式概述"></a>观察者模式概述</h2><ul>
 <li>分析<ul>
@@ -1035,7 +1139,7 @@ namespace WebApi
   </entry>
   <entry>
     <title>备忘录模式</title>
-    <url>/2019/09/01/%E5%A4%87%E5%BF%98%E5%BD%95%E6%A8%A1%E5%BC%8F/</url>
+    <url>/2019/09/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%A4%87%E5%BF%98%E5%BD%95%E6%A8%A1%E5%BC%8F/</url>
     <content><![CDATA[<h1 id="备忘录模式"><a href="#备忘录模式" class="headerlink" title="备忘录模式"></a>备忘录模式</h1><p>提供对象状态的撤销机制，需要恢复某一历史状态可以使用备忘录模式进行设计。</p>
 <blockquote>
 <p>应用在 ctrl+z 以及 悔棋 等等</p>
@@ -1091,7 +1195,7 @@ namespace WebApi
   </entry>
   <entry>
     <title>中介者模式</title>
-    <url>/2019/09/01/%E4%B8%AD%E4%BB%8B%E8%80%85%E6%A8%A1%E5%BC%8F/</url>
+    <url>/2019/09/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E4%B8%AD%E4%BB%8B%E8%80%85%E6%A8%A1%E5%BC%8F/</url>
     <content><![CDATA[<h1 id="中介者模式"><a href="#中介者模式" class="headerlink" title="中介者模式"></a>中介者模式</h1><p>引入中介者，将原本对象之间的两两交互转化为每个对象与中介者之间的交互。<br>降低耦合度，使系统更加灵活，也易于扩展。</p>
 <h2 id="中介者模式概述"><a href="#中介者模式概述" class="headerlink" title="中介者模式概述"></a>中介者模式概述</h2><p><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E4%B8%AD%E4%BB%8B%E8%80%85%E6%A8%A1%E5%BC%8F_1.png" alt="中介者模式"></p>
 <ul>
@@ -1150,7 +1254,7 @@ namespace WebApi
   </entry>
   <entry>
     <title>迭代器模式</title>
-    <url>/2019/09/01/%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A8%A1%E5%BC%8F/</url>
+    <url>/2019/09/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A8%A1%E5%BC%8F/</url>
     <content><![CDATA[<h1 id="迭代器模式"><a href="#迭代器模式" class="headerlink" title="迭代器模式"></a>迭代器模式</h1><p>将数据的遍历功能从聚合对象中分离，聚合对象只负责存储数据，而遍历数据由迭代器来完成，简化聚合对象的设计，更符合单一职责原则的要求。</p>
 <h2 id="迭代器概述"><a href="#迭代器概述" class="headerlink" title="迭代器概述"></a>迭代器概述</h2><p><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A8%A1%E5%BC%8F_1.png" alt="迭代器模式"></p>
 <ul>
@@ -1202,7 +1306,7 @@ namespace WebApi
   </entry>
   <entry>
     <title>解释器模式</title>
-    <url>/2019/09/01/%E8%A7%A3%E9%87%8A%E5%99%A8%E6%A8%A1%E5%BC%8F/</url>
+    <url>/2019/09/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%A7%A3%E9%87%8A%E5%99%A8%E6%A8%A1%E5%BC%8F/</url>
     <content><![CDATA[<blockquote>
 <p>文法之类的<br>略</p>
 </blockquote>
@@ -1214,7 +1318,7 @@ namespace WebApi
   </entry>
   <entry>
     <title>命令模式</title>
-    <url>/2019/09/01/%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F/</url>
+    <url>/2019/09/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F/</url>
     <content><![CDATA[<h1 id="命令模式"><a href="#命令模式" class="headerlink" title="命令模式"></a>命令模式</h1><p>请求发送者与请求接收者解耦，发送者通过命令对象来间接引用接收者。<br>灵活性较高，不修改源码让发送者对应不同接收者。</p>
 <h2 id="命令模式概述"><a href="#命令模式概述" class="headerlink" title="命令模式概述"></a>命令模式概述</h2><p><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%81%8C%E8%B4%A3%E9%93%BE%E6%A8%A1%E5%BC%8F_1.png" alt="职责链模式"></p>
 <ul>
@@ -1328,7 +1432,7 @@ namespace WebApi
   </entry>
   <entry>
     <title>职责链模式</title>
-    <url>/2019/09/01/%E8%81%8C%E8%B4%A3%E9%93%BE%E6%A8%A1%E5%BC%8F/</url>
+    <url>/2019/09/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%81%8C%E8%B4%A3%E9%93%BE%E6%A8%A1%E5%BC%8F/</url>
     <content><![CDATA[<h1 id="职责链模式"><a href="#职责链模式" class="headerlink" title="职责链模式"></a>职责链模式</h1><p>行为型模式关注系统中对象之间的交互，研究系统在运行时对象之间的相互通信与协作，进一步明确对象的职责。<br>系统中多个对象处理同一请求，将所有的处理请求连成一条链，让请求沿着该链进行传递。如果链上对象可以处理则处理，不能处理转发给下家。<br>将请求的发送者和接收者解耦，无需关心请求细节和传递过程。</p>
 <p>16.1  行为型模式</p>
 <ul>
@@ -1491,7 +1595,7 @@ namespace WebApi
   </entry>
   <entry>
     <title>代理模式</title>
-    <url>/2019/08/31/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/</url>
+    <url>/2019/08/31/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/</url>
     <content><![CDATA[<h1 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a>代理模式</h1><p>当用户无法直接访问某个对象或访问困难，可以通过代理对象来间接访问，为了保证客户端的透明性，所访问的真实对象与代理对象之间需要实现相同的接口。</p>
 <p>根据使用目的不同，分为：保护代理、远程代理、虚拟代理、缓冲代理……</p>
 <p><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F_1.png" alt="代理模式"></p>
@@ -1590,7 +1694,7 @@ namespace WebApi
   </entry>
   <entry>
     <title>sugarsql简介</title>
-    <url>/2019/08/31/sugarsql%E7%AE%80%E4%BB%8B/</url>
+    <url>/2019/08/31/%E5%85%B6%E4%BB%96/sugarsql%E7%AE%80%E4%BB%8B/</url>
     <content><![CDATA[<h1 id="sugarsql"><a href="#sugarsql" class="headerlink" title="sugarsql"></a>sugarsql</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>简单谈一下sugarsql。</p>
 <p>一般我们去了解一项技术呢，最主要的看权威官网而不是私人博客。<br>在我看来，因为有几项好处是私人博客比不了的。</p>
 <ul>
@@ -1618,7 +1722,7 @@ namespace WebApi
   </entry>
   <entry>
     <title>享元模式</title>
-    <url>/2019/08/31/%E4%BA%AB%E5%85%83%E6%A8%A1%E5%BC%8F/</url>
+    <url>/2019/08/31/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E4%BA%AB%E5%85%83%E6%A8%A1%E5%BC%8F/</url>
     <content><![CDATA[<h1 id="享元模式"><a href="#享元模式" class="headerlink" title="享元模式"></a>享元模式</h1><blockquote>
 <p>系统存在大量相同或者相似的对象时，享元模式通过共享技术实现相同或相似的细粒度对象的复用，节省内存空间，提高系统性能。</p>
 </blockquote>
@@ -1699,7 +1803,7 @@ namespace WebApi
   </entry>
   <entry>
     <title>外观模式</title>
-    <url>/2019/08/31/%E5%A4%96%E8%A7%82%E6%A8%A1%E5%BC%8F/</url>
+    <url>/2019/08/31/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%A4%96%E8%A7%82%E6%A8%A1%E5%BC%8F/</url>
     <content><![CDATA[<h1 id="外观模式"><a href="#外观模式" class="headerlink" title="外观模式"></a>外观模式</h1><blockquote>
 <p>引入外观角色来简化客户端与子系统之间的交互，为复杂的子系统调用一个统一的入口，降低子系统与客户端的耦合度。</p>
 </blockquote>
@@ -1756,7 +1860,7 @@ namespace WebApi
   </entry>
   <entry>
     <title>装饰模式</title>
-    <url>/2019/08/31/%E8%A3%85%E9%A5%B0%E6%A8%A1%E5%BC%8F/</url>
+    <url>/2019/08/31/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%A3%85%E9%A5%B0%E6%A8%A1%E5%BC%8F/</url>
     <content><![CDATA[<p><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%A3%85%E9%A5%B0%E6%A8%A1%E5%BC%8F_1.png" alt="组合模式"></p>
 <h1 id="装饰模式"><a href="#装饰模式" class="headerlink" title="装饰模式"></a>装饰模式</h1><blockquote>
 <p>是一种替代继承的技术，是一种无需定义子类的方式给对象动态增加职责，使用对象的关联关系取代类之间的继承关系。</p>
@@ -1817,7 +1921,7 @@ namespace WebApi
   </entry>
   <entry>
     <title>组合模式</title>
-    <url>/2019/08/31/%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F/</url>
+    <url>/2019/08/31/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F/</url>
     <content><![CDATA[<h1 id="组合模式"><a href="#组合模式" class="headerlink" title="组合模式"></a>组合模式</h1><p><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F_1.png" alt="组合模式"><br><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F_2.png" alt="组合模式"></p>
 <h2 id="组合模式概述"><a href="#组合模式概述" class="headerlink" title="组合模式概述"></a>组合模式概述</h2><ul>
 <li><p>分析</p>
@@ -1885,7 +1989,7 @@ namespace WebApi
   </entry>
   <entry>
     <title>桥接模式</title>
-    <url>/2019/08/17/%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F/</url>
+    <url>/2019/08/17/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F/</url>
     <content><![CDATA[<h1 id="桥接模式"><a href="#桥接模式" class="headerlink" title="桥接模式"></a>桥接模式</h1><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;系统存在两个独立变化的维度，通过桥接模式可以将这两个维度分离出来，使两者可以独立扩展。可以处理多层继承存在的问题，通过抽象关联代替。由静态继承变为动态的组合，使系统更加灵活，并易于扩展，同时有效控制了系统中类的个数。</p>
 <h2 id="桥接模式概述"><a href="#桥接模式概述" class="headerlink" title="桥接模式概述"></a>桥接模式概述</h2><ul>
 <li>分析<ul>
@@ -1944,7 +2048,7 @@ namespace WebApi
   </entry>
   <entry>
     <title>适配器模式</title>
-    <url>/2019/08/17/%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/</url>
+    <url>/2019/08/17/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/</url>
     <content><![CDATA[<h1 id="适配器模式"><a href="#适配器模式" class="headerlink" title="适配器模式"></a>适配器模式</h1><h2 id="结构型模式"><a href="#结构型模式" class="headerlink" title="结构型模式"></a>结构型模式</h2><ul>
 <li>结构型模式(Structural Pattern)关注如何将现有类或对象组织在一起形成更加强大的结构<blockquote>
 <p>积木搭建成城堡</p>
@@ -2084,7 +2188,7 @@ namespace WebApi
   </entry>
   <entry>
     <title>单例模式</title>
-    <url>/2019/08/17/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</url>
+    <url>/2019/08/17/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</url>
     <content><![CDATA[<h1 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h1><h2 id="单例模式概述"><a href="#单例模式概述" class="headerlink" title="单例模式概述"></a>单例模式概述</h2><p>此核心结构只包含一个被称为单例类的特殊类。一个类只有一个实例且易被外界访问，控制实例个数，节约系统资源。</p>
 <p>例子：任务管理器、文件系统、计时工具、ID生成器等等…… ……</p>
 <ul>
@@ -2157,7 +2261,7 @@ namespace WebApi
   </entry>
   <entry>
     <title>原型模式</title>
-    <url>/2019/08/17/%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/</url>
+    <url>/2019/08/17/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/</url>
     <content><![CDATA[<h1 id="原型模式"><a href="#原型模式" class="headerlink" title="原型模式"></a>原型模式</h1><blockquote>
 <p>复制一个已有的对象来获取更多或者相似的对象。深克隆、浅克隆机制。</p>
 </blockquote>
@@ -2225,7 +2329,7 @@ namespace WebApi
   </entry>
   <entry>
     <title>建造者模式</title>
-    <url>/2019/08/17/%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/</url>
+    <url>/2019/08/17/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/</url>
     <content><![CDATA[<h1 id="建造者模式"><a href="#建造者模式" class="headerlink" title="建造者模式"></a>建造者模式</h1><h2 id="建造者模式概述"><a href="#建造者模式概述" class="headerlink" title="建造者模式概述"></a>建造者模式概述</h2><blockquote>
 <p>建造者模式可以将部件本身和它们的组装过程分开，关注如何一步步创建一个包含多个组成部分的复杂对象，用户只需要指定复杂对象的类型即可得到该对象，而无须知道其内部的具体构造细节。</p>
 </blockquote>
@@ -2274,7 +2378,7 @@ namespace WebApi
   </entry>
   <entry>
     <title>抽象工厂模式</title>
-    <url>/2019/08/17/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/</url>
+    <url>/2019/08/17/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/</url>
     <content><![CDATA[<h1 id="抽象工厂模式"><a href="#抽象工厂模式" class="headerlink" title="抽象工厂模式"></a>抽象工厂模式</h1><h2 id="产品等级结构与产品族"><a href="#产品等级结构与产品族" class="headerlink" title="产品等级结构与产品族"></a>产品等级结构与产品族</h2><ul>
 <li>工厂方法模式<ul>
 <li>每个具体工厂只有一个或者一组重载的工厂方法，只能生产一种产品，可能会导致系统中存在大量的工厂类，势必会增加系统的开销</li>
@@ -2343,7 +2447,7 @@ namespace WebApi
   </entry>
   <entry>
     <title>工厂方法模式</title>
-    <url>/2019/08/11/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/</url>
+    <url>/2019/08/11/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/</url>
     <content><![CDATA[<h1 id="工厂方法模式"><a href="#工厂方法模式" class="headerlink" title="工厂方法模式"></a>工厂方法模式</h1><h2 id="工厂方法模式概述"><a href="#工厂方法模式概述" class="headerlink" title="工厂方法模式概述"></a>工厂方法模式概述</h2><p>错误示例：<br><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F_1.png" alt="错误示例"><br>正确示例：<br><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F_2.png" alt="正确示例"></p>
 <p>工厂方法模式：</p>
 <ul>
@@ -2413,7 +2517,7 @@ namespace WebApi
   </entry>
   <entry>
     <title>简单工厂模式</title>
-    <url>/2019/08/11/%E7%AE%80%E5%8D%95%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/</url>
+    <url>/2019/08/11/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%AE%80%E5%8D%95%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/</url>
     <content><![CDATA[<h1 id="简单工厂模式"><a href="#简单工厂模式" class="headerlink" title="简单工厂模式"></a>简单工厂模式</h1><h2 id="创建型模式"><a href="#创建型模式" class="headerlink" title="创建型模式"></a>创建型模式</h2><ul>
 <li>创建型模式(Creational Pattern)关注对象的创建过程</li>
 <li>创建型模式对类的实例化过程进行了抽象，能够将软件模块中对象的创建和对象的使用分离，对用户隐藏了类的实例的创建细节</li>
@@ -2495,7 +2599,7 @@ namespace WebApi
   </entry>
   <entry>
     <title>面向对象设计原则</title>
-    <url>/2019/08/11/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/</url>
+    <url>/2019/08/11/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/</url>
     <content><![CDATA[<h1 id="面向对象设计原则"><a href="#面向对象设计原则" class="headerlink" title="面向对象设计原则"></a>面向对象设计原则</h1><h2 id="面向对象设计原则概述"><a href="#面向对象设计原则概述" class="headerlink" title="面向对象设计原则概述"></a>面向对象设计原则概述</h2><blockquote>
 <p>可维护性(Maintainability)：指软件能够被理解、改正、适应及扩展的难易程度<br>可复用性(Reusability)：指软件能够被重复使用的难易程度</p>
 </blockquote>
@@ -2672,7 +2776,7 @@ namespace WebApi
   </entry>
   <entry>
     <title>设计模式概述</title>
-    <url>/2019/08/11/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%A6%82%E8%BF%B0/</url>
+    <url>/2019/08/11/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%A6%82%E8%BF%B0/</url>
     <content><![CDATA[<h1 id="第一章设计模式概述"><a href="#第一章设计模式概述" class="headerlink" title="第一章设计模式概述"></a>第一章设计模式概述</h1><h2 id="设计模式的诞生和发展"><a href="#设计模式的诞生和发展" class="headerlink" title="设计模式的诞生和发展"></a>设计模式的诞生和发展</h2><p>在特定环境下遇到特定问题采取他人使用过的一些成功的方案</p>
 <ol>
 <li>降低了分析、设计实现的难度。</li>
@@ -2741,7 +2845,7 @@ namespace WebApi
   </entry>
   <entry>
     <title>简谈Redius</title>
-    <url>/2019/08/05/%E7%AE%80%E8%B0%88Redius/</url>
+    <url>/2019/08/05/%E5%85%B6%E4%BB%96/%E7%AE%80%E8%B0%88Redius/</url>
     <content><![CDATA[<h1 id="简谈Redius"><a href="#简谈Redius" class="headerlink" title="简谈Redius"></a>简谈Redius</h1><h2 id="redius简介"><a href="#redius简介" class="headerlink" title="redius简介"></a>redius简介</h2><p>要想了解redius，简介肯定要看百度百科的。<br>百度百科是这样说的。</p>
 <ul>
 <li>Redis开源</li>
@@ -2804,7 +2908,7 @@ namespace WebApi
   </entry>
   <entry>
     <title>如何创建个人微博</title>
-    <url>/2019/07/30/%E5%A6%82%E4%BD%95%E5%88%9B%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%BE%AE%E5%8D%9A/</url>
+    <url>/2019/07/30/%E5%85%B6%E4%BB%96/%E5%A6%82%E4%BD%95%E5%88%9B%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%BE%AE%E5%8D%9A/</url>
     <content><![CDATA[<h1 id="如何创建个人微博"><a href="#如何创建个人微博" class="headerlink" title="如何创建个人微博"></a>如何创建个人微博</h1><p><strong>github+hexo（nexT）创建个人帅气blog</strong></p>
 <h2 id="安装node-js、npm、git"><a href="#安装node-js、npm、git" class="headerlink" title="安装node.js、npm、git"></a>安装node.js、npm、git</h2><p>官网安装，具体不教，请移步官网<a href="http://nodejs.cn/download/" target="_blank" rel="noopener">http://nodejs.cn/download/</a><br>淘宝镜像：<br><code>npm install -g cnpm --registry=https://registry.npm.taobao.org</code><br>查看是否成功(显示版本):<br><code>cnpm -v</code></p>
 <h2 id="创建个人仓库"><a href="#创建个人仓库" class="headerlink" title="创建个人仓库"></a>创建个人仓库</h2><ol>
@@ -2865,7 +2969,7 @@ namespace WebApi
   </entry>
   <entry>
     <title>MarkDown常见语法</title>
-    <url>/2019/07/30/MarkDown%E5%B8%B8%E8%A7%81%E8%AF%AD%E6%B3%95/</url>
+    <url>/2019/07/30/%E5%85%B6%E4%BB%96/MarkDown%E5%B8%B8%E8%A7%81%E8%AF%AD%E6%B3%95/</url>
     <content><![CDATA[<h1 id="MarkDown常见语法"><a href="#MarkDown常见语法" class="headerlink" title="MarkDown常见语法"></a>MarkDown常见语法</h1><h1 id="标题H1"><a href="#标题H1" class="headerlink" title="标题H1"></a>标题H1</h1><h2 id="标题H2"><a href="#标题H2" class="headerlink" title="标题H2"></a>标题H2</h2><h3 id="标题H3"><a href="#标题H3" class="headerlink" title="标题H3"></a>标题H3</h3><h4 id="标题H4"><a href="#标题H4" class="headerlink" title="标题H4"></a>标题H4</h4><h5 id="标题H5"><a href="#标题H5" class="headerlink" title="标题H5"></a>标题H5</h5><h6 id="标题H5-1"><a href="#标题H5-1" class="headerlink" title="标题H5"></a>标题H5</h6><h3 id="字符效果和横线等"><a href="#字符效果和横线等" class="headerlink" title="字符效果和横线等"></a>字符效果和横线等</h3><hr>
 <p><del>删除线</del> <s>删除线（开启识别HTML标签时）</s></p>
 <p><em>斜体字</em>      <em>斜体字</em></p>
@@ -3117,7 +3221,7 @@ namespace WebApi
   </entry>
   <entry>
     <title>引言</title>
-    <url>/2019/07/29/%E5%BC%95%E8%A8%80/</url>
+    <url>/2019/07/29/%E5%85%B6%E4%BB%96/%E5%BC%95%E8%A8%80/</url>
     <content><![CDATA[<h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><blockquote>
 <p>有快两年没碰博客了，难免有些生疏。</p>
 </blockquote>
