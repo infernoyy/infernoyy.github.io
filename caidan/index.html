@@ -92,7 +92,15 @@
             75%,100%{height: 20px; transform: translateY(0);}
         }
 
-        *{margin:0px;padding:0px;}
+        .biu{
+        	position: fixed;
+		    bottom: 0;
+		    margin-top: 0;
+		    display: inline-block;
+		    z-index: 99999999;
+		    left: 0;
+		    display: none
+		}
 
 		/* music */
 		@-webkit-keyframes reverseRotataZ{
@@ -103,11 +111,12 @@
 		 0%{-webkit-transform: rotateZ(0deg);}
 		 100%{-webkit-transform: rotateZ(360deg);}
 		}
-		#musicControl { position:fixed;right:10px;top:20px;margin-top:0;display:inline-block;z-index:99999999}
+		#musicControl { position:fixed;right:10px;bottom:20px;margin-top:0;display:inline-block;z-index:99999999}
 		#musicControl a { display:inline-block;width: 25px; height: 25px;overflow:hidden; no-repeat;background-size:100%;}
+		#musicControl a>img { width:100%;}
 		#musicControl a audio{width:100%;height:56px;}
 		#musicControl a.stop { background-position:left bottom;}
-		#musicControl a.on { background-position:0px 1px;-webkit-animation: reverseRotataZ 1.2s linear infinite;}
+		#musicControl a.on { background-position:0px 1px;-webkit-animation: reverseRotataZ 12s linear infinite;}
 		#music_play_filter{width:100%;height:100%;overflow:hidden;position:fixed;top:0;left:0;z-index:99999998;}
     </style>
 </head>
@@ -127,10 +136,12 @@
     </div>
     <canvas id="EffectCanvas" width="980" height="1742" style="position: fixed; top: 0px; left: 0px; z-index: 9999999; pointer-events: none;"></canvas>
 
+	<img class="biu" src="">
 
 	<span id="musicControl">
-		<a id="mc_play" class="on" onclick="play_music();">
-			<audio id="musicfx" controls muted>
+		<a id="mc_play" class="stop" onclick="play_music();">
+			<img src="./images/music.svg">
+			<audio id="musicfx" controls autoplay muted>
 			  <source src="bg.mp3" type="audio/mpeg">
 			</audio>
 		</a>
@@ -145,6 +156,8 @@
 
 				downImg()
 				play_music()
+				$(".biu").attr("src","./biubiubiu.gif").show()
+				
     		},6000)
 
 
@@ -153,11 +166,12 @@
     	function play_music(){
     		var music = document.getElementById('musicfx'); 
 			if(music.paused){
-
+				music.muted = false;
 				setTimeout(function(){music.play();},1000)
 				
 				 $('#mc_play').attr('class','on');
 			}else{
+				music.muted = true;
 				music.pause();
 				 $('#mc_play').attr('class','stop');
 			}
